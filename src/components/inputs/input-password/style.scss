@@ -1,0 +1,16 @@
+.input-password {
+  position: relative;
+
+  &__button-eye-container {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    margin-right: 7px;
+  }
+
+  &__inputField {
+    padding-right: 14%;
+  }
+}

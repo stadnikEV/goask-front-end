@@ -1,0 +1,28 @@
+@import 'components/__shared/css/variables.scss';
+
+.form-registration {
+  padding-bottom: 200px;
+  &__name-container {
+    margin-bottom: 8px;
+  }
+  &__email-container {
+    margin-bottom: 8px;
+  }
+  &__submit-container {
+    margin-top: 15px;
+    float: right;
+  }
+  &__login {
+    margin-top: 15px;
+    float: left;
+    color: $gray;
+  }
+  &__login:hover {
+    color: $black;
+  }
+  &::after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+}

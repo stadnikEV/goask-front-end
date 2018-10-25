@@ -1,0 +1,13 @@
+@import 'components/__shared/css/variables.scss';
+
+.button-submit {
+  font-size: 100%;
+  padding: 10px 16px;
+  background-color: $orange;
+  color: white;
+  border-radius: 2px;
+
+  &:hover, {
+    background-color: $darkOrange;
+  }
+}

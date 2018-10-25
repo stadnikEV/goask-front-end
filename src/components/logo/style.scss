@@ -1,0 +1,14 @@
+@import 'components/__shared/css/variables.scss';
+
+.logo {
+  background-color: white;
+  height: 100%;
+
+  &__button {
+    height: 100%;
+    cursor: pointer;
+  }
+  &__img {
+    width: 125px;
+  }
+}

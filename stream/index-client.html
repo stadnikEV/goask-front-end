@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Video</title>
+  <script type="text/javascript" src="script-client.js" defer></script>
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      background-color: rgb(240, 240, 240);
+    }
+    .container {
+      overflow: auto;
+      height: 100%;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .container:before {
+      content: '';
+      height: 100%;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .video-container {
+      width: 40%;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: left;
+      white-space: normal;
+    }
+    .video-webcam {
+      width: 100%;
+      background-color: white;
+    }
+    .video-webcam:hover {
+      cursor: pointer;
+    }
+    .button-wrapper {
+      text-align: center;
+    }
+    button {
+      width: 50px;
+      height: 50px;
+      margin-top: 20px;
+      margin-left: 35px;
+      border: 25px solid transparent;
+      border-left: 40px solid green;
+      display: inline-block;
+      outline: none;
+      background-color: rgb(240, 240, 240);
+    }
+    .hidden {
+      display: none;
+    }
+    button:hover {
+      cursor: pointer;
+    }
+    .button_start {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="video-container">
+      <a href="http://localhost:8080/file/17" download class="hidden">скачать</a>
+      <video class="video-webcam" onclick="this.play()" autoplay></video></br>
+      <div class="button-wrapper">
+        <button type="button" name="button"></button>
+      <div>
+    </div>
+  </div>
+
+  <!-- onclick="this.play()" -->
+</body>
+</html>

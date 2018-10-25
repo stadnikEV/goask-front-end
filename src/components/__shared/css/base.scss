@@ -1,0 +1,17 @@
+@import 'components/__shared/css/variables.scss';
+
+html, body {
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  overflow: hidden;
+}
+
+body {
+  font: 16px arial, sans-serif;
+  background-color: white;
+}
+
+.hidden {
+  display: none;
+}

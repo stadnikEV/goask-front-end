@@ -1,0 +1,17 @@
+.button-eye {
+  background-color: rgba(0, 0, 0, 0);
+
+  .button-eye:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  &__img-show,
+  &__img-hide {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+}

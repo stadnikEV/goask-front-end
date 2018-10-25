@@ -1,0 +1,39 @@
+@import 'components/__shared/css/variables.scss';
+
+.login,
+.registration {
+  overflow: auto;
+  height: 100%;
+  white-space: nowrap;
+  text-align: center;
+
+  &:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__describe {
+    font-size: 125%;
+    color: $black;
+    margin-bottom: 20px;
+    cursor: default;
+    text-align: center;
+  }
+
+  &__main-container {
+    width: 350px;
+    padding: 10px 0;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    white-space: normal;
+  }
+
+  &__main-container:after {
+    content: '';
+    display: inline-block;
+    height: 50px;
+  }
+}
