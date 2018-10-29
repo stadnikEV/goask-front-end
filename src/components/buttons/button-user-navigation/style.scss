@@ -1,18 +1,17 @@
 @import 'components/__shared/css/variables.scss';
 
-.button-header {
-  background-color: $white;
-  height: 75px;
+.button-user-navigation {
+  height: 50px;
+  display: inline-block;
   box-sizing: border-box;
-
 
   &__link {
     display: inline-block;
     height: 100%;
     text-decoration: none;
     vertical-align: middle;
-    padding: 0 10px;
-    color: $gray;
+    padding-right: 30px;
+    color: $white;
 
     &_selected {
       color: $light-blue;

@@ -1,12 +1,12 @@
 import BaseComponent from 'components/__shared/base-component';
 import Header from 'components/header';
-import Login from 'components/login';
+import RegistrationSpeaker from 'components/registration-speaker';
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css
-import 'components/__shared/page-login-registration/style.scss'; // css
+import 'components/pages/registration-speaker/style.scss'; // css
 
 
-export default class PageLogin extends BaseComponent {
+export default class PageCreateSpeaker extends BaseComponent {
   constructor({ el }) {
     super({ el });
     this.components = {};
@@ -16,7 +16,7 @@ export default class PageLogin extends BaseComponent {
     this.elements.mainContainer = this.elements.page.querySelector('[data-element="page__main-container"]');
 
     this.initHeader();
-    this.initLogin();
+    this.initRegistrationSpeaker();
   }
 
   initHeader() {
@@ -25,8 +25,8 @@ export default class PageLogin extends BaseComponent {
     });
   }
 
-  initLogin() {
-    this.components.login = new Login({
+  initRegistrationSpeaker() {
+    this.components.createSpeaker = new RegistrationSpeaker({
       el: this.elements.mainContainer,
     });
   }

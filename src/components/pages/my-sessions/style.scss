@@ -1,0 +1,10 @@
+.page {
+
+  &__main-section-container {
+    width: 100%;
+    background-image: url(<%publicPathFrontEnd%>/img/kource-web-design.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+  }
+}

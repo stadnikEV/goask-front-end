@@ -6,7 +6,7 @@ import 'components/__shared/css/base.scss'; // css
 import 'components/__shared/page-login-registration/style.scss'; // css
 
 
-export default class Page extends BaseComponent {
+export default class PageRegistration extends BaseComponent {
   constructor({ el }) {
     super({ el });
     this.components = {};

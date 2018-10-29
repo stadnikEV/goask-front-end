@@ -1,5 +1,8 @@
+@import 'components/__shared/css/variables.scss';
+
 .navigation-header {
-  height: 100%;
+  background-color: $white;
+  font-size: 0px;
 
   &__button-speakers-container,
   &__button-login-container,
@@ -7,6 +10,6 @@
   &__button-create-speaker-container,
   &__button-profile-setings-container {
     display: inline-block;
-    height: 100%;
+    font-size: 1rem;
   }
 }

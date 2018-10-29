@@ -34,7 +34,7 @@ export default class FormLogin extends BaseComponent {
 
   render() {
     this.el.innerHTML = template({
-      publicPath: '<%publicPath%>',
+      publicPath: '<%publicPathBackEnd%>',
     });
   }
 

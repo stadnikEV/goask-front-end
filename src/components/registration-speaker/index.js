@@ -1,9 +1,9 @@
 import PubSub from 'pubsub-js';
-import HttpError from 'utils/http-error.js';
 import httpRequest from 'utils/http-request.js';
+import HttpError from 'utils/http-error.js';
 import BaseComponent from 'components/__shared/base-component';
-import 'components/__shared/login-registration/style.scss'; // css
-import FormLogin from '../forms/form-login';
+import 'components/registration-speaker/style.scss'; // css
+import FormCreateSpeaker from '../forms/form-create-speaker';
 import template from './template.hbs';
 
 
@@ -14,10 +14,10 @@ export default class Login extends BaseComponent {
     this.eventsPubSub = {};
 
     this.render();
-    this.elements.login = document.querySelector('[data-component="login"]');
-    this.elements.FormContainer = this.elements.login.querySelector('[data-element="login__form-container"]');
+    this.elements.createSpeaker = document.querySelector('[data-component="create-speaker"]');
+    this.elements.FormContainer = this.elements.createSpeaker.querySelector('[data-element="create-speaker__form-container"]');
 
-    this.components.formLogin = new FormLogin({
+    this.components.formCreateSpeaker = new FormCreateSpeaker({
       el: this.elements.FormContainer,
     });
 
@@ -29,34 +29,27 @@ export default class Login extends BaseComponent {
   }
 
   addEvents() {
-    this.eventsPubSub.formRegistratioData = PubSub.subscribe('form-login-data', this.onSendData.bind(this));
+    this.eventsPubSub.formCreateSpeaker = PubSub.subscribe('form-create-speaker-data', this.onSendData.bind(this));
   }
 
   removeEvents() {
     this.unsubscribe();
   }
 
-  onSendData(msg, { email, password }) {
+  onSendData(msg, data) {
     httpRequest({
-      url: '<%publicPathBackEnd%>/rest/login',
+      url: '<%publicPathBackEnd%>/rest/registration-speaker',
       contentType: 'application/json',
       method: 'post',
-      data: { email, password },
+      data,
     })
       .then((json) => {
         const { link } = json;
         window.location.href = link;
       })
       .catch((err) => {
-        this.components.formLogin.formEnable();
+        this.components.formCreateSpeaker.formEnable();
         if (err instanceof HttpError) {
-          if (err.status === 403) {
-            this.components.formLogin.tipHendler({
-              isValid: false,
-              message: 'Не верная почта или пароль',
-              tipName: 'tipEmail',
-            });
-          }
           if (err.status === 500) {
             console.log('ошибка на сторне сервера');
           }

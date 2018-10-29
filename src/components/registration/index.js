@@ -38,7 +38,7 @@ export default class Registration extends BaseComponent {
 
   onSendData(msg, { userName, email, password }) {
     httpRequest({
-      url: '<%publicPathBackEnd%>/account-create',
+      url: '<%publicPathBackEnd%>/rest/registration',
       contentType: 'application/json',
       method: 'post',
       data: { userName, email, password },

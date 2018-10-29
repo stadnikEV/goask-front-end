@@ -1,5 +1,6 @@
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
@@ -9,9 +10,11 @@ const publicPath = (NODE_ENV === 'dev')
 
 const config = {
   entry: {
+    mySessions: './src/my-sessions.js',
+    main: './src/main.js',
     login: './src/login.js',
     registration: './src/registration.js',
-    createSpeaker: './src/create-speaker.js',
+    registrationSpeaker: './src/registration-speaker.js',
   },
   output: {
     filename: 'js/[name].js',
@@ -35,6 +38,14 @@ const config = {
         },
       },
       {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader!sass-loader',
+        }),
+        include: path.join(__dirname, 'src'),
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
@@ -47,29 +58,6 @@ const config = {
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [
-                path.join(__dirname, 'src'),
-              ],
-            },
-          },
-        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -89,6 +77,9 @@ const config = {
   resolveLoader: {
     modules: ['node_modules', 'webpack/loaders'],
   },
+  plugins: [
+    new ExtractTextPlugin('css/[name].css', { allChunks: true }),
+  ],
   resolve: {
     modules: [
       'src',
@@ -110,9 +101,7 @@ if (NODE_ENV === 'dev') {
 
 
 if (NODE_ENV === 'prod') {
-  config.plugins = [
-    new UglifyJsPlugin(),
-  ];
+  config.plugins.push(new UglifyJsPlugin());
 }
 
 module.exports = config;
