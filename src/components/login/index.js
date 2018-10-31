@@ -15,10 +15,10 @@ export default class Login extends BaseComponent {
 
     this.render();
     this.elements.login = document.querySelector('[data-component="login"]');
-    this.elements.FormContainer = this.elements.login.querySelector('[data-element="login__form-container"]');
+    this.elements.formContainer = this.elements.login.querySelector('[data-element="login__form-container"]');
 
     this.components.formLogin = new FormLogin({
-      el: this.elements.FormContainer,
+      el: this.elements.formContainer,
     });
 
     this.addEvents();

@@ -1,11 +1,8 @@
 @import 'components/__shared/css/variables.scss';
 
 .header {
-  width: 75%;
-  // height: 83px;
   box-sizing: border-box;
   background-color: $white;
-  margin: 0 auto;
 
   &__logo-container {
     float: left;

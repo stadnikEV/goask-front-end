@@ -1,5 +1,12 @@
 .page {
 
+  &__header-container,
+  &__my-sessions-container,
+  &__add-session-container {
+    width: 75%;
+    margin: 0 auto;
+  }
+
   &__main-section-container {
     width: 100%;
     background-image: url(<%publicPathFrontEnd%>/img/kource-web-design.png);

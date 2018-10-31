@@ -17,9 +17,13 @@ export default class Login extends BaseComponent {
     this.elements.createSpeaker = document.querySelector('[data-component="create-speaker"]');
     this.elements.FormContainer = this.elements.createSpeaker.querySelector('[data-element="create-speaker__form-container"]');
 
-    this.components.formCreateSpeaker = new FormCreateSpeaker({
-      el: this.elements.FormContainer,
-    });
+    this.getCategoriesName()
+      .then((categories) => {
+        this.initComponentFormCreateSpeaker(categories);
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
 
     this.addEvents();
   }
@@ -34,6 +38,20 @@ export default class Login extends BaseComponent {
 
   removeEvents() {
     this.unsubscribe();
+  }
+
+  getCategoriesName() {
+    return httpRequest({
+      url: '<%publicPathBackEnd%>/rest/categories-name',
+      method: 'get',
+    });
+  }
+
+  initComponentFormCreateSpeaker(categories) {
+    this.components.formCreateSpeaker = new FormCreateSpeaker({
+      el: this.elements.FormContainer,
+      categories,
+    });
   }
 
   onSendData(msg, data) {

@@ -10,16 +10,18 @@ export default ({
     const params = {
       method,
       credentials: 'include',
-      headers: {
-        'Content-Type': contentType,
-      },
     };
 
-    if (contentType === 'application/json') {
-      params.body = JSON.stringify(data);
-    }
-    if (contentType === 'video/webm') {
-      params.body = data;
+    if (contentType) {
+      params.headers = {
+        'Content-Type': contentType,
+      };
+      if (contentType === 'application/json') {
+        params.body = JSON.stringify(data);
+      }
+      if (contentType === 'video/webm') {
+        params.body = data;
+      }
     }
 
     let response = null;

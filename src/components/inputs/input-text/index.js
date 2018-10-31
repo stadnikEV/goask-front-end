@@ -5,10 +5,11 @@ import template from './template.hbs'; // template
 
 
 export default class InputText extends BaseInput {
-  constructor({ el, componentName }) {
+  constructor({ el, componentName, maxLength }) {
     super({ el });
 
     this.componentName = componentName;
+    this.maxLength = maxLength;
     this.render({ componentName });
     this.elements.input = document.querySelector(`[data-component="input-${componentName}"]`);
   }
@@ -18,7 +19,10 @@ export default class InputText extends BaseInput {
   }
 
   validation() {
-    const textStatus = validationText({ value: this.elements.input.value });
+    const textStatus = validationText({
+      value: this.elements.input.value,
+      maxLength: this.maxLength,
+    });
     this.backlightValid({ isValid: textStatus.isValid });
     return textStatus;
   }

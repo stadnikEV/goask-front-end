@@ -18,6 +18,8 @@ const config = {
   },
   output: {
     filename: 'js/[name].js',
+    chunkFilename: 'js/[name].js',
+    publicPath: `${publicPath}/`,
     path: path.join(__dirname, './dist'),
   },
   module: {
@@ -46,16 +48,6 @@ const config = {
         include: path.join(__dirname, 'src'),
       },
       {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
-      },
-      {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
@@ -71,6 +63,16 @@ const config = {
             },
           },
         ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
     ],
   },

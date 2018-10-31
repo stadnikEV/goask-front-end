@@ -1,6 +1,6 @@
 import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
-import SelectCategory from 'components/inputs/select-category';
+import SelectCategory from 'components/inputs/select';
 import 'components/__shared/form/style.scss'; // css
 import 'components/forms/form-create-speaker/style.scss'; // css
 import getValidationMessage from './get-validation-message';
@@ -12,7 +12,7 @@ import Textarea from '../../inputs/textarea';
 
 
 export default class FormCreateSpeaker extends BaseComponent {
-  constructor({ el }) {
+  constructor({ el, categories }) {
     super({ el });
     this.components = {};
 
@@ -31,11 +31,10 @@ export default class FormCreateSpeaker extends BaseComponent {
 
     this.elements.buttonSubmitContainer = this.elements.form.querySelector('[data-element="form-create-speaker__submit-container"]');
 
-
     this.initComponentInputFirstname();
     this.initComponentInputLastname();
     this.initComponentTextAbout();
-    this.initComponentSelectCategory();
+    this.initComponentSelectCategory(categories);
     this.initComponentTipFirstname();
     this.initComponentTipLastname();
     this.initComponentTipAbout();
@@ -59,7 +58,6 @@ export default class FormCreateSpeaker extends BaseComponent {
   removeEvents() {
     this.elements.form.removeEventListener('click', this.onClick);
   }
-
 
   onClick(e) {
     const submit = e.target.closest('[data-component="button-submit-create-speaker"]');
@@ -181,6 +179,7 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.inputFirstname = new InputText({
       el: this.elements.firstnameContainer,
       componentName: 'firstname',
+      maxLength: 20,
     });
   }
 
@@ -189,6 +188,7 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.inputLastname = new InputText({
       el: this.elements.lastnameContainer,
       componentName: 'lastname',
+      maxLength: 20,
     });
   }
 
@@ -196,13 +196,16 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.textAbout = new Textarea({
       el: this.elements.aboutContainer,
       componentName: 'about',
+      maxLength: 4000,
     });
   }
 
-  initComponentSelectCategory() {
+  initComponentSelectCategory(categories) {
     this.components.selectCategory = new SelectCategory({
       el: this.elements.categoryContainer,
       componentName: 'category',
+      disableFirst: true,
+      categories,
     });
   }
 

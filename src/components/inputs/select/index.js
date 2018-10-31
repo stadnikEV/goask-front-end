@@ -4,16 +4,25 @@ import template from './template.hbs'; // template
 
 
 export default class Select extends BaseInput {
-  constructor({ el, componentName }) {
+  constructor({
+    el,
+    componentName,
+    disableFirst,
+    categories,
+  }) {
     super({ el });
 
+    categories.disableFirst = disableFirst;
+    categories.componentName = componentName;
+
     this.componentName = componentName;
-    this.render({ componentName });
-    this.elements.input = document.querySelector(`[data-component="select-${componentName}"]`);
+
+    this.render({ categories });
+    this.elements.input = document.querySelector(`[data-component="select-${this.componentName}"]`);
   }
 
-  render({ componentName }) {
-    this.el.innerHTML = template({ componentName });
+  render({ categories }) {
+    this.el.innerHTML = template(categories);
   }
 
   validation() {

@@ -151,6 +151,7 @@ export default class FormRegistration extends BaseComponent {
     this.components.inputName = new InputText({
       el: this.elements.nameContainer,
       componentName: 'firstname',
+      maxLength: 20,
     });
   }
 

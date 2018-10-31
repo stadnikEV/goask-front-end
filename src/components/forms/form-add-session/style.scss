@@ -1,0 +1,29 @@
+@import 'components/__shared/css/variables.scss';
+
+.form-add-session {
+  padding-top: 50px;
+  padding-bottom: 100px;
+
+  &__label {
+    display: inline-block;
+    padding-bottom: 2px;
+  }
+
+  &__theme-container,
+  &__describe-session-container,
+  &__category-container {
+    margin-bottom: 20px;
+  }
+
+  &__theme-container {
+    height: 70px;
+  }
+
+  &__describe-session-container {
+    height: 200px;
+  }
+
+  &__submit-container {
+    margin-top: 35px;
+  }
+}

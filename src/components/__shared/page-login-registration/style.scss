@@ -7,14 +7,10 @@ html, body {
 .page {
   width: 100%;
   height: 100%;
-  // &__container {
-  //   width: 100%;
-  //   height: 100%;
-  //   margin: 0 auto;
-  // }
 
   &__header-container {
-    width: 100%;
+    width: 75%;
+    margin: 0 auto;
   }
 
   &__main-container {
@@ -23,15 +19,3 @@ html, body {
     border-top: solid 1px $black;
   }
 }
-
-
-// @media only screen and (max-height: 420px) {
-//   .page {
-//     &__header-container {
-//       height: 15%;
-//     }
-//     &__main-container_show-main-header {
-//       height: 85%;
-//     }
-//   }
-// }

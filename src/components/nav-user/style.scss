@@ -1,13 +1,10 @@
 @import 'components/__shared/css/variables.scss';
 
 .user-navigation {
-  // height: 100%;
   width: 75%;
-  padding: 0 15px;
   font-size: 0;
   box-sizing: border-box;
   margin: 0 auto;
-  // text-align: center;
 
   &__button-container {
     font-size: 1rem;
