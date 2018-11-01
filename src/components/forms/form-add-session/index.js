@@ -4,6 +4,7 @@ import SelectCategory from 'components/inputs/select';
 import TipInline from 'components/tip-inline';
 import Textarea from 'components/inputs/textarea';
 import ButtonSubmit from 'components/buttons/button-submit';
+import ButtonDefault from 'components/buttons/button-default';
 import 'components/__shared/form/style.scss'; // css
 import './style.scss'; // css
 import getValidationMessage from './get-validation-message';
@@ -27,6 +28,7 @@ export default class FormAddSession extends BaseComponent {
     this.elements.tipDescribeSessionContainer = this.elements.form.querySelector('[data-element="form-add-session__tip-describe-session-container"]');
 
     this.elements.buttonSubmitContainer = this.elements.form.querySelector('[data-element="form-add-session__submit-container"]');
+    this.elements.buttonCancelContainer = this.elements.form.querySelector('[data-element="form-add-session__button-cancel-container"]');
 
 
     this.initComponentInputTheme();
@@ -36,6 +38,7 @@ export default class FormAddSession extends BaseComponent {
     this.initComponentTipDescribeSession();
     this.initComponentTipCategory();
     this.initComponentButtonSubmit();
+    this.initComponentButtonCancel();
 
     this.onClick = this.onClick.bind(this);
     this.addEvents();
@@ -59,45 +62,46 @@ export default class FormAddSession extends BaseComponent {
   onClick(e) {
     const submit = e.target.closest('[data-component="button-submit-add-session"]');
 
-    if (submit) {
-      if (!this.elements.form.contains(submit)) {
-        return;
-      }
-      e.preventDefault(); // запрещает срабатывание события "submit"
+    if (!submit) {
+      return;
+    }
+    if (!this.elements.form.contains(submit)) {
+      return;
+    }
+    e.preventDefault(); // запрещает срабатывание события "submit"
 
-      if (this.inSendProcess) {
-        return;
-      }
+    if (this.inSendProcess) {
+      return;
+    }
 
-      const themeStatus = this.components.inputTheme.validation();
-      const describeSessionStatus = this.components.inputDescribeSession.validation();
+    const themeStatus = this.components.inputTheme.validation();
+    const describeSessionStatus = this.components.inputDescribeSession.validation();
 
-      this.tipHendler({
-        isValid: themeStatus.isValid,
-        message: getValidationMessage({ tipName: 'theme', validationMessage: themeStatus.message }),
-        tipElem: this.components.tipTheme,
-      });
-      this.tipHendler({
-        isValid: describeSessionStatus.isValid,
-        message: getValidationMessage({ tipName: 'describe-session', validationMessage: describeSessionStatus.message }),
-        tipElem: this.components.tipDescribeSession,
-      });
+    this.tipHendler({
+      isValid: themeStatus.isValid,
+      message: getValidationMessage({ tipName: 'theme', validationMessage: themeStatus.message }),
+      tipElem: this.components.tipTheme,
+    });
+    this.tipHendler({
+      isValid: describeSessionStatus.isValid,
+      message: getValidationMessage({ tipName: 'describe-session', validationMessage: describeSessionStatus.message }),
+      tipElem: this.components.tipDescribeSession,
+    });
 
-      this.setFocus({
-        isValidTheme: themeStatus.isValid,
-        isValidDescribeSession: describeSessionStatus.isValid,
-      });
+    this.setFocus({
+      isValidTheme: themeStatus.isValid,
+      isValidDescribeSession: describeSessionStatus.isValid,
+    });
 
-      if (themeStatus.isValid
-      && describeSessionStatus.isValid) {
-        this.formDisable();
-        const data = {
-          theme: this.components.inputTheme.getData(),
-          describeSession: this.components.inputDescribeSession.getData(),
-          category: this.components.selectCategory.getData(),
-        };
-        PubSub.publish('form-add-session-data', data);
-      }
+    if (themeStatus.isValid
+    && describeSessionStatus.isValid) {
+      this.formDisable();
+      const data = {
+        theme: this.components.inputTheme.getData(),
+        describeSession: this.components.inputDescribeSession.getData(),
+        category: this.components.selectCategory.getData(),
+      };
+      PubSub.publish('form-add-session-data', data);
     }
   }
 
@@ -140,11 +144,17 @@ export default class FormAddSession extends BaseComponent {
     this.components.selectCategory.enable();
   }
 
+  formClear() {
+    this.components.inputTheme.clear();
+    this.components.inputDescribeSession.clear();
+  }
+
 
   initComponentInputTheme() {
     this.components.inputTheme = new Textarea({
       el: this.elements.themeContainer,
       componentName: 'theme',
+      maxLength: 50,
     });
   }
 
@@ -153,6 +163,7 @@ export default class FormAddSession extends BaseComponent {
     this.components.inputDescribeSession = new Textarea({
       el: this.elements.describeSessionContainer,
       componentName: 'describe-session',
+      maxLength: 500,
     });
   }
 
@@ -191,6 +202,15 @@ export default class FormAddSession extends BaseComponent {
       el: this.elements.buttonSubmitContainer,
       componentName: 'button-submit-add-session',
       value: 'Создать сессию',
+    });
+  }
+
+  initComponentButtonCancel() {
+    this.components.ButtonCancel = new ButtonDefault({
+      el: this.elements.buttonCancelContainer,
+      componentName: 'button-cancel',
+      eventName: 'add-session-cancel',
+      value: 'Отмена',
     });
   }
 }

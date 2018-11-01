@@ -23,7 +23,13 @@
     height: 200px;
   }
 
-  &__submit-container {
+  &__submit-container,
+  &__button-cancel-container {
     margin-top: 35px;
+    display: inline-block;
+  }
+
+  &__button-cancel-container {
+    margin-left: 10px;
   }
 }

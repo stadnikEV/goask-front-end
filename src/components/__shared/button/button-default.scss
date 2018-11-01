@@ -9,5 +9,10 @@
 
   &:hover, {
     background-color: $darkOrange;
+    cursor: pointer;
   }
+}
+
+.button-cancel {
+  background-color: gray;
 }

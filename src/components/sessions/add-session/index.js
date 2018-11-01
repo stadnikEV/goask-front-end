@@ -58,15 +58,20 @@ export default class AddSessions extends BaseComponent {
   }
 
   onSendData(msg, data) {
-    data.speakerId = this.speakerId;
     httpRequest({
-      url: '<%publicPathBackEnd%>/rest/login',
+      url: '<%publicPathBackEnd%>/rest/add-session',
       contentType: 'application/json',
       method: 'post',
       data,
     })
       .then(() => {
-        console.log('ok');
+        this.components.formAddSession.formEnable();
+        this.components.formAddSession.formClear();
+        PubSub.publish('session-added');
+      })
+      .catch((e) => {
+        this.components.formAddSession.formEnable();
+        console.warn(e);
       });
   }
 }

@@ -23,7 +23,7 @@ export default class MySessions extends BaseComponent {
 
     this.speakerId = this.getSpeakersId();
 
-    this.initSessionListContainer();
+    this.initSessionList({ speakerId: this.speakerId });
     this.initButtonGoToAddSession();
 
     this.addEvents();
@@ -35,6 +35,8 @@ export default class MySessions extends BaseComponent {
 
   addEvents() {
     this.eventsPubSub.initAddSession = PubSub.subscribe('go-to-add-session', this.onGoToAddSession.bind(this));
+    this.eventsPubSub.sessionAdded = PubSub.subscribe('session-added', this.onSessionAdded.bind(this));
+    this.eventsPubSub.addSessionCancel = PubSub.subscribe('add-session-cancel', this.onAddSessionCancel.bind(this));
   }
 
   removeEvents() {
@@ -45,9 +47,10 @@ export default class MySessions extends BaseComponent {
     return this.el.getAttribute('data-speakerId');
   }
 
-  initSessionListContainer() {
+  initSessionList({ speakerId }) {
     this.components.mySessionList = new MySessionList({
       el: this.elements.sessionListContainer,
+      speakerId,
     });
   }
 
@@ -61,6 +64,7 @@ export default class MySessions extends BaseComponent {
   }
 
   onGoToAddSession() {
+    console.log('click');
     this.components.mySessionList.hide();
     this.components.ButtonGoToAddSession.hide();
     if (this.components.addSession) {
@@ -74,10 +78,28 @@ export default class MySessions extends BaseComponent {
           el: this.elements.addSessionContainer,
           speakerId: this.speakerId,
         });
-        PubSub.unsubscribe(this.eventsPubSub.initAddSession);
+        // PubSub.unsubscribe(this.eventsPubSub.initAddSession);
       })
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  onSessionAdded() {
+    this.components.mySessionList.initSessionData()
+      .then(() => {
+        this.components.mySessionList.show();
+        this.components.ButtonGoToAddSession.show();
+        this.components.addSession.hide();
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  }
+
+  onAddSessionCancel() {
+    this.components.mySessionList.show();
+    this.components.ButtonGoToAddSession.show();
+    this.components.addSession.hide();
   }
 }

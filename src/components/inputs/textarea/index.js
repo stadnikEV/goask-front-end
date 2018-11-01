@@ -27,4 +27,8 @@ export default class Textarea extends BaseInput {
     this.backlightValid({ isValid: textStatus.isValid });
     return textStatus;
   }
+
+  clear() {
+    this.elements.input.value = '';
+  }
 }

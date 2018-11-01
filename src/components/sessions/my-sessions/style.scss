@@ -1,10 +1,7 @@
 .my-sessions {
+  margin-bottom: 150px;
 
-  &__describe {
-    margin-top: 50px;
-    font-size: 180%;
-  }
-  &__list-container {
-    margin-top: 50px;
+  &__session-list-container {
+    margin: 50px 0;
   }
 }

@@ -1,21 +1,27 @@
 import PubSub from 'pubsub-js';
+import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonDefault from 'components/buttons/button-default';
 
 
-// import './style.scss'; // css
-// import template from './template.hbs';
+import './style.scss'; // css
+import template from './template.hbs';
 
 
-export default class MySessions extends BaseComponent {
-  constructor({ el }) {
+export default class MySessionsList extends BaseComponent {
+  constructor({ el, speakerId }) {
     super({ el });
     this.components = {};
+    this.speakerId = speakerId;
     // this.eventsPubSub = {};
+
+    this.initSessionData()
+      .catch((e) => {
+        console.warn(e);
+      });
+
     //
-    // this.render();
-    //
-    // this.elements.mySessions = document.querySelector('[data-component="my-sessions"]');
+    this.elements.mySessions = document.querySelector('[data-component="my-sessions"]');
     // this.elements.sessionListContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__session-list-container"]');
     // this.elements.ButtonGoToAddSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__button-go-to-add-session-container"]');
     // this.elements.addSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__add-session-container"]');
@@ -26,8 +32,8 @@ export default class MySessions extends BaseComponent {
     // this.addEvents();
   }
 
-  render() {
-    // this.el.innerHTML = template();
+  render({ sessions }) {
+    this.el.innerHTML = template({ sessions });
   }
 
   addEvents() {
@@ -36,6 +42,13 @@ export default class MySessions extends BaseComponent {
 
   removeEvents() {
     this.unsubscribe();
+  }
+
+  getSessions({ speakerId }) {
+    return httpRequest({
+      url: `<%publicPathBackEnd%>/rest/speakers/${speakerId}/sessions`,
+      method: 'get',
+    });
   }
 
   // initSessionsListContainer() {
@@ -67,5 +80,19 @@ export default class MySessions extends BaseComponent {
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  initSessionData() {
+    const promise = new Promise((resolve, reject) => {
+      this.getSessions({ speakerId: this.speakerId })
+        .then((sessions) => {
+          this.render({ sessions });
+          resolve();
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+    return promise;
   }
 }

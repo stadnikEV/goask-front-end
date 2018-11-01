@@ -10,10 +10,10 @@ module.exports = ({ tipName, validationMessage }) => {
   }
   if (validationMessage === 'max length') {
     if (tipName === 'theme') {
-      message = 'Название сессии не должно превышать 20 символов';
+      message = 'Название сессии не должно превышать 50 символов';
     }
     if (tipName === 'lastname') {
-      message = 'Описание сессии не должно превышать 20 символов';
+      message = 'Описание сессии не должно превышать 500 символов';
     }
   }
   return message;

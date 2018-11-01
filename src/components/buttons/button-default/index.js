@@ -40,7 +40,8 @@ export default class ButtonDefault extends BaseComponent {
     this.elements.button.onmousedown = null;
   }
 
-  onButtonClick() {
+  onButtonClick(e) {
+    e.preventDefault();
     PubSub.publish(this.eventName);
   }
 }
