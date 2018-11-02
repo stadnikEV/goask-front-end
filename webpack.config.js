@@ -20,7 +20,7 @@ const config = {
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].js',
     publicPath: `${publicPath}/`,
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, '../main-server/public'),
   },
   module: {
     rules: [
@@ -39,11 +39,30 @@ const config = {
           publicPath,
         },
       },
+      // {
+      //   test: /\.scss$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader',
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //     },
+      //     {
+      //       loader: 'sass-loader',
+      //       options: {
+      //         includePaths: [
+      //           path.join(__dirname, 'src'),
+      //         ],
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader!sass-loader',
+          // fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
         }),
         include: path.join(__dirname, 'src'),
       },
@@ -80,7 +99,10 @@ const config = {
     modules: ['node_modules', 'webpack/loaders'],
   },
   plugins: [
-    new ExtractTextPlugin('css/[name].css', { allChunks: true }),
+    new ExtractTextPlugin({
+      filename: 'css/[name].css',
+      allChunks: true,
+    }),
   ],
   resolve: {
     modules: [

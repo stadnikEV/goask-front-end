@@ -4,8 +4,9 @@
   <div class="my-sessions-list__list-container"
        data-element="my-sessions-list__list-container">
     {{#each sessions}}
-      <div class="my-sessions-list__item">
-        <p>{{theme}}</p>
+      <div class="my-sessions-list__item-container"
+           data-element="my-sessions-list__item-container"
+           data-sessionId="{{sessionId}}">
       </div>
     {{/each}}
   </div>

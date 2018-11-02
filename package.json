@@ -31,8 +31,8 @@
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.7.0",
     "node-sass": "^4.9.2",
-    "sass-loader": "^7.0.3",
-    "style-loader": "^0.20.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   }

@@ -11,14 +11,17 @@ export default class ButtonDefault extends BaseComponent {
     value,
     componentName,
     eventName,
+    className,
+    data,
   }) {
     super({ el });
 
     this.eventsPubSub = {};
 
     this.eventName = eventName;
+    this.data = data;
 
-    this.render({ value, componentName });
+    this.render({ value, componentName, className });
     this.elements.button = document.querySelector(`[data-component="${componentName}"]`);
 
     this.onButtonClick = this.onButtonClick.bind(this);
@@ -26,8 +29,8 @@ export default class ButtonDefault extends BaseComponent {
     this.addEvents();
   }
 
-  render({ value, componentName }) {
-    this.el.innerHTML = template({ value, componentName });
+  render({ value, componentName, className }) {
+    this.el.innerHTML = template({ value, componentName, className });
   }
 
   addEvents() {
@@ -42,6 +45,6 @@ export default class ButtonDefault extends BaseComponent {
 
   onButtonClick(e) {
     e.preventDefault();
-    PubSub.publish(this.eventName);
+    PubSub.publish(this.eventName, this.data);
   }
 }

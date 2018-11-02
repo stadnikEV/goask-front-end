@@ -25,6 +25,7 @@ export default class Textarea extends BaseInput {
       maxLength: this.maxLength,
     });
     this.backlightValid({ isValid: textStatus.isValid });
+    console.log(textStatus);
     return textStatus;
   }
 

@@ -57,6 +57,7 @@ export default class MySessions extends BaseComponent {
   initButtonGoToAddSession() {
     this.components.ButtonGoToAddSession = new ButtonDefault({
       el: this.elements.ButtonGoToAddSessionContainer,
+      className: 'button-go-to-add-session',
       componentName: 'button-go-to-add-session',
       eventName: 'go-to-add-session',
       value: 'Добавить новую сессию',
@@ -64,7 +65,6 @@ export default class MySessions extends BaseComponent {
   }
 
   onGoToAddSession() {
-    console.log('click');
     this.components.mySessionList.hide();
     this.components.ButtonGoToAddSession.hide();
     if (this.components.addSession) {
@@ -78,7 +78,6 @@ export default class MySessions extends BaseComponent {
           el: this.elements.addSessionContainer,
           speakerId: this.speakerId,
         });
-        // PubSub.unsubscribe(this.eventsPubSub.initAddSession);
       })
       .catch((e) => {
         console.warn(e);
@@ -86,7 +85,7 @@ export default class MySessions extends BaseComponent {
   }
 
   onSessionAdded() {
-    this.components.mySessionList.initSessionData()
+    this.components.mySessionList.createSessionList()
       .then(() => {
         this.components.mySessionList.show();
         this.components.ButtonGoToAddSession.show();

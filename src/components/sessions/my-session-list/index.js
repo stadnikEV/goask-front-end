@@ -1,8 +1,7 @@
 import PubSub from 'pubsub-js';
 import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
-import ButtonDefault from 'components/buttons/button-default';
-
+import MylistItem from 'components/sessions/my-list-item';
 
 import './style.scss'; // css
 import template from './template.hbs';
@@ -13,23 +12,20 @@ export default class MySessionsList extends BaseComponent {
     super({ el });
     this.components = {};
     this.speakerId = speakerId;
-    // this.eventsPubSub = {};
+    this.eventsPubSub = {};
 
-    this.initSessionData()
+    this.createSessionList()
       .catch((e) => {
         console.warn(e);
       });
 
-    //
-    this.elements.mySessions = document.querySelector('[data-component="my-sessions"]');
+
     // this.elements.sessionListContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__session-list-container"]');
-    // this.elements.ButtonGoToAddSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__button-go-to-add-session-container"]');
-    // this.elements.addSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__add-session-container"]');
-    //
+
     // this.initSessionListContainer();
     // this.initButtonGoToAddSession();
     //
-    // this.addEvents();
+    this.addEvents();
   }
 
   render({ sessions }) {
@@ -37,7 +33,7 @@ export default class MySessionsList extends BaseComponent {
   }
 
   addEvents() {
-    this.eventsPubSub.initAddSession = PubSub.subscribe('go-to-add-session', this.onGoToAddSession.bind(this));
+    this.eventsPubSub.removeSession = PubSub.subscribe('remove-session', this.onRemoveSesion.bind(this));
   }
 
   removeEvents() {
@@ -51,42 +47,31 @@ export default class MySessionsList extends BaseComponent {
     });
   }
 
-  // initSessionsListContainer() {
-  //   this.components.mySessionsList = new MySessionList({
-  //     el: this.elements.sessionListContainer,
-  //   });
-  // }
-
-  initButtonGoToAddSession() {
-    this.components.ButtonGoToAddSession = new ButtonDefault({
-      el: this.elements.ButtonGoToAddSessionContainer,
-      componentName: 'button-go-to-add-session',
-      eventName: 'go-to-add-session',
-      value: 'Добавить новую сессию',
+  initListItems({ sessions }) {
+    sessions.forEach((item) => {
+      const elemContainer = this.elements.MySessionsList.querySelector(`[data-sessionId="${item.sessionId}"][data-element="my-sessions-list__item-container"]`);
+      this.initcomponentListItem({
+        el: elemContainer,
+        sessionId: item.sessionId,
+        data: item,
+      });
     });
   }
 
-  onGoToAddSession() {
-    if (this.components.addSession) {
-      this.components.addSession.show();
-      return;
-    }
-    import('components/sessions/add-session' /* webpackChunkName: "addSession" */)
-      .then((Module) => {
-        const AddSession = Module.default;
-        this.components.addSession = new AddSession({ el: this.elements.addSessionContainer });
-        PubSub.unsubscribe(this.eventsPubSub.initAddSession);
-      })
-      .catch((e) => {
-        console.warn(e);
-      });
+  initcomponentListItem({ el, sessionId, data }) {
+    this.components[`mylistItem${sessionId}`] = new MylistItem({
+      el,
+      data,
+    });
   }
 
-  initSessionData() {
+  createSessionList() {
     const promise = new Promise((resolve, reject) => {
       this.getSessions({ speakerId: this.speakerId })
         .then((sessions) => {
           this.render({ sessions });
+          this.elements.MySessionsList = document.querySelector('[data-component="my-sessions-list"]');
+          this.initListItems({ sessions });
           resolve();
         })
         .catch((e) => {
@@ -94,5 +79,24 @@ export default class MySessionsList extends BaseComponent {
         });
     });
     return promise;
+  }
+
+  onRemoveSesion(msg, sessionId) {
+    this.components[`mylistItem${sessionId}`].destroy();
+    this.components[`mylistItem${sessionId}`] = null;
+    this.removeSessionFromDB({ sessionId })
+      .then(() => {
+        console.log('Сессия удалена');
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  }
+
+  removeSessionFromDB({ sessionId }) {
+    return httpRequest({
+      url: `<%publicPathBackEnd%>/rest/sessions/${sessionId}/remove`,
+      method: 'get',
+    });
   }
 }

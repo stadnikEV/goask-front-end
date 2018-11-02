@@ -12,7 +12,7 @@ module.exports = ({ tipName, validationMessage }) => {
     if (tipName === 'theme') {
       message = 'Название сессии не должно превышать 50 символов';
     }
-    if (tipName === 'lastname') {
+    if (tipName === 'describe-session') {
       message = 'Описание сессии не должно превышать 500 символов';
     }
   }

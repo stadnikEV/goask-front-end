@@ -11,8 +11,8 @@
     background-color: $darkOrange;
     cursor: pointer;
   }
-}
 
-.button-cancel {
-  background-color: gray;
+  &_color-gray {
+    background-color: gray;
+  }
 }

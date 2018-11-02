@@ -106,6 +106,7 @@ export default class FormAddSession extends BaseComponent {
   }
 
   tipHendler({ isValid, message, tipElem }) {
+    console.log(message);
     if (isValid) {
       tipElem.showTip({ message: '' });
       return;
@@ -208,7 +209,8 @@ export default class FormAddSession extends BaseComponent {
   initComponentButtonCancel() {
     this.components.ButtonCancel = new ButtonDefault({
       el: this.elements.buttonCancelContainer,
-      componentName: 'button-cancel',
+      className: 'button-default_color-gray',
+      componentName: 'add-session-cancel',
       eventName: 'add-session-cancel',
       value: 'Отмена',
     });
