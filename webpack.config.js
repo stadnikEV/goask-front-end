@@ -5,8 +5,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 const publicPath = (NODE_ENV === 'dev')
-  ? 'http://localhost:8080'
-  : 'http://www.goask.club';
+  ? 'http://localhost:3000'
+  : 'http://goask.club';
 
 const config = {
   entry: {
@@ -96,7 +96,7 @@ if (NODE_ENV === 'dev') {
   config.devtool = 'inline-cheap-module-source-map';
   config.devServer = {
     inline: true,
-    port: 8080,
+    port: 3000,
     contentBase: path.join(__dirname, 'dist'),
   };
 }
