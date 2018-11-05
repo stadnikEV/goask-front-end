@@ -44,9 +44,8 @@ export default class AddSessions extends BaseComponent {
   }
 
   getCategoriesName({ speakerId }) {
-    return httpRequest({
-      url: `<%publicPathBackEnd%>/rest/speakers/${speakerId}/categories-name`,
-      method: 'get',
+    return httpRequest.get({
+      url: `<%publicPathBackEnd%>/api/speakers/${speakerId}/categories-name`,
     });
   }
 
@@ -58,11 +57,9 @@ export default class AddSessions extends BaseComponent {
   }
 
   onSendData(msg, data) {
-    httpRequest({
-      url: '<%publicPathBackEnd%>/rest/add-session',
-      contentType: 'application/json',
-      method: 'post',
-      data,
+    httpRequest.post({
+      url: '<%publicPathBackEnd%>/api/add-session',
+      options: { data },
     })
       .then(() => {
         this.components.formAddSession.formEnable();

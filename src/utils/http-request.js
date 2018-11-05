@@ -1,20 +1,49 @@
 import HttpError from 'utils/http-error.js';
 
-export default ({
-  url,
-  contentType,
-  method,
-  data,
-}) => {
-  const promise = new Promise((resolve, reject) => {
-    const params = {
-      method,
-      credentials: 'include',
-    };
+const httpRequest = () => {
+  if (window.httpRequest) {
+    return window.httpRequest;
+  }
 
-    if (contentType) {
-      params.headers = {
-        'Content-Type': contentType,
+  class HttpRequest {
+    get({ url, options = {} }) {
+      options.method = 'get';
+      options.credentials = 'include';
+
+      return this.request(url, options);
+    }
+
+
+    post({ url, options }) {
+      options.method = 'post';
+      const params = this.prepareParams(options);
+
+      return this.request(url, params);
+    }
+
+
+    put({ url, options }) {
+      options.method = 'put';
+      const params = this.prepareParams(options);
+      return this.request(url, params);
+    }
+
+
+    delete({ url, options = {} }) {
+      options.method = 'delete';
+      options.credentials = 'include';
+
+      return this.request(url, options);
+    }
+
+
+    prepareParams({ contentType = 'application/json', data, method }) {
+      const params = {
+        method,
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       };
       if (contentType === 'application/json') {
         params.body = JSON.stringify(data);
@@ -22,36 +51,48 @@ export default ({
       if (contentType === 'video/webm') {
         params.body = data;
       }
+
+      return params;
     }
 
-    let response = null;
-    let dataType = null;
 
-    fetch(url, params)
-      .then((res) => {
-        response = res;
-        dataType = response.headers.get('content-type');
-        if (dataType === 'application/json; charset=utf-8') {
-          const json = response.json();
-          return json;
-        }
-        return response.arrayBuffer();
-      })
-      .then((responeData) => {
-        if (response.status !== 200) {
-          if (dataType === 'application/json; charset=utf-8') {
-            return Promise.reject(new HttpError({
-              status: responeData.status,
-              message: responeData.message,
-            }));
-          }
-        }
-        return resolve(responeData);
-      })
-      .catch((err) => {
-        reject(err);
+    request(url, options) {
+      let response = null;
+      let dataType = null;
+
+      const promise = new Promise((resolve, reject) => {
+        fetch(url, options)
+          .then((res) => {
+            response = res;
+            dataType = response.headers.get('content-type');
+            if (dataType === 'application/json; charset=utf-8') {
+              const json = response.json();
+              return json;
+            }
+            return response.arrayBuffer();
+          })
+          .then((responeData) => {
+            if (response.status !== 200 && response.status !== 201) {
+              if (dataType === 'application/json; charset=utf-8') {
+                return Promise.reject(new HttpError({
+                  status: responeData.status,
+                  message: responeData.message,
+                }));
+              }
+            }
+            return resolve(responeData);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
-  });
 
-  return promise;
+      return promise;
+    }
+  }
+
+  window.httpRequest = new HttpRequest();
+  return window.httpRequest;
 };
+
+export default httpRequest();

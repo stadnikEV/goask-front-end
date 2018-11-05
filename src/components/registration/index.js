@@ -36,12 +36,10 @@ export default class Registration extends BaseComponent {
     this.unsubscribe();
   }
 
-  onSendData(msg, { userName, email, password }) {
-    httpRequest({
-      url: '<%publicPathBackEnd%>/rest/registration',
-      contentType: 'application/json',
-      method: 'post',
-      data: { userName, email, password },
+  onSendData(msg, data) {
+    httpRequest.post({
+      url: '<%publicPathBackEnd%>/api/registration',
+      options: { data },
     })
       .then((json) => {
         const { link } = json;

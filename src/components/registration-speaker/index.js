@@ -41,9 +41,8 @@ export default class Login extends BaseComponent {
   }
 
   getCategoriesName() {
-    return httpRequest({
-      url: '<%publicPathBackEnd%>/rest/categories-name',
-      method: 'get',
+    return httpRequest.get({
+      url: '<%publicPathBackEnd%>/api/categories-name',
     });
   }
 
@@ -55,11 +54,9 @@ export default class Login extends BaseComponent {
   }
 
   onSendData(msg, data) {
-    httpRequest({
-      url: '<%publicPathBackEnd%>/rest/registration-speaker',
-      contentType: 'application/json',
-      method: 'post',
-      data,
+    httpRequest.post({
+      url: '<%publicPathBackEnd%>/api/registration-speaker',
+      options: { data },
     })
       .then((json) => {
         const { link } = json;

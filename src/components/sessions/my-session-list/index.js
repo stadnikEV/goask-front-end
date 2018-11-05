@@ -15,17 +15,12 @@ export default class MySessionsList extends BaseComponent {
     this.eventsPubSub = {};
 
     this.createSessionList()
+      .then(() => {
+        this.addEvents();
+      })
       .catch((e) => {
         console.warn(e);
       });
-
-
-    // this.elements.sessionListContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__session-list-container"]');
-
-    // this.initSessionListContainer();
-    // this.initButtonGoToAddSession();
-    //
-    this.addEvents();
   }
 
   render({ sessions }) {
@@ -41,9 +36,8 @@ export default class MySessionsList extends BaseComponent {
   }
 
   getSessions({ speakerId }) {
-    return httpRequest({
-      url: `<%publicPathBackEnd%>/rest/speakers/${speakerId}/sessions`,
-      method: 'get',
+    return httpRequest.get({
+      url: `<%publicPathBackEnd%>/api/speakers/${speakerId}/sessions`,
     });
   }
 
@@ -82,21 +76,15 @@ export default class MySessionsList extends BaseComponent {
   }
 
   onRemoveSesion(msg, sessionId) {
-    this.components[`mylistItem${sessionId}`].destroy();
-    this.components[`mylistItem${sessionId}`] = null;
-    this.removeSessionFromDB({ sessionId })
+    return httpRequest.delete({
+      url: `<%publicPathBackEnd%>/api/sessions/${sessionId}`,
+    })
       .then(() => {
-        console.log('Сессия удалена');
+        this.components[`mylistItem${sessionId}`].destroy();
+        this.components[`mylistItem${sessionId}`] = null;
       })
       .catch((e) => {
         console.warn(e);
       });
-  }
-
-  removeSessionFromDB({ sessionId }) {
-    return httpRequest({
-      url: `<%publicPathBackEnd%>/rest/sessions/${sessionId}/remove`,
-      method: 'get',
-    });
   }
 }

@@ -20,7 +20,7 @@ const config = {
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].js',
     publicPath: `${publicPath}/`,
-    path: path.join(__dirname, '../main-server/public'),
+    path: path.join(__dirname, '../goask-main-server/public'),
   },
   module: {
     rules: [

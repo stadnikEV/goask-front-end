@@ -36,12 +36,10 @@ export default class Login extends BaseComponent {
     this.unsubscribe();
   }
 
-  onSendData(msg, { email, password }) {
-    httpRequest({
-      url: '<%publicPathBackEnd%>/rest/login',
-      contentType: 'application/json',
-      method: 'post',
-      data: { email, password },
+  onSendData(msg, data) {
+    httpRequest.post({
+      url: '<%publicPathBackEnd%>/api/login',
+      options: { data },
     })
       .then((json) => {
         const { link } = json;

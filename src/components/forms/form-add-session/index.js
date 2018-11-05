@@ -106,7 +106,6 @@ export default class FormAddSession extends BaseComponent {
   }
 
   tipHendler({ isValid, message, tipElem }) {
-    console.log(message);
     if (isValid) {
       tipElem.showTip({ message: '' });
       return;
