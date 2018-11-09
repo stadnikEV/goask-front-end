@@ -1,0 +1,16 @@
+.page {
+
+  &__header-container,
+  &__public-sessions-container {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  &__main-section-container {
+    width: 100%;
+    background-image: url(<%publicPathFrontEnd%>/img/sesions-categories-main.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+  }
+}

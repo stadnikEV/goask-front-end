@@ -1,0 +1,37 @@
+@import 'components/__shared/css/variables.scss';
+
+.session-page-navigation {
+  font-size: 0;
+  &__button {
+    display: inline-block;
+    font-size: 1.4rem;
+
+    .session-page-navigation__link {
+      display: inline-block;
+      text-decoration: none;
+      color: $gray;
+      padding: 7px 10px;
+
+      &:hover {
+        color: $light-blue;
+      }
+
+      &_selected {
+        background: $orange;
+        color: white;
+        border-radius: 7px;
+        cursor: default;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+
+  &__dots {
+    display: inline-block;
+    color: $gray;
+    font-size: 1.4rem;
+  }
+}

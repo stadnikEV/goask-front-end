@@ -20,8 +20,6 @@ export default class PageMySessions extends BaseComponent {
     this.elements.mainSectionContainer = this.elements.page.querySelector('[data-element="page__main-section-container"]');
     this.elements.mySessionsContainer = this.elements.page.querySelector('[data-element="page__my-sessions-container"]');
 
-    this.elements.page.hidden = false;
-
     this.initHeader();
     this.initMainSection();
     this.initMySessions();

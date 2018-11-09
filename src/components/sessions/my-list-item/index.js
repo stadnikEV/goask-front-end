@@ -1,4 +1,3 @@
-// import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonDefault from 'components/buttons/button-default';
 
@@ -11,7 +10,7 @@ export default class MyListItem extends BaseComponent {
     super({ el });
     this.components = {};
     this.sessionId = data.sessionId;
-    // this.eventsPubSub = {};
+
     this.render(data);
 
     this.elements.myListItem = document.querySelector(`[data-component="my-list-item"][data-sessionId="${data.sessionId}"]`);

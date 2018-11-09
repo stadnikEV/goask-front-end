@@ -25,7 +25,6 @@ export default class ButtonHeader extends ButtonNavigation {
   }
 
   onButtonClick() {
-    console.log('click');
     PubSub.publish(this.eventName);
   }
 }
