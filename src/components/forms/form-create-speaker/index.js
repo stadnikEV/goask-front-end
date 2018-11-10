@@ -201,6 +201,11 @@ export default class FormCreateSpeaker extends BaseComponent {
   }
 
   initComponentSelectCategory(categories) {
+    categories.categories.unshift({
+      content: 'Выберите категорию',
+      selected: 'selected',
+      disabled: 'disabled',
+    });
     this.components.selectCategory = new SelectCategory({
       el: this.elements.categoryContainer,
       componentName: 'category',

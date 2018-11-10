@@ -3,7 +3,7 @@ import 'components/__shared/button/style.scss'; // css
 import './style.scss'; // css
 
 
-export default class PublicListItem extends BaseComponent {
+export default class PublicSessionNavigation extends BaseComponent {
   constructor({ el }) {
     super({ el });
 

@@ -1,10 +1,7 @@
 <select class="select select-{{componentName}}"
         data-component="select-{{componentName}}"
         id="{{componentName}}">
-  {{#if disableFirst}}
-    <option disabled selected>Выберите категорию</option>
-  {{/if}}
   {{#each categories}}
-    <option value="{{value}}">{{content}}</option>
+    <option value="{{value}}" {{disabled}} {{selected}}>{{content}}</option>
   {{/each}}
 </select>
