@@ -1,6 +1,7 @@
 @import 'components/__shared/css/variables.scss';
 
 .button-default {
+  display: inline-block;
   font-size: 100%;
   padding: 10px 16px;
   background-color: $orange;

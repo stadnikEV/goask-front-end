@@ -3,4 +3,8 @@
 .tip-inline {
   color: $red-intense;
   font-size: 80%;
+
+  &-ask {
+    font-size: 100%;
+  }
 }

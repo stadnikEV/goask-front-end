@@ -154,7 +154,7 @@ export default class FormAddSession extends BaseComponent {
     this.components.inputTheme = new Textarea({
       el: this.elements.themeContainer,
       componentName: 'theme',
-      maxLength: 50,
+      maxLength: 100,
     });
   }
 
@@ -163,7 +163,7 @@ export default class FormAddSession extends BaseComponent {
     this.components.inputDescribeSession = new Textarea({
       el: this.elements.describeSessionContainer,
       componentName: 'describe-session',
-      maxLength: 500,
+      maxLength: 4000,
     });
   }
 

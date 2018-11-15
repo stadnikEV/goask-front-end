@@ -8,7 +8,7 @@ export default class TipInline extends BaseComponent {
     super({ el });
 
     this.render({ componentName });
-    this.elements.TipInline = document.querySelector(`[data-component="${componentName}"]`);
+    this.elements.TipInline = document.querySelector(`[data-component="tip-inline-${componentName}"]`);
   }
 
   render({ componentName }) {

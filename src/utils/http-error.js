@@ -3,7 +3,7 @@ export default class HttpError extends Error {
     super();
     this.status = status;
     this.name = this.constructor.name;
-    this.message = `${status} ${message}`;
+    this.message = `${message}`;
     this.stack = (new Error(message)).stack;
   }
 }

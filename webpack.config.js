@@ -11,10 +11,12 @@ const publicPath = (NODE_ENV === 'dev')
 const config = {
   entry: {
     mySessions: './src/my-sessions.js',
+    myQuestions: './src/my-questions.js',
     main: './src/main.js',
     login: './src/login.js',
     registration: './src/registration.js',
     publicSessions: './src/public-sessions.js',
+    publicSessionDetails: './src/public-session-details.js',
     registrationSpeaker: './src/registration-speaker.js',
   },
   output: {

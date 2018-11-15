@@ -1,0 +1,42 @@
+@import 'components/__shared/css/variables.scss';
+
+.public-session-details {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 50px;
+
+  .main-title {
+    padding-bottom: 20px;
+
+    &__theme {
+      margin-bottom: 30px;
+      font-size: 180%;
+      font-weight: bold;
+    }
+    &__category,
+    &__speaker {
+      margin-bottom: 20px;
+      font-size: 120%;
+      & span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .describe {
+    margin-top: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid $light-gray;
+
+    &__title {
+      font-size: 140%;
+      font-weight: bold;
+    }
+    &__content {
+      text-indent: 1.5rem;
+      font-size: 120%;
+      line-height: 140%;
+      margin-top: 20px;
+    }
+  }
+}

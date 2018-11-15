@@ -77,7 +77,7 @@ export default class PublicSessions extends BaseComponent {
   selectCategory(categories) {
     const url = window.location.href;
 
-    if (url.indexOf('public-sessions/') === -1) {
+    if (url.indexOf('category') === -1) {
       categories.categories[0].selected = 'selected';
       return categories;
     }
@@ -97,6 +97,6 @@ export default class PublicSessions extends BaseComponent {
       window.location.href = '<%publicPathBackEnd%>/public-sessions';
       return;
     }
-    window.location.href = `<%publicPathBackEnd%>/public-sessions/${category}`;
+    window.location.href = `<%publicPathBackEnd%>/public-sessions?category=${category}`;
   }
 }

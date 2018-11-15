@@ -13,7 +13,6 @@ module.exports = {
   "parser": "babel-eslint",
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "import/no-unresolved": [2, { ignore: ['<%applicationName%>'] }],
     "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]mage" }],
     "import/extensions": [
       {
@@ -52,7 +51,7 @@ module.exports = {
       "error",
       {
         "allowAfterThis": true,
-        "allow": ["_makeStep"]
+        "allow": ["_id"]
       }
     ],
     "no-shadow": [

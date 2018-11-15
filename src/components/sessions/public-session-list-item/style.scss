@@ -26,11 +26,27 @@
         font-weight: bold;
       }
     }
+
+    .public-session-list-item__category {
+      margin-bottom: 10px;
+      & span {
+        font-weight: bold;
+      }
+    }
   }
 
   &__navigation {
     width: 180px;
     height: 100%;
     float: right;
+    position: relative;
+
+    .public-session-list-item__button-session-details-container {
+      width: 100%;
+      position: absolute;
+      display: inline-block;
+      bottom: 10px;
+      text-align: right;
+    }
   }
 }

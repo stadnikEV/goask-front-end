@@ -1,0 +1,14 @@
+@import 'components/__shared/css/variables.scss';
+
+.page {
+
+  &__header-container {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  &__public-session-details-container {
+    width: 100%;
+    border-top: 1px solid $black;
+  }
+}

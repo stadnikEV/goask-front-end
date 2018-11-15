@@ -1,6 +1,6 @@
 import BaseComponent from 'components/__shared/base-component';
 import getTruncateText from 'utils/get-truncate-text';
-// import ButtonDefault from 'components/buttons/button-default';
+import ButtonLink from 'components/buttons/button-link';
 import './style.scss'; // css
 
 
@@ -13,6 +13,7 @@ export default class PublicListItem extends BaseComponent {
     this.elements.content = this.elements.item.querySelector('[data-element="public-session-list-item__content"]');
     this.elements.describeSession = this.elements.item.querySelector('[data-element="public-session-list-item__describe-session"]');
     this.elements.navigation = this.elements.item.querySelector('[data-element="public-session-list-item__navigation"]');
+    this.elements.buttonDetailsContainer = this.elements.item.querySelector('[data-element="public-session-list-item__button-session-details-container"]');
 
     this.elements.describeSession.classList.remove('hidden');
     this.str = this.elements.describeSession.textContent;
@@ -24,6 +25,8 @@ export default class PublicListItem extends BaseComponent {
     }
 
     this.onResize = this.onResize.bind(this);
+
+    this.initButtonDetailsComponent();
 
     this.addEvents();
     // this.elements.buttoRemoveContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-remove-container"]');
@@ -64,6 +67,16 @@ export default class PublicListItem extends BaseComponent {
     if (truncateDescribeText) {
       this.elements.describeSession.innerHTML = truncateDescribeText;
     }
+  }
+
+  initButtonDetailsComponent() {
+    const sessionId = this.elements.buttonDetailsContainer.getAttribute('data-sessionId');
+
+    this.components.ButtonDetails = new ButtonLink({
+      el: this.elements.buttonDetailsContainer,
+      componentName: 'button-session-details',
+      id: sessionId,
+    });
   }
 
   // initComponentButtonRemove() {

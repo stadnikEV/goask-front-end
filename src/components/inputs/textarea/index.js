@@ -6,17 +6,22 @@ import './style.scss'; // css
 
 
 export default class Textarea extends BaseInput {
-  constructor({ el, componentName, maxLength }) {
+  constructor({
+    el,
+    componentName,
+    maxLength,
+    placeholder,
+  }) {
     super({ el });
 
     this.componentName = componentName;
     this.maxLength = maxLength;
-    this.render({ componentName });
+    this.render({ componentName, placeholder });
     this.elements.input = document.querySelector(`[data-component="textarea-${componentName}"]`);
   }
 
-  render({ componentName }) {
-    this.el.innerHTML = template({ componentName });
+  render({ componentName, placeholder }) {
+    this.el.innerHTML = template({ componentName, placeholder });
   }
 
   validation() {

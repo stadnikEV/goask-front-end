@@ -17,7 +17,7 @@ export default class Logo extends BaseComponent {
   }
 
   addEvents() {
-    this.elements.button.addEventListener('mousedown', this.onMouseDown); // запрет outline при клике
+    this.elements.button.addEventListener('mousedown', this.onMouseDown);
     this.elements.logoImg.ondragstart = () => false; // запрет dragstart
   }
 
