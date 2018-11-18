@@ -43,17 +43,16 @@ export default class publicSessionsDetails extends BaseComponent {
       options: { data },
     })
       .then((json) => {
-        const { link } = json;
-        window.location.href = link;
+        window.location.href = json.link;
       })
       .catch((err) => {
         this.components.FormAskQuestion.formEnable();
         if (err instanceof HttpError) {
           if (err.status === 403) {
-            if (err.message === 'user is not authorized') {
+            if (err.message === 'User is not authorized') {
               window.location.href = '<%publicPathBackEnd%>/login';
             }
-            if (err.message === 'the question is yourself') {
+            if (err.message === 'The question is yourself') {
               this.components.FormAskQuestion.tipHendler({
                 isValid: false,
                 message: 'Вы не можете задать вопрос самому себе',

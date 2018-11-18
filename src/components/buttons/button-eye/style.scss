@@ -1,12 +1,6 @@
 .button-eye {
   background-color: rgba(0, 0, 0, 0);
-
-  .button-eye:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-  }
+  height: 100%;
 
   &__img-show,
   &__img-hide {

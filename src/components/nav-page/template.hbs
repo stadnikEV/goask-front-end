@@ -1,0 +1,46 @@
+<nav class="navigation-page"
+     data-component="navigation-page">
+
+  {{#if firstPage}}
+    <div class="navigation-page__button-container"
+         data-element="navigation-page__button-first-page-container">
+    </div>
+  {{/if}}
+
+  {{#if dotsBefore}}
+    <div class="navigation-page__dots">
+      ...
+    </div>
+  {{/if}}
+
+  {{#each pagesBefore}}
+    <div class="navigation-page__button-container"
+         data-element="navigation-page__button-page-before-{{this}}-container">
+    </div>
+  {{/each}}
+
+  {{#if currentPage}}
+    <div class="navigation-page__button-container"
+         data-element="navigation-page__button-current-page-container">
+    </div>
+  {{/if}}
+
+  {{#each pagesAfter}}
+    <div class="navigation-page__button-container"
+         data-element="navigation-page__button-page-after-{{this}}-container">
+    </div>
+  {{/each}}
+
+  {{#if dotsAfter}}
+    <div class="navigation-page__dots">
+      ...
+    </div>
+  {{/if}}
+
+  {{#if lastPage}}
+    <div class="navigation-page__button-container"
+         data-element="navigation-page__button-last-page-container">
+    </div>
+  {{/if}}
+
+</nav>

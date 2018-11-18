@@ -1,6 +1,6 @@
 import BaseComponent from 'components/__shared/base-component';
 import 'components/__shared/button/style.scss'; // css
-import 'components/__shared/button/button-default.scss'; // css
+import 'components/__shared/button/button-main/button-main.scss'; // css
 import template from './template.hbs'; // template
 
 
@@ -9,18 +9,19 @@ export default class ButtonSubmit extends BaseComponent {
     el,
     value,
     componentName,
+    className,
   }) {
     super({ el });
     this.eventsPubSub = {};
 
-    this.render({ value, componentName });
-    this.elements.button = document.querySelector(`[data-component="${componentName}"]`);
+    this.render({ value, componentName, className });
+    this.elements.button = el.querySelector(`[data-element="${componentName}__button"]`);
 
     this.addEvents();
   }
 
-  render({ value, componentName }) {
-    this.el.innerHTML = template({ value, componentName });
+  render({ value, componentName, className }) {
+    this.el.innerHTML = template({ value, componentName, className });
   }
 
   addEvents() {

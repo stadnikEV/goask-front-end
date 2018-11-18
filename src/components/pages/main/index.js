@@ -1,10 +1,10 @@
 import BaseComponent from 'components/__shared/base-component';
 import Header from 'components/header';
-import MainSection from 'components/main-section';
+import MainBlock from 'components/main-block';
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css
 import 'components/pages/main/style.scss'; // css
-import mainSectionImage from './img/main-section.png'; // svg
+import mainBlockImage from './img/main-block.png'; // svg
 
 
 export default class PageMain extends BaseComponent {
@@ -12,11 +12,11 @@ export default class PageMain extends BaseComponent {
     super({ el });
     this.components = {};
 
-    this.elements.page = document.querySelector('[data-component="page"]');
-    this.elements.mainSectionContainer = this.elements.page.querySelector('[data-element="page__main-section-container"]');
+    this.elements.page = el.querySelector('[data-component="page"]');
+    this.elements.mainBlockContainer = this.elements.page.querySelector('[data-element="page__main-block-container"]');
 
     this.initHeader();
-    this.initMainSection();
+    this.initMainBlock();
   }
 
   initHeader() {
@@ -25,9 +25,9 @@ export default class PageMain extends BaseComponent {
     });
   }
 
-  initMainSection() {
-    this.components.mainSection = new MainSection({
-      el: this.elements.mainSectionContainer,
+  initMainBlock() {
+    this.components.mainBlock = new MainBlock({
+      el: this.elements.mainBlockContainer,
     });
   }
 }

@@ -1,0 +1,27 @@
+@import 'components/__shared/css/variables.scss';
+
+.button-page-navigation {
+  font-size: 0;
+  &__button {
+    background-color: $white;
+    display: inline-block;
+    font-size: 1.4rem;
+    color: $gray;
+    padding: 7px 10px;
+
+    &:hover {
+      color: $blue;
+    }
+
+    &_selected {
+      background: $orange;
+      color: white;
+      border-radius: 7px;
+      cursor: default;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}

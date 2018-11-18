@@ -1,14 +1,19 @@
 @import 'components/__shared/css/variables.scss';
 
 .header {
+  height: 100%;
+  width: 75%;
   box-sizing: border-box;
   background-color: $white;
+  margin: 0 auto;
 
   &__logo-container {
     float: left;
+    height: 100%;
   }
 
   &__navigation-container {
+    height: 100%;
     float: right;
   }
 
@@ -19,9 +24,3 @@
     clear: both;
   }
 }
-
-// @media only screen and (max-width: 420px) {
-//   .header__logo-container {
-//     margin-left: 10px;
-//   }
-// }

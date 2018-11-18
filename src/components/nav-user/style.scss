@@ -5,10 +5,10 @@
   font-size: 0;
   box-sizing: border-box;
   margin: 0 auto;
+  text-align: left;
 
   &__button-container {
     font-size: 1rem;
-    height: 100%;
     display: inline-block;
   }
 }

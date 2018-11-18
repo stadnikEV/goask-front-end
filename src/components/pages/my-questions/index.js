@@ -1,11 +1,11 @@
 import BaseComponent from 'components/__shared/base-component';
 import Header from 'components/header';
-import MainSection from 'components/main-section';
+import MainBlock from 'components/main-block';
 import MyQuestions from 'components/questions/my-questions';
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css
 import './style.scss'; // css
-import mainSectionImage from './img/kource-web-design.png'; // svg
+import MainBlockImage from './img/kource-web-design.png'; // svg
 
 
 export default class PageMyQuestions extends BaseComponent {
@@ -15,11 +15,11 @@ export default class PageMyQuestions extends BaseComponent {
 
     this.elements.page = document.querySelector('[data-component="page"]');
     this.elements.headerContainer = this.elements.page.querySelector('[data-element="page__header-container"]');
-    this.elements.mainSectionContainer = this.elements.page.querySelector('[data-element="page__main-section-container"]');
+    this.elements.MainBlockContainer = this.elements.page.querySelector('[data-element="page__main-block-container"]');
     this.elements.myQuestionsContainer = this.elements.page.querySelector('[data-element="page__my-questions-container"]');
 
     this.initHeader();
-    this.initMainSection();
+    this.initMainBlock();
     this.initMyQuestions();
   }
 
@@ -30,9 +30,9 @@ export default class PageMyQuestions extends BaseComponent {
     });
   }
 
-  initMainSection() {
-    this.components.mainSection = new MainSection({
-      el: this.elements.mainSectionContainer,
+  initMainBlock() {
+    this.components.MainBlock = new MainBlock({
+      el: this.elements.MainBlockContainer,
     });
   }
 

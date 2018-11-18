@@ -1,0 +1,16 @@
+@import 'components/__shared/css/variables.scss';
+
+.navigation-page {
+  cursor: default;
+
+  &__button-container {
+    display: inline-block;
+  }
+
+  &__dots {
+    display: inline-block;
+    color: $gray;
+    font-size: 1.4rem;
+    cursor: default;
+  }
+}

@@ -14,7 +14,6 @@
     right: solid 1px rgb(220, 220, 220);
     bottom: solid 1px rgb(220, 220, 220);
   }
-  // -webkit-appearance: none;
   border-radius: 2px;
   box-sizing: border-box;
   background-color: $white;
@@ -30,4 +29,8 @@
   &_invalid {
     border: solid 1px $red-intense;
   }
+}
+
+.select {
+  cursor: pointer;
 }

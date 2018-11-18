@@ -3,13 +3,13 @@ import UserNavigation from 'components/nav-user';
 import './style.scss'; // css
 
 
-export default class MainSection extends BaseComponent {
+export default class MainBlock extends BaseComponent {
   constructor({ el }) {
     super({ el });
     this.components = {};
 
-    this.elements.mainSection = document.querySelector('[data-component="main-section"]');
-    this.elements.userNavContainer = this.elements.mainSection.querySelector('[data-element="main-section__user-navigation-container"]');
+    this.elements.mainBlock = el.querySelector('[data-component="main-block"]');
+    this.elements.userNavContainer = this.elements.mainBlock.querySelector('[data-element="main-block__user-navigation-container"]');
 
     if (this.elements.userNavContainer) {
       this.initUserNavigation();

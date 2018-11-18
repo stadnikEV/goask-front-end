@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import ButtonDefault from 'components/buttons/button-default';
+import ButtonMainEvent from 'components/buttons/button-main-event';
 import getTruncateText from 'utils/get-truncate-text';
 
 import './style.scss'; // css
@@ -10,7 +10,7 @@ export default class MyListItem extends BaseComponent {
   constructor({ el, data }) {
     super({ el });
     this.components = {};
-    this.sessionId = data.sessionId;
+    this.questionId = data._id;
 
     this.render(data);
 
@@ -32,8 +32,6 @@ export default class MyListItem extends BaseComponent {
     }
 
     this.addEvents();
-
-    // this.initComponentButtonLoad({ data });
   }
 
   render(data) {
@@ -51,28 +49,16 @@ export default class MyListItem extends BaseComponent {
 
   removeEvents() {
     window.removeEventListener('resize', this.onResize);
-    this.unsubscribe();
   }
 
   initComponentButtonDetails() {
-    this.components.ButtonDetails = new ButtonDefault({
+    this.components.ButtonDetails = new ButtonMainEvent({
       el: this.elements.buttoDetailsContainer,
-      className: 'button-default_color-gray',
-      componentName: `button-remove-session-${this.sessionId}`,
-      eventName: 'remove-session',
-      data: this.sessionId,
+      className: 'button-main',
+      componentName: 'my-question-details',
+      eventName: 'question-details',
+      data: { questionId: this.questionId },
       value: 'Подробнее',
-    });
-  }
-
-  initComponentButtonLoad() {
-    this.components.ButtonLoad = new ButtonDefault({
-      el: this.elements.buttoLoadContainer,
-      className: 'button-default_color-gray',
-      componentName: `button-remove-session-${this.sessionId}`,
-      eventName: 'remove-session',
-      data: this.sessionId,
-      value: 'Удалить сессию',
     });
   }
 

@@ -1,0 +1,45 @@
+@import 'components/__shared/css/variables.scss';
+
+.main-block {
+  width: 100%;
+  color: $white;
+  text-align: center;
+
+  &__user-name-container {
+    width: 100%;
+
+    .user-name {
+      width: 75%;
+      text-align: right;
+      padding-top: 10px;
+      padding-right: 10px;
+      margin: 0 auto;
+    }
+  }
+
+  &__main-describe-block-container {
+    width: 100%;
+    padding: 60px 0;
+
+    .main-describe-block {
+      width: 75%;
+      text-align: center;
+      box-sizing: border-box;
+      margin: 0 auto;
+
+      &__describe-title {
+        font-size: 280%;
+        font-weight: bold;
+      }
+      &__describe-text {
+        font-size: 120%;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  &__user-navigation-container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}

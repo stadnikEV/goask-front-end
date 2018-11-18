@@ -1,13 +1,11 @@
 <div class="my-question-list"
      data-component="my-question-list">
-  <h2 class="my-question-list__describe">Заданные мной вопросы</h2>
-  <div class="my-question-list__list-container"
-       data-element="my-question-list__list-container">
+
     {{#each questions}}
       <div class="my-question-list__item-container"
            data-element="my-question-list__item-container"
            data-questionId="{{_id}}">
       </div>
     {{/each}}
-  </div>
+
 </div>

@@ -1,9 +1,9 @@
 import PubSub from 'pubsub-js';
+import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
-import ButtonDefault from 'components/buttons/button-default';
 import MyQuestionList from 'components/questions/my-question-list';
-
-
+import MyTitle from 'components/my-title';
+import NavigationPage from 'components/nav-page';
 import './style.scss'; // css
 import template from './template.hbs';
 
@@ -14,16 +14,37 @@ export default class MyQuestions extends BaseComponent {
     this.components = {};
     this.eventsPubSub = {};
 
+    this.pageNumber = 1;
+    this.numberItemsInPage = 5;
+
     this.render();
 
-    this.elements.myQuestions = document.querySelector('[data-component="my-questions"]');
+    this.elements.myQuestions = el.querySelector('[data-component="my-questions"]');
     this.elements.questionListContainer = this.elements.myQuestions.querySelector('[data-element="my-questions__question-list-container"]');
     this.elements.questionDetailsContainer = this.elements.myQuestions.querySelector('[data-element="my-questions__question-details-container"]');
+    this.elements.questionTitleContainer = this.elements.myQuestions.querySelector('[data-element="my-questions__title-container"]');
+    this.elements.navigationPageContainer = this.elements.myQuestions.querySelector('[data-element="my-questions__page-navigation-container"]');
+    this.elements.questionDetailsContainer = this.elements.myQuestions.querySelector('[data-element="my-questions__question-details-container"]');
 
-    this.initQuestionList({ speakerId: this.speakerId });
-    // this.initButtonGoToAddSession();
 
-    // this.addEvents();
+    this.getMyQuestions(this.getRangeQuestions())
+      .then((response) => {
+        this.numberOfQuestions = response.numberOfQuestions;
+        this.numberOfPages = parseInt(response.numberOfQuestions / this.numberItemsInPage, 10);
+        this.initComponentQuestionTitle();
+        this.initComponentQuestionList({ questions: response.questions });
+
+        if (response.questions.length === 0) {
+          return;
+        }
+        this.initComponentNavigationPage();
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+
+
+    this.addEvents();
   }
 
   render() {
@@ -31,67 +52,102 @@ export default class MyQuestions extends BaseComponent {
   }
 
   addEvents() {
-    this.eventsPubSub.initAddSession = PubSub.subscribe('go-to-add-session', this.onGoToAddSession.bind(this));
-    this.eventsPubSub.sessionAdded = PubSub.subscribe('session-added', this.onSessionAdded.bind(this));
-    this.eventsPubSub.addSessionCancel = PubSub.subscribe('add-session-cancel', this.onAddSessionCancel.bind(this));
+    this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
+    this.eventsPubSub.questionDetails = PubSub.subscribe('question-details', this.onQuestionDetails.bind(this));
   }
 
   removeEvents() {
     this.unsubscribe();
   }
 
-  initQuestionList({ speakerId }) {
+  getRangeQuestions() {
+    const range = {};
+    range.from = (this.pageNumber * this.numberItemsInPage) - (this.numberItemsInPage - 1);
+    range.to = this.numberItemsInPage * this.pageNumber;
+
+    return range;
+  }
+
+  initComponentQuestionTitle() {
+    this.components.MyQuestionsTitle = new MyTitle({
+      el: this.elements.questionTitleContainer,
+      value: 'Заданные мной вопросы',
+    });
+  }
+
+  initComponentQuestionList({ questions }) {
     this.components.myQuestionList = new MyQuestionList({
       el: this.elements.questionListContainer,
-      speakerId,
+      questions,
     });
   }
 
-  initButtonGoToAddSession() {
-    this.components.ButtonGoToAddSession = new ButtonDefault({
-      el: this.elements.ButtonGoToAddSessionContainer,
-      className: 'button-go-to-add-session',
-      componentName: 'button-go-to-add-session',
-      eventName: 'go-to-add-session',
-      value: 'Добавить новую сессию',
+  initComponentNavigationPage() {
+    this.components.navigationPage = new NavigationPage({
+      el: this.elements.navigationPageContainer,
+      pageNumber: this.pageNumber,
+      numberOfPages: this.numberOfPages,
     });
   }
 
-  // onGoToAddSession() {
-  //   this.components.mySessionList.hide();
-  //   this.components.ButtonGoToAddSession.hide();
-  //   if (this.components.addSession) {
-  //     this.components.addSession.show();
-  //     return;
-  //   }
-  //   import('components/sessions/add-session' /* webpackChunkName: "addSession" */)
-  //     .then((Module) => {
-  //       const AddSession = Module.default;
-  //       this.components.addSession = new AddSession({
-  //         el: this.elements.addSessionContainer,
-  //         speakerId: this.speakerId,
-  //       });
-  //     })
-  //     .catch((e) => {
-  //       console.warn(e);
-  //     });
-  // }
+  onSetPage(msg, data) {
+    if (data.pageNumber === this.pageNumber) {
+      return;
+    }
+    this.pageNumber = data.pageNumber;
 
-  onSessionAdded() {
-    this.components.mySessionList.createSessionList()
-      .then(() => {
-        this.components.mySessionList.show();
-        this.components.ButtonGoToAddSession.show();
-        this.components.addSession.hide();
+    this.getMyQuestions(this.getRangeQuestions())
+      .then((response) => {
+        this.components.myQuestionList.createQuestionList({ questions: response.questions });
+
+        this.numberOfQuestions = response.numberOfQuestions;
+        this.numberOfPages = parseInt(response.numberOfQuestions / this.numberItemsInPage, 10);
+
+        this.removeComponent({ componentName: 'navigationPage' });
+        this.initComponentNavigationPage();
       })
       .catch((e) => {
         console.warn(e);
       });
   }
 
-  onAddSessionCancel() {
-    this.components.mySessionList.show();
-    this.components.ButtonGoToAddSession.show();
-    this.components.addSession.hide();
+  onQuestionDetails(msg, data) {
+    this.getQuestionsDetails(data)
+      .then((response) => {
+        this.components.MyQuestionsTitle.hide();
+        this.components.myQuestionList.hide();
+        this.components.navigationPage.hide();
+
+        if (this.components.questionDetails) {
+          this.components.questionDetails.show();
+          return;
+        }
+        import('components/questions/my-questions-details' /* webpackChunkName: "questionDetails" */)
+          .then((Module) => {
+            const QuestionDetails = Module.default;
+            this.components.questionDetails = new QuestionDetails({
+              el: this.elements.questionDetailsContainer,
+              data: response,
+            });
+          })
+          .catch((e) => {
+            console.warn(e);
+          });
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  }
+
+  getMyQuestions({ from, to }) {
+    return httpRequest.get({
+      url: `<%publicPathBackEnd%>/api/questions?from=${from}&to=${to}`,
+    });
+  }
+
+  getQuestionsDetails(data) {
+    return httpRequest.get({
+      url: `<%publicPathBackEnd%>/api/questions/${data.questionId}`,
+    });
   }
 }

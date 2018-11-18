@@ -12,6 +12,7 @@ module.exports = {
   },
   "parser": "babel-eslint",
   "rules": {
+    "no-useless-constructor": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]mage" }],
     "import/extensions": [

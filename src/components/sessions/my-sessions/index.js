@@ -1,7 +1,8 @@
 import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
-import ButtonDefault from 'components/buttons/button-default';
+import ButtonMainEvent from 'components/buttons/button-main-event';
 import MySessionList from 'components/sessions/my-session-list';
+import MyTitle from 'components/my-title';
 
 
 import './style.scss'; // css
@@ -17,12 +18,15 @@ export default class MySessions extends BaseComponent {
     this.render();
 
     this.elements.mySessions = document.querySelector('[data-component="my-sessions"]');
+    this.elements.sessionTitleContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__title-container"]');
     this.elements.sessionListContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__session-list-container"]');
     this.elements.ButtonGoToAddSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__button-go-to-add-session-container"]');
     this.elements.addSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__add-session-container"]');
+    console.log(this.elements.addSessionContainer);
 
     this.speakerId = this.getSpeakersId();
 
+    this.initComponentSessionTitle();
     this.initSessionList({ speakerId: this.speakerId });
     this.initButtonGoToAddSession();
 
@@ -47,6 +51,13 @@ export default class MySessions extends BaseComponent {
     return this.el.getAttribute('data-speakerId');
   }
 
+  initComponentSessionTitle() {
+    this.components.MySessionTitle = new MyTitle({
+      el: this.elements.sessionTitleContainer,
+      value: 'Добавленные сессии',
+    });
+  }
+
   initSessionList({ speakerId }) {
     this.components.mySessionList = new MySessionList({
       el: this.elements.sessionListContainer,
@@ -55,9 +66,9 @@ export default class MySessions extends BaseComponent {
   }
 
   initButtonGoToAddSession() {
-    this.components.ButtonGoToAddSession = new ButtonDefault({
+    this.components.ButtonGoToAddSession = new ButtonMainEvent({
       el: this.elements.ButtonGoToAddSessionContainer,
-      className: 'button-go-to-add-session',
+      className: 'button-main',
       componentName: 'button-go-to-add-session',
       eventName: 'go-to-add-session',
       value: 'Добавить новую сессию',
@@ -65,6 +76,7 @@ export default class MySessions extends BaseComponent {
   }
 
   onGoToAddSession() {
+    this.components.MySessionTitle.hide();
     this.components.mySessionList.hide();
     this.components.ButtonGoToAddSession.hide();
     if (this.components.addSession) {
@@ -88,6 +100,7 @@ export default class MySessions extends BaseComponent {
     this.components.mySessionList.createSessionList()
       .then(() => {
         this.components.mySessionList.show();
+        this.components.MySessionTitle.show();
         this.components.ButtonGoToAddSession.show();
         this.components.addSession.hide();
       })
@@ -98,6 +111,7 @@ export default class MySessions extends BaseComponent {
 
   onAddSessionCancel() {
     this.components.mySessionList.show();
+    this.components.MySessionTitle.show();
     this.components.ButtonGoToAddSession.show();
     this.components.addSession.hide();
   }

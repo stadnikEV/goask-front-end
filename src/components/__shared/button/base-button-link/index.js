@@ -1,19 +1,16 @@
 import BaseComponent from 'components/__shared/base-component';
 import 'components/__shared/button/style.scss'; // css
-import 'components/__shared/button/button-default.scss'; // css
-
 
 export default class ButtonLink extends BaseComponent {
   constructor({
     el,
     componentName,
-    id,
   }) {
     super({ el });
 
     this.componentName = componentName;
 
-    this.elements.buttonLink = document.querySelector(`[data-component="${componentName}-${id}"]`);
+    this.elements.buttonLink = el.querySelector(`[data-component="${componentName}"]`);
     this.elements.link = this.elements.buttonLink.querySelector(`[data-element="${componentName}__link"]`);
     this.elements.button = this.elements.buttonLink.querySelector(`[data-element="${componentName}__button"]`);
 

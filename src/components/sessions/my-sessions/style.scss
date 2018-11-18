@@ -1,7 +1,21 @@
+@import 'components/__shared/css/variables.scss';
+
 .my-sessions {
   margin-bottom: 150px;
+  width: 100%;
+
+  &__title-container {
+    width: 100%;
+    background-color: $very-light-gray;
+  }
 
   &__session-list-container {
-    margin: 50px 0;
+    margin: 30px 0;
+  }
+
+  &__button-go-to-add-session-container,
+  &__add-session-container {
+    width: 75%;
+    margin: 0 auto;
   }
 }

@@ -8,9 +8,9 @@ const httpRequest = () => {
   class HttpRequest {
     get({ url, options = {} }) {
       options.method = 'get';
-      options.credentials = 'include';
+      const params = this.prepareParams(options);
 
-      return this.request(url, options);
+      return this.request(url, params);
     }
 
 
@@ -25,6 +25,7 @@ const httpRequest = () => {
     put({ url, options }) {
       options.method = 'put';
       const params = this.prepareParams(options);
+
       return this.request(url, params);
     }
 
@@ -45,7 +46,7 @@ const httpRequest = () => {
           'Content-Type': 'application/json',
         },
       };
-      if (contentType === 'application/json') {
+      if (contentType === 'application/json' && data) {
         params.body = JSON.stringify(data);
       }
       if (contentType === 'video/webm') {

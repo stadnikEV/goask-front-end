@@ -4,7 +4,7 @@ import SelectCategory from 'components/inputs/select';
 import TipInline from 'components/tip-inline';
 import Textarea from 'components/inputs/textarea';
 import ButtonSubmit from 'components/buttons/button-submit';
-import ButtonDefault from 'components/buttons/button-default';
+import ButtonMainEvent from 'components/buttons/button-main-event';
 import 'components/__shared/form/style.scss'; // css
 import './style.scss'; // css
 import getValidationMessage from './get-validation-message';
@@ -200,15 +200,17 @@ export default class FormAddSession extends BaseComponent {
   initComponentButtonSubmit() {
     this.components.buttonSubmit = new ButtonSubmit({
       el: this.elements.buttonSubmitContainer,
+      className: 'button-main',
       componentName: 'button-submit-add-session',
       value: 'Создать сессию',
     });
   }
 
   initComponentButtonCancel() {
-    this.components.ButtonCancel = new ButtonDefault({
+    this.components.ButtonCancel = new ButtonMainEvent({
       el: this.elements.buttonCancelContainer,
-      className: 'button-default_color-gray',
+      className: 'button-main',
+      modifierClassName: 'color-gray',
       componentName: 'add-session-cancel',
       eventName: 'add-session-cancel',
       value: 'Отмена',

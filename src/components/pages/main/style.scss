@@ -1,13 +1,13 @@
 .page {
 
   &__header-container {
-    width: 75%;
-    margin: 0 auto;
+    width: 100%;
+    height: 75px;
   }
 
-  &__main-section-container {
+  &__main-block-container {
     width: 100%;
-    background-image: url(<%publicPathFrontEnd%>/img/main-section.png);
+    background-image: url(<%publicPathFrontEnd%>/img/main-block.png);
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;

@@ -1,0 +1,23 @@
+@import 'components/__shared/css/variables.scss';
+
+.button-user-navigation {
+  &__button {
+    background-color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    color: $white;
+    padding: 12px 0;
+    padding-right: 20px;
+
+    &:hover {
+      color: $light-blue;
+    }
+
+    &_selected {
+      color: $light-blue;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}

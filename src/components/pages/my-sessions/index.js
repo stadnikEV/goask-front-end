@@ -1,13 +1,13 @@
 import BaseComponent from 'components/__shared/base-component';
 import Header from 'components/header';
-import MainSection from 'components/main-section';
+import MainBlock from 'components/main-block';
 import MySessions from 'components/sessions/my-sessions';
 
 
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css
 import './style.scss'; // css
-import mainSectionImage from './img/kource-web-design.png'; // svg
+import mainBlockImage from './img/kource-web-design.png'; // svg
 
 
 export default class PageMySessions extends BaseComponent {
@@ -15,13 +15,13 @@ export default class PageMySessions extends BaseComponent {
     super({ el });
     this.components = {};
 
-    this.elements.page = document.querySelector('[data-component="page"]');
+    this.elements.page = el.querySelector('[data-component="page"]');
     this.elements.headerContainer = this.elements.page.querySelector('[data-element="page__header-container"]');
-    this.elements.mainSectionContainer = this.elements.page.querySelector('[data-element="page__main-section-container"]');
+    this.elements.MainBlockContainer = this.elements.page.querySelector('[data-element="page__main-block-container"]');
     this.elements.mySessionsContainer = this.elements.page.querySelector('[data-element="page__my-sessions-container"]');
 
     this.initHeader();
-    this.initMainSection();
+    this.initMainBlock();
     this.initMySessions();
   }
 
@@ -32,9 +32,9 @@ export default class PageMySessions extends BaseComponent {
     });
   }
 
-  initMainSection() {
-    this.components.mainSection = new MainSection({
-      el: this.elements.mainSectionContainer,
+  initMainBlock() {
+    this.components.MainBlock = new MainBlock({
+      el: this.elements.MainBlockContainer,
     });
   }
 

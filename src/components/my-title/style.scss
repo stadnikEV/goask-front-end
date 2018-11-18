@@ -1,0 +1,9 @@
+@import 'components/__shared/css/variables.scss';
+
+.my-question-title {
+  color: $black;
+  width: 75%;
+  margin: 0 auto;
+  font-size: 180%;
+  padding: 50px 0;
+}

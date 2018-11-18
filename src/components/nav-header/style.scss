@@ -1,14 +1,24 @@
 @import 'components/__shared/css/variables.scss';
 
 .navigation-header {
+  height: 100%;
   background-color: $white;
   font-size: 0px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
 
   &__button-speakers-container,
   &__button-login-container,
   &__button-registration-container,
   &__button-create-speaker-container,
   &__button-logout-container {
+    vertical-align: middle;
+    height: 100%;
     display: inline-block;
     font-size: 1rem;
   }

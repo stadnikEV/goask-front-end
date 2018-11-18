@@ -1,6 +1,6 @@
 import BaseComponent from 'components/__shared/base-component';
+import ButtonMainLink from 'components/buttons/button-main-link';
 import getTruncateText from 'utils/get-truncate-text';
-import ButtonLink from 'components/buttons/button-link';
 import './style.scss'; // css
 
 
@@ -40,13 +40,14 @@ export default class PublicListItem extends BaseComponent {
   }
 
   removeEvents() {
+    window.removeEventListener('resize', this.onResize);
     this.unsubscribe();
   }
 
   getTruncateDescribeText() {
     const contentElemHeight = this.elements.content.clientHeight;
     const innerElementsHeight = this.elements.content.scrollHeight;
-    const describeSessionHeight = this.elements.describeSession.clientHeight;
+    const describeSessionHeight = this.elements.describeSession.offsetHeight;
 
     if (contentElemHeight > innerElementsHeight) {
       return false;
@@ -72,10 +73,9 @@ export default class PublicListItem extends BaseComponent {
   initButtonDetailsComponent() {
     const sessionId = this.elements.buttonDetailsContainer.getAttribute('data-sessionId');
 
-    this.components.ButtonDetails = new ButtonLink({
+    this.components.ButtonDetails = new ButtonMainLink({
       el: this.elements.buttonDetailsContainer,
-      componentName: 'button-session-details',
-      id: sessionId,
+      componentName: `button-session-details-${sessionId}`,
     });
   }
 

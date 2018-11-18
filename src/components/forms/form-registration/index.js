@@ -199,6 +199,7 @@ export default class FormRegistration extends BaseComponent {
   initComponentButtonSubmit() {
     this.components.buttonSubmit = new ButtonSubmit({
       el: this.elements.buttonSubmitContainer,
+      className: 'button-main',
       componentName: 'button-submit-registration',
       value: 'ДАЛЕЕ',
     });

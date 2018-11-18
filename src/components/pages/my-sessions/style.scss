@@ -3,11 +3,15 @@
   &__header-container,
   &__my-sessions-container,
   &__add-session-container {
-    width: 75%;
-    margin: 0 auto;
+    width: 100%;
   }
 
-  &__main-section-container {
+  &__header-container {
+    height: 75px;
+  }
+
+
+  &__main-block-container {
     width: 100%;
     background-image: url(<%publicPathFrontEnd%>/img/kource-web-design.png);
     background-repeat: no-repeat;

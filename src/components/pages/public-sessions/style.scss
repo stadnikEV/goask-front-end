@@ -1,11 +1,11 @@
 .page {
 
   &__header-container {
-    width: 75%;
-    margin: 0 auto;
+    height: 75px;
+    width: 100%;
   }
 
-  &__main-section-container {
+  &__main-block-container {
     width: 100%;
     background-image: url(<%publicPathFrontEnd%>/img/sesions-categories-main.png);
     background-repeat: no-repeat;

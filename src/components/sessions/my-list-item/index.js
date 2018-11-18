@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import ButtonDefault from 'components/buttons/button-default';
+import ButtonMainEvent from 'components/buttons/button-main-event';
 
 import './style.scss'; // css
 import template from './template.hbs';
@@ -27,9 +27,10 @@ export default class MyListItem extends BaseComponent {
   }
 
   initComponentButtonRemove() {
-    this.components.ButtonRemove = new ButtonDefault({
+    this.components.ButtonRemove = new ButtonMainEvent({
       el: this.elements.buttoRemoveContainer,
-      className: 'button-default_color-gray',
+      className: 'button-main',
+      modifierClassName: 'color-gray',
       componentName: `button-remove-session-${this.sessionId}`,
       eventName: 'remove-session',
       data: this.sessionId,
