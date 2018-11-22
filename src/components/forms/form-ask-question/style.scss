@@ -1,8 +1,6 @@
 @import 'components/__shared/css/variables.scss';
 
 .form-ask-question {
-  border-bottom: solid 3px $light-gray;
-  padding-bottom: 40px;
 
   &::after {
     content: '';

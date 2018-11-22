@@ -2,6 +2,7 @@ import PubSub from 'pubsub-js';
 import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import FormAddSession from 'components/forms/form-add-session';
+import MyTitle from 'components/my-title';
 import './style.scss'; // css
 import template from './template.hbs';
 
@@ -16,11 +17,14 @@ export default class AddSessions extends BaseComponent {
     this.render();
 
     this.elements.addSessions = document.querySelector('[data-component="add-sessions"]');
+    this.elements.sessionTitleContainer = this.elements.addSessions.querySelector('[data-element="add-sessions__title-container"]');
     this.elements.buttonAddSessionContainer = this.elements.addSessions.querySelector('[data-element="add-sessions__button-add-session-container"]');
     this.elements.formContainer = this.elements.addSessions.querySelector('[data-element="add-sessions__form-container"]');
 
+
     this.getCategoriesName({ speakerId })
       .then((categories) => {
+        this.initComponentSessionTitle();
         this.initFormAddSession({ categories });
       })
       .catch((e) => {
@@ -46,6 +50,13 @@ export default class AddSessions extends BaseComponent {
   getCategoriesName({ speakerId }) {
     return httpRequest.get({
       url: `<%publicPathBackEnd%>/api/speakers/${speakerId}/categories-name`,
+    });
+  }
+
+  initComponentSessionTitle() {
+    this.components.MySessionTitle = new MyTitle({
+      el: this.elements.sessionTitleContainer,
+      value: 'Создание новой сессии',
     });
   }
 

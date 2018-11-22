@@ -1,42 +1,36 @@
 @import 'components/__shared/css/variables.scss';
+@import 'components/about/session-title/style.scss';
+@import 'components/about/describe/style.scss';
 
 .public-session-details {
-  width: 75%;
-  margin: 0 auto;
-  margin-top: 50px;
+  margin-bottom: 100px;
 
-  .main-title {
-    padding-bottom: 20px;
+  &__session-title-wraper {
+    background-color: $very-light-gray;
+    border-bottom: 1px solid lightgray;
 
-    &__theme {
-      margin-bottom: 30px;
-      font-size: 180%;
-      font-weight: bold;
-    }
-    &__category,
-    &__speaker {
-      margin-bottom: 20px;
-      font-size: 120%;
-      & span {
-        font-weight: bold;
-      }
+    .public-session-details__session-title-container {
+      width: 75%;
+      margin: 0 auto;
+      padding: 30px 0;
     }
   }
 
-  .describe {
-    margin-top: 40px;
-    padding-bottom: 20px;
-    border-bottom: 3px solid $light-gray;
+  &__form-ask-question-container {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 60px;
+  }
 
-    &__title {
-      font-size: 140%;
-      font-weight: bold;
-    }
-    &__content {
-      text-indent: 1.5rem;
-      font-size: 120%;
-      line-height: 140%;
-      margin-top: 20px;
-    }
+  &__session-container,
+  &__about-speaker-container {
+    width: 75%;
+    margin: 0 auto;
+    padding: 30px 0;
+    border-bottom: 3px solid $light-gray;
+  }
+
+  &__about-speaker-container {
+    border-bottom: none;
   }
 }

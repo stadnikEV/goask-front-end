@@ -5,6 +5,7 @@
 
   &__select-category-container {
     background-color: $very-light-gray;
+    border-bottom: 1px solid lightgray;
 
     .public-sessions__select-category {
       width: 75%;

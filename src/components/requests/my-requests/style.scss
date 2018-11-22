@@ -1,6 +1,6 @@
 @import 'components/__shared/css/variables.scss';
 
-.my-questions {
+.my-requests {
   margin-bottom: 150px;
 
   &__title-container {
@@ -9,7 +9,7 @@
     border-bottom: 1px solid lightgray;
   }
 
-  &__question-list-container {
+  &__request-list-container {
     width: 75%;
     margin: 0 auto;
     margin-top: 60px;
@@ -19,10 +19,5 @@
     margin-top: 50px;
     width: 100%;
     text-align: center;
-  }
-
-  &__question-details-container {
-    width: 100%;
-    margin: 0 auto;
   }
 }

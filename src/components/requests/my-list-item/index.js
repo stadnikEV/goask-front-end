@@ -20,11 +20,14 @@ export default class MyListItem extends BaseComponent {
     this.elements.statusQuestionContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__status-question-container"]');
     this.elements.question = this.elements.myListItem.querySelector('[data-element="my-list-item__question"]');
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
-    this.elements.buttoLoadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-load-container"]');
-    this.elements.buttoDetailsContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-details-container"]');
+    this.elements.buttoResponseContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-response-container"]');
+    this.elements.buttoRejectContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-reject-container"]');
 
     this.initComponentStatusQuestion({ status: data.status });
-    this.initComponentButtonDetails();
+
+    if (data.status === 'pending') {
+      this.initComponentButtonReject();
+    }
 
     this.onResize = this.onResize.bind(this);
     this.str = this.elements.question.textContent;
@@ -60,14 +63,18 @@ export default class MyListItem extends BaseComponent {
     });
   }
 
-  initComponentButtonDetails() {
-    this.components.ButtonDetails = new ButtonMainEvent({
-      el: this.elements.buttoDetailsContainer,
+  initComponentButtonReject() {
+    this.components.ButtonReject = new ButtonMainEvent({
+      el: this.elements.buttoRejectContainer,
       className: 'button-main',
-      componentName: 'my-question-details',
-      eventName: 'question-details',
-      data: { questionId: this.questionId },
-      value: 'Подробнее',
+      modifierClassName: 'color-gray',
+      componentName: 'my-request-reject',
+      eventName: 'request-reject',
+      data: {
+        questionId: this.questionId,
+        listItem: this,
+      },
+      value: 'Отклонить',
     });
   }
 

@@ -1,0 +1,24 @@
+@import 'components/__shared/css/variables.scss';
+
+.session-title {
+
+  &__theme {
+    font-size: 180%;
+    font-weight: bold;
+  }
+  &__category,
+  &__speaker {
+    font-size: 120%;
+    & span {
+      font-weight: bold;
+    }
+  }
+
+  &__category {
+    margin-top: 20px;
+  }
+
+  &__speaker {
+    margin-top: 10px;
+  }
+}

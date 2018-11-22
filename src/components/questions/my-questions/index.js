@@ -30,11 +30,11 @@ export default class MyQuestions extends BaseComponent {
     this.getMyQuestions(this.getRangeQuestions())
       .then((response) => {
         this.numberOfQuestions = response.numberOfQuestions;
-        this.numberOfPages = parseInt(response.numberOfQuestions / this.numberItemsInPage, 10);
+        this.numberOfPages = this.getNumbersOfPages();
         this.initComponentQuestionTitle();
         this.initComponentQuestionList({ questions: response.questions });
 
-        if (response.questions.length === 0) {
+        if (this.numberOfQuestions <= this.numberItemsInPage) {
           return;
         }
         this.initComponentNavigationPage();
@@ -54,10 +54,15 @@ export default class MyQuestions extends BaseComponent {
   addEvents() {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.questionDetails = PubSub.subscribe('question-details', this.onQuestionDetails.bind(this));
+    this.eventsPubSub.setNavigationPage = PubSub.subscribe('back-from-question-details', this.onBackFromDetails.bind(this));
   }
 
   removeEvents() {
     this.unsubscribe();
+  }
+
+  getNumbersOfPages() {
+    return Math.ceil(this.numberOfQuestions / this.numberItemsInPage);
   }
 
   getRangeQuestions() {
@@ -101,7 +106,7 @@ export default class MyQuestions extends BaseComponent {
         this.components.myQuestionList.createQuestionList({ questions: response.questions });
 
         this.numberOfQuestions = response.numberOfQuestions;
-        this.numberOfPages = parseInt(response.numberOfQuestions / this.numberItemsInPage, 10);
+        this.numberOfPages = this.getNumbersOfPages();
 
         this.removeComponent({ componentName: 'navigationPage' });
         this.initComponentNavigationPage();
@@ -120,6 +125,7 @@ export default class MyQuestions extends BaseComponent {
 
         if (this.components.questionDetails) {
           this.components.questionDetails.show();
+          this.components.questionDetails.showDetails(response);
           return;
         }
         import('components/questions/my-questions-details' /* webpackChunkName: "questionDetails" */)
@@ -137,6 +143,13 @@ export default class MyQuestions extends BaseComponent {
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  onBackFromDetails() {
+    this.components.MyQuestionsTitle.show();
+    this.components.myQuestionList.show();
+    this.components.navigationPage.show();
+    this.components.questionDetails.hide();
   }
 
   getMyQuestions({ from, to }) {

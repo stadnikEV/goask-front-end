@@ -1,0 +1,15 @@
+@import 'components/__shared/css/variables.scss';
+
+.status-question {
+  &__value {
+    &_color-red {
+      color: $red;
+    }
+    &_color-blue {
+      color: $blue;
+    }
+    &_color-green {
+      color: green;
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
 import ButtonMainEvent from 'components/buttons/button-main-event';
-
 import './style.scss'; // css
 import template from './template.hbs';
 
@@ -13,7 +12,7 @@ export default class MyListItem extends BaseComponent {
 
     this.render(data);
 
-    this.elements.myListItem = document.querySelector(`[data-component="my-list-item"][data-sessionId="${data.sessionId}"]`);
+    this.elements.myListItem = el.querySelector(`[data-component="my-list-item"][data-sessionId="${data.sessionId}"]`);
     this.elements.buttoRemoveContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-remove-container"]');
 
     this.initComponentButtonRemove({ data });

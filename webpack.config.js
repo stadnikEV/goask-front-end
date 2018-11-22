@@ -12,6 +12,7 @@ const config = {
   entry: {
     mySessions: './src/my-sessions.js',
     myQuestions: './src/my-questions.js',
+    myRequests: './src/my-requests.js',
     main: './src/main.js',
     login: './src/login.js',
     registration: './src/registration.js',

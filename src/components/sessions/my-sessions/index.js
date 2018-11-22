@@ -22,7 +22,6 @@ export default class MySessions extends BaseComponent {
     this.elements.sessionListContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__session-list-container"]');
     this.elements.ButtonGoToAddSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__button-go-to-add-session-container"]');
     this.elements.addSessionContainer = this.elements.mySessions.querySelector('[data-element="my-sessions__add-session-container"]');
-    console.log(this.elements.addSessionContainer);
 
     this.speakerId = this.getSpeakersId();
 

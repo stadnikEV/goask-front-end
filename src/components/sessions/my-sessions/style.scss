@@ -5,16 +5,16 @@
   width: 100%;
 
   &__title-container {
-    width: 100%;
     background-color: $very-light-gray;
+    border-bottom: 1px solid lightgray;
   }
 
   &__session-list-container {
-    margin: 30px 0;
+    margin-top: 80px;
+    margin-bottom: 30px;
   }
 
-  &__button-go-to-add-session-container,
-  &__add-session-container {
+  &__button-go-to-add-session-container {
     width: 75%;
     margin: 0 auto;
   }

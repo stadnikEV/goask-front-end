@@ -3,7 +3,7 @@ import './style.scss'; // css
 import template from './template.hbs';
 
 
-export default class MyQestionsTitle extends BaseComponent {
+export default class MyTitle extends BaseComponent {
   constructor({ el, value }) {
     super({ el });
 

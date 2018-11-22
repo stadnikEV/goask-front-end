@@ -1,7 +1,14 @@
+@import 'components/__shared/css/variables.scss';
+
 .add-sessions {
 
-  &__describe {
-    margin-top: 50px;
-    font-size: 180%;
+  &__title-container {
+    background-color: $very-light-gray;
+    border-bottom: 1px solid lightgray;
+  }
+
+  &__form-container {
+    width: 75%;
+    margin: 0 auto;
   }
 }

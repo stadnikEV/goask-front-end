@@ -1,42 +1,34 @@
-<div class="public-session-details"
-     data-component="my-questions-details">
+<div class="my-question-details"
+     data-component="my-question-details">
 
-  <section class="main-title">
-    <h1 class="main-title__theme">
-      {{theme}}
-    </h1>
-    <p class="main-title__category">
-      <span>Категория:</span> {{category}}
-    </p>
-    <p class="main-title__speaker">
-      <span>Спикер: </span> {{firstname}} {{lastname}}
-    </p>
+  <div class="my-question-details__session-title-wraper">
+    <section class="my-question-details__session-title-container"
+             data-element="my-question-details__session-title-container">
+    </section>
+  </div>
+
+  <div class="my-question-details__status-question-wraper">
+    <section class="my-question-details__status-question-container"
+            data-element="my-question-details__status-question-container">
+    </section>
+  </div>
+
+  <section class="my-question-details__question-container"
+           data-element="my-question-details__question-container">
   </section>
 
-  <section class="my-questions-details__question-container">
-    <h2 class="my-questions-details__question-title">
-     Мой Вопрос
-    </h2>
-    <p class="my-questions-details__question">
-     {{question}}
-    </p>
+  <section class="my-question-details__session-container"
+           data-element="my-question-details__session-container">
   </section>
 
-  <section class="describe">
-    <h2 class="describe__title">
-      Описание сессии
-    </h2>
-    <p class="describe__content">
-      {{sessionDescribe}}
-    </p>
+  <section class="my-question-details__about-speaker-container"
+           data-element="my-question-details__about-speaker-container">
   </section>
 
-  <section class="describe">
-    <h2 class="describe__title">
-      О спикере
-    </h2>
-    <p class="describe__content">
-      {{speakerDescribe}}
-    </p>
-  </section>
+  <div class="my-question-details__button-back-wraper">
+    <div class="my-question-details__button-back-container"
+         data-element="my-question-details__button-back-container">
+    </div>
+  </div>
+
 </div>
