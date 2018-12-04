@@ -25,12 +25,12 @@ function sendArrayBuffer({url, arrayBuffer}) {
       }
     })
     .catch((e) => {
-      if (mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-        setTimeout(() => {
-          mediaRecorder.start(5000);
-        }, 1000);
-      }
+      // if (mediaRecorder.state === 'recording') {
+      //   mediaRecorder.stop();
+      //   setTimeout(() => {
+      //     mediaRecorder.start(1000);
+      //   }, 1000);
+      // }
     });
 }
 
@@ -77,13 +77,13 @@ const handleDataAvailable = (event) => {
     .then((arrayBuffer) => {
       if (mediaRecorder.state === 'recording') {
         sendArrayBuffer({
-          url: 'http://localhost:8080/stream/37',
+          url: 'http://localhost:5000/stream/50',
           arrayBuffer
         });
       }
       if (mediaRecorder.state === 'inactive') {
         sendArrayBuffer({
-          url: 'http://localhost:8080/streamEnd/37',
+          url: 'http://localhost:5000/stream-stop/50',
           arrayBuffer
         });
       }
@@ -98,7 +98,7 @@ navigator.mediaDevices.getUserMedia({video: true, audio: true})
     mediaRecorder = new MediaRecorder(stream, {
       mimeType: 'video/webm; codecs=vp9',
       audioBitsPerSecond : 128000,
-      videoBitsPerSecond : 2500000,
+      videoBitsPerSecond : 250000,
     });
 
     mediaRecorder.addEventListener('dataavailable', handleDataAvailable);

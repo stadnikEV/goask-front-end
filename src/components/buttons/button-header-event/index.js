@@ -4,6 +4,7 @@ import 'components/__shared/button/button-header/style.scss'; // css
 
 export default class ButtonHeaderEvent extends BaseButtonEvent {
   constructor(options) {
+    options.className = 'button-header';
     super(options);
   }
 }

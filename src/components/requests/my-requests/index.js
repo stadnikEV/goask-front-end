@@ -54,6 +54,7 @@ export default class MyRequests extends BaseComponent {
   addEvents() {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.requestReject = PubSub.subscribe('request-reject', this.onRequestReject.bind(this));
+    this.eventsPubSub.goToResponse = PubSub.subscribe('go-to-response', this.onGoToResponse.bind(this));
   }
 
   removeEvents() {
@@ -123,6 +124,11 @@ export default class MyRequests extends BaseComponent {
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  onGoToResponse(msg, data) {
+    const { questionId } = data;
+    window.location.href = `<%publicPathBackEnd%>/stream/${questionId}`;
   }
 
   setRejectStatus({ questionId }) {

@@ -56,7 +56,7 @@ export default class Login extends BaseComponent {
             });
           }
           if (err.status === 500) {
-            console.log('ошибка на сторне сервера');
+            console.warn('ошибка на сторне сервера');
           }
         }
         console.warn(err);

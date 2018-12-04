@@ -43,7 +43,7 @@ const httpRequest = () => {
         method,
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentType,
         },
       };
       if (contentType === 'application/json' && data) {

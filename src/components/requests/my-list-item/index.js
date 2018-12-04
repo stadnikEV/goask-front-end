@@ -27,6 +27,7 @@ export default class MyListItem extends BaseComponent {
 
     if (data.status === 'pending') {
       this.initComponentButtonReject();
+      this.initComponentButtonResponse();
     }
 
     this.onResize = this.onResize.bind(this);
@@ -64,17 +65,29 @@ export default class MyListItem extends BaseComponent {
   }
 
   initComponentButtonReject() {
-    this.components.ButtonReject = new ButtonMainEvent({
+    this.components.buttonReject = new ButtonMainEvent({
       el: this.elements.buttoRejectContainer,
-      className: 'button-main',
-      modifierClassName: 'color-gray',
-      componentName: 'my-request-reject',
+      modifierClassName: 'button-main__button_color-gray button-main__button_width-container',
+      componentName: 'button-my-request-reject',
       eventName: 'request-reject',
       data: {
         questionId: this.questionId,
         listItem: this,
       },
       value: 'Отклонить',
+    });
+  }
+
+  initComponentButtonResponse() {
+    this.components.buttonResponse = new ButtonMainEvent({
+      el: this.elements.buttoResponseContainer,
+      componentName: 'button-my-response',
+      modifierClassName: 'button-main__button_width-container',
+      eventName: 'go-to-response',
+      data: {
+        questionId: this.questionId,
+      },
+      value: 'Ответить',
     });
   }
 

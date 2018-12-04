@@ -121,7 +121,9 @@ export default class MyQuestions extends BaseComponent {
       .then((response) => {
         this.components.MyQuestionsTitle.hide();
         this.components.myQuestionList.hide();
-        this.components.navigationPage.hide();
+        if (this.components.navigationPage) {
+          this.components.navigationPage.hide();
+        }
 
         if (this.components.questionDetails) {
           this.components.questionDetails.show();
@@ -148,8 +150,10 @@ export default class MyQuestions extends BaseComponent {
   onBackFromDetails() {
     this.components.MyQuestionsTitle.show();
     this.components.myQuestionList.show();
-    this.components.navigationPage.show();
     this.components.questionDetails.hide();
+    if (this.components.navigationPage) {
+      this.components.navigationPage.show();
+    }
   }
 
   getMyQuestions({ from, to }) {

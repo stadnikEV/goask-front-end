@@ -4,7 +4,7 @@ import 'components/__shared/button/style.scss'; // css
 import template from './template.hbs'; // template
 
 
-export default class ButtonDefault extends BaseComponent {
+export default class BaseButtonEvent extends BaseComponent {
   constructor({
     el,
     value,

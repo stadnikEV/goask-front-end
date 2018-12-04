@@ -8,18 +8,22 @@ export default class BaseComponent {
 
   show() {
     this.el.classList.remove('hidden');
+    this.el.classList.remove('impotent');
   }
 
   hide() {
     this.el.classList.add('hidden');
+    this.el.classList.add('impotent');
   }
 
   showElem({ el }) {
     el.classList.remove('hidden');
+    el.classList.remove('impotent');
   }
 
   hideElem({ el }) {
     el.classList.add('hidden');
+    el.classList.add('impotent');
   }
 
   unsubscribe() {

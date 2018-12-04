@@ -75,7 +75,6 @@ export default class NavHeader extends BaseComponent {
   initComponentbuttonLogout() {
     this.components.buttonLogout = new ButtonHeaderEvent({
       el: this.elements.buttonLogoutContainer,
-      className: 'button-header',
       componentName: 'button-logout',
       eventName: 'logout',
       value: 'Выйти',

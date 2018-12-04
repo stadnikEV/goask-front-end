@@ -1,7 +1,7 @@
 import BaseComponent from 'components/__shared/base-component';
 import 'components/__shared/button/style.scss'; // css
 
-export default class ButtonLink extends BaseComponent {
+export default class BaseButtonLink extends BaseComponent {
   constructor({
     el,
     componentName,

@@ -1,0 +1,18 @@
+.stream {
+  text-align: center;
+
+  &__video-container {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+
+    .stream__video {
+      width: 100%;
+    }
+  }
+
+  &__button-record-container {
+    margin-top: 25px;
+    display: inline-block;
+  }
+}
