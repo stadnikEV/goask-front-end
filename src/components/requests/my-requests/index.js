@@ -27,6 +27,7 @@ export default class MyRequests extends BaseComponent {
 
     this.getMyRequests(this.getRangeRequests())
       .then((response) => {
+        console.log(response);
         this.numberOfRequests = response.numberOfRequests;
         this.numberOfPages = this.getNumbersOfPages();
 
@@ -55,6 +56,8 @@ export default class MyRequests extends BaseComponent {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.requestReject = PubSub.subscribe('request-reject', this.onRequestReject.bind(this));
     this.eventsPubSub.goToResponse = PubSub.subscribe('go-to-response', this.onGoToResponse.bind(this));
+    this.eventsPubSub.download = PubSub.subscribe('request-download', this.onDownload.bind(this));
+    this.eventsPubSub.send = PubSub.subscribe('request-send', this.onSend.bind(this));
   }
 
   removeEvents() {
@@ -131,14 +134,33 @@ export default class MyRequests extends BaseComponent {
     window.location.href = `<%publicPathBackEnd%>/stream/${questionId}`;
   }
 
+  onDownload(msg, data) {
+    const { questionId } = data;
+    const link = document.createElement('a');
+    link.href = `<%publicPathBackEnd%>/download-video-speaker/${questionId}`;
+    link.download = true;
+    link.click();
+  }
+
+  onSend(msg, data) {
+    this.setReadyStatus({ questionId: data.questionId })
+      .then(() => {
+        PubSub.publish('video-response-sent', { questionId: data.questionId });
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  }
+
   setRejectStatus({ questionId }) {
     return httpRequest.put({
-      url: `<%publicPathBackEnd%>/api/requests/${questionId}/status`,
-      options: {
-        data: {
-          status: 'reject',
-        },
-      },
+      url: `<%publicPathBackEnd%>/api/requests/${questionId}/reject`,
+    });
+  }
+
+  setReadyStatus({ questionId }) {
+    return httpRequest.put({
+      url: `<%publicPathBackEnd%>/api/requests/${questionId}/ready`,
     });
   }
 

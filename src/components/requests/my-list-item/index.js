@@ -1,3 +1,4 @@
+import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonMainEvent from 'components/buttons/button-main-event';
 import StatusQuestion from 'components/questions/status-question';
@@ -11,7 +12,9 @@ export default class MyListItem extends BaseComponent {
   constructor({ el, data }) {
     super({ el });
     this.components = {};
+    this.eventsPubSub = {};
     this.questionId = data._id;
+    this.status = data.status;
 
     this.render(data);
 
@@ -20,14 +23,27 @@ export default class MyListItem extends BaseComponent {
     this.elements.statusQuestionContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__status-question-container"]');
     this.elements.question = this.elements.myListItem.querySelector('[data-element="my-list-item__question"]');
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
+    this.elements.buttoSendContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-send-container"]');
+    this.elements.buttoDownloadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-download-container"]');
     this.elements.buttoResponseContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-response-container"]');
     this.elements.buttoRejectContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-reject-container"]');
 
-    this.initComponentStatusQuestion({ status: data.status });
+    this.initComponentStatusQuestion({ status: this.status });
 
-    if (data.status === 'pending') {
+    if (this.status === 'pending'
+    || this.status === 'recorded'
+    || this.status === 'decode') {
       this.initComponentButtonReject();
       this.initComponentButtonResponse();
+    }
+
+    if (this.status === 'recorded') {
+      this.initComponentButtonDownload();
+      this.initComponentButtonSend();
+    }
+
+    if (this.status === 'ready') {
+      this.initComponentButtonDownload();
     }
 
     this.onResize = this.onResize.bind(this);
@@ -51,16 +67,46 @@ export default class MyListItem extends BaseComponent {
 
   addEvents() {
     window.addEventListener('resize', this.onResize);
+    this.eventsPubSub.videoSent = PubSub.subscribe('video-response-sent', this.onVideoSent.bind(this));
   }
 
   removeEvents() {
     window.removeEventListener('resize', this.onResize);
+    this.unsubscribe();
   }
 
   initComponentStatusQuestion({ status }) {
     this.components.statusQestion = new StatusQuestion({
       el: this.elements.statusQuestionContainer,
       status,
+    });
+  }
+
+  initComponentButtonSend() {
+    this.components.buttonSend = new ButtonMainEvent({
+      el: this.elements.buttoSendContainer,
+      modifierClassName: 'button-main__button_width-container',
+      componentName: 'button-my-request-send',
+      eventName: 'request-send',
+      data: {
+        questionId: this.questionId,
+        listItem: this,
+      },
+      value: 'Отправить',
+    });
+  }
+
+  initComponentButtonDownload() {
+    this.components.buttonDownload = new ButtonMainEvent({
+      el: this.elements.buttoDownloadContainer,
+      modifierClassName: 'button-main__button_width-container',
+      componentName: 'button-my-request-download',
+      eventName: 'request-download',
+      data: {
+        questionId: this.questionId,
+        listItem: this,
+      },
+      value: 'Скачать',
     });
   }
 
@@ -79,6 +125,10 @@ export default class MyListItem extends BaseComponent {
   }
 
   initComponentButtonResponse() {
+    const value = (this.status === 'pending')
+      ? 'Ответить'
+      : 'Перезаписать';
+
     this.components.buttonResponse = new ButtonMainEvent({
       el: this.elements.buttoResponseContainer,
       componentName: 'button-my-response',
@@ -87,7 +137,7 @@ export default class MyListItem extends BaseComponent {
       data: {
         questionId: this.questionId,
       },
-      value: 'Ответить',
+      value,
     });
   }
 
@@ -105,6 +155,18 @@ export default class MyListItem extends BaseComponent {
       height: newQuestionHeight,
       width: this.elements.question.clientWidth - this.elements.navigation.clientWidth,
     });
+  }
+
+  onVideoSent(msg, data) {
+    if (data.questionId === this.questionId) {
+      this.components.statusQestion.setStatus({ status: 'ready' });
+      this.components.buttonResponse.destroy();
+      this.components.buttonReject.destroy();
+      this.components.buttonSend.destroy();
+      delete this.components.buttonResponse;
+      delete this.components.buttonReject;
+      delete this.components.buttonSend;
+    }
   }
 
 

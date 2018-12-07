@@ -16,10 +16,24 @@ html, body {
   &__main-container {
     width: 100%;
     border-top: solid 1px $black;
+
+    .page__tip-inline-wraper {
+      height: 20px;
+      width: 75%;
+      margin: 0 auto;
+      margin-top: 30px;
+
+      .page__tip-inline-container {
+        width: 80%;
+        margin: 0 auto;
+      }
+    }
+
+    .page__stream-container {
+      width: 75%;
+      margin: 0 auto;
+    }
   }
 
-  &__stream-container {
-    width: 75%;
-    margin: 0 auto;
-  }
+
 }

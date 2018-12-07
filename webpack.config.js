@@ -6,7 +6,7 @@ const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 const publicPath = (NODE_ENV === 'dev')
   ? 'http://localhost:3000'
-  : 'http://goask.club';
+  : 'https://goask.club';
 
 const config = {
   entry: {

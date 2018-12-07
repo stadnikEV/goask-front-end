@@ -14,7 +14,7 @@ const httpRequest = () => {
     }
 
 
-    post({ url, options }) {
+    post({ url, options = {} }) {
       options.method = 'post';
       const params = this.prepareParams(options);
 
@@ -22,7 +22,7 @@ const httpRequest = () => {
     }
 
 
-    put({ url, options }) {
+    put({ url, options = {} }) {
       options.method = 'put';
       const params = this.prepareParams(options);
 

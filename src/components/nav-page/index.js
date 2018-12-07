@@ -52,7 +52,7 @@ export default class NavigationPage extends BaseComponent {
       this.components.buttonCurrentPage = this.initButtonComponent({
         pageNumber: pageNavigationData.currentPage,
         componentName: 'button-current-page',
-        modifierClassName: 'selected',
+        modifierClassName: 'button-page-navigation__button_selected',
       });
     }
 

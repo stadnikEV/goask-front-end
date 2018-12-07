@@ -200,6 +200,7 @@ export default class FormAddSession extends BaseComponent {
   initComponentButtonSubmit() {
     this.components.buttonSubmit = new ButtonSubmit({
       el: this.elements.buttonSubmitContainer,
+      className: 'button-main',
       componentName: 'button-submit-add-session',
       value: 'Создать сессию',
     });
@@ -208,7 +209,7 @@ export default class FormAddSession extends BaseComponent {
   initComponentButtonCancel() {
     this.components.ButtonCancel = new ButtonMainEvent({
       el: this.elements.buttonCancelContainer,
-      modifierClassName: 'color-gray',
+      modifierClassName: 'button-main__button_color-gray',
       componentName: 'add-session-cancel',
       eventName: 'add-session-cancel',
       value: 'Отмена',

@@ -55,6 +55,7 @@ export default class MyQuestions extends BaseComponent {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.questionDetails = PubSub.subscribe('question-details', this.onQuestionDetails.bind(this));
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('back-from-question-details', this.onBackFromDetails.bind(this));
+    this.eventsPubSub.download = PubSub.subscribe('question-download', this.onDownload.bind(this));
   }
 
   removeEvents() {
@@ -145,6 +146,14 @@ export default class MyQuestions extends BaseComponent {
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  onDownload(msg, data) {
+    const { questionId } = data;
+    const link = document.createElement('a');
+    link.href = `<%publicPathBackEnd%>/download-video-user/${questionId}`;
+    link.download = true;
+    link.click();
   }
 
   onBackFromDetails() {

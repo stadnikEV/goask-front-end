@@ -14,14 +14,25 @@ export default class StatusQuestion extends BaseComponent {
 
   getStatusData({ status }) {
     const statusData = {};
+
     if (status === 'pending') {
       statusData.statusName = 'Ожидание';
       statusData.modifierClassName = 'color-blue';
       return statusData;
     }
     if (status === 'ready') {
-      statusData.statusName = 'Ответ получен';
+      statusData.statusName = 'Готово';
       statusData.modifierClassName = 'color-green';
+      return statusData;
+    }
+    if (status === 'decode') {
+      statusData.statusName = 'Обработка видео';
+      statusData.modifierClassName = 'color-blue';
+      return statusData;
+    }
+    if (status === 'recorded') {
+      statusData.statusName = 'Видео записано';
+      statusData.modifierClassName = 'color-blue';
       return statusData;
     }
     if (status === 'reject') {
@@ -38,5 +49,10 @@ export default class StatusQuestion extends BaseComponent {
       statusName,
       modifierClassName,
     });
+  }
+
+  setStatus({ status }) {
+    const statusData = this.getStatusData({ status });
+    this.render(statusData);
   }
 }

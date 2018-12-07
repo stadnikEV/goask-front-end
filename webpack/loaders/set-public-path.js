@@ -6,11 +6,11 @@ module.exports = (source) => {
 
   const publicPathBackEnd = (NODE_ENV === 'dev')
     ? 'http://localhost:8080'
-    : 'http://goask.club';
+    : 'https://goask.club';
 
   const publicPathFrontEnd = (NODE_ENV === 'dev')
     ? 'http://localhost:3000'
-    : 'http://goask.club';
+    : 'https://goask.club';
 
   let result = source.replace(/<%publicPathBackEnd%>/g, publicPathBackEnd);
   result = result.replace(/<%publicPathFrontEnd%>/g, publicPathFrontEnd);

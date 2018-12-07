@@ -37,5 +37,11 @@
       display: inline-block;
       vertical-align: bottom;
     }
+
+    .my-list-item__button-details-container,
+    .my-list-item__button-download-container {
+      margin-top: 7px;
+      width: 150px;
+    }
   }
 }

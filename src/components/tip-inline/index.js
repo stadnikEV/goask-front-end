@@ -17,7 +17,13 @@ export default class TipInline extends BaseComponent {
     });
   }
 
-  showTip({ message }) {
+  showTip({ color, message }) {
+    this.elements.TipInline.classList.remove('tip-inline_color-green');
+
     this.elements.TipInline.innerHTML = message;
+
+    if (color === 'green') {
+      this.elements.TipInline.classList.add('tip-inline_color-green');
+    }
   }
 }

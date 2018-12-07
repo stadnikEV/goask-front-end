@@ -20,11 +20,15 @@ export default class MyListItem extends BaseComponent {
     this.elements.statusQuestionContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__status-question-container"]');
     this.elements.question = this.elements.myListItem.querySelector('[data-element="my-list-item__question"]');
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
-    this.elements.buttoLoadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-load-container"]');
+    this.elements.buttoDownloadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-download-container"]');
     this.elements.buttoDetailsContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-details-container"]');
 
     this.initComponentStatusQuestion({ status: data.status });
     this.initComponentButtonDetails();
+
+    if (data.status === 'ready') {
+      this.initComponentButtonDownload();
+    }
 
     this.onResize = this.onResize.bind(this);
     this.str = this.elements.question.textContent;
@@ -63,11 +67,25 @@ export default class MyListItem extends BaseComponent {
   initComponentButtonDetails() {
     this.components.ButtonDetails = new ButtonMainEvent({
       el: this.elements.buttoDetailsContainer,
-      className: 'button-main',
+      modifierClassName: 'button-main__button_width-container button-main__button_color-gray',
       componentName: 'my-question-details',
       eventName: 'question-details',
       data: { questionId: this.questionId },
       value: 'Подробнее',
+    });
+  }
+
+  initComponentButtonDownload() {
+    this.components.buttonDownload = new ButtonMainEvent({
+      el: this.elements.buttoDownloadContainer,
+      modifierClassName: 'button-main__button_width-container',
+      componentName: 'button-my-question-download',
+      eventName: 'question-download',
+      data: {
+        questionId: this.questionId,
+        listItem: this,
+      },
+      value: 'Скачать',
     });
   }
 

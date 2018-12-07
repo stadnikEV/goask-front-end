@@ -1,6 +1,6 @@
 .my-list-item {
   margin: 15px 0 20px 0;
-  height: 150px;
+  height: 200px;
   border-bottom: solid 1px lightgray;
 
   &__content {
@@ -22,7 +22,7 @@
 
   &__navigation-container {
     float: right;
-    height: 130px;
+    height: 180px;
     display: inline-block;
     padding-left: 20px;
 
@@ -38,8 +38,12 @@
       vertical-align: bottom;
     }
 
-    .my-list-item__button-reject-container {
+    .my-list-item__button-send-container,
+    .my-list-item__button-reject-container,
+    .my-list-item__button-download-container,
+    .my-list-item__button-response-container {
       margin-top: 7px;
+      width: 150px;
     }
   }
 }
