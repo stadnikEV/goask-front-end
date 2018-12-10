@@ -1,5 +1,12 @@
+import loadPolyfillFetch from 'utils/polyfills/load-polyfill-fetch';
 import PageMyRequests from './components/pages/my-requests';
 
-new PageMyRequests({
-  el: document.body,
-});
+loadPolyfillFetch()
+  .then(() => {
+    new PageMyRequests({
+      el: document.body,
+    });
+  })
+  .catch((err) => {
+    console.warn(err);
+  });

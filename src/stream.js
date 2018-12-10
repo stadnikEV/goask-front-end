@@ -1,5 +1,12 @@
+import loadPolyfillFetch from 'utils/polyfills/load-polyfill-fetch';
 import PageStream from './components/pages/stream';
 
-new PageStream({
-  el: document.body,
-});
+loadPolyfillFetch()
+  .then(() => {
+    new PageStream({
+      el: document.body,
+    });
+  })
+  .catch((err) => {
+    console.warn(err);
+  });

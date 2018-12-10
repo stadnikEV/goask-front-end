@@ -4,9 +4,9 @@ export default () => {
       resolve();
       return;
     }
-    import(/* webpackChunkName: "fetch-polyfill" */ 'whatwg-fetch')
+
+    import('whatwg-fetch' /* webpackChunkName: "fetch-polyfill" */)
       .then(() => {
-        console.log('import');
         resolve();
       })
       .catch((err) => {

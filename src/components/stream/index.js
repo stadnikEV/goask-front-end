@@ -20,7 +20,11 @@ export default class Stram extends BaseComponent {
     this.firstRequestTime = 400;
     this.requestInteval = 5000;
     this.optionsUserMedia = {
-      video: { width: 1280, height: 720 },
+      video: {
+        width: 1280,
+        height: 720,
+        frameRate: 25,
+      },
       audio: true,
     };
     this.optionsRecorder = {

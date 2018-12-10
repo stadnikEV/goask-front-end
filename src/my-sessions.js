@@ -1,5 +1,12 @@
+import loadPolyfillFetch from 'utils/polyfills/load-polyfill-fetch';
 import PageMySessions from './components/pages/my-sessions';
 
-new PageMySessions({
-  el: document.body,
-});
+loadPolyfillFetch()
+  .then(() => {
+    new PageMySessions({
+      el: document.body,
+    });
+  })
+  .catch((err) => {
+    console.warn(err);
+  });

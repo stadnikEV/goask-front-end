@@ -1,5 +1,12 @@
+import loadPolyfillFetch from 'utils/polyfills/load-polyfill-fetch';
 import PageMain from './components/pages/main';
 
-new PageMain({
-  el: document.body,
-});
+loadPolyfillFetch()
+  .then(() => {
+    new PageMain({
+      el: document.body,
+    });
+  })
+  .catch((err) => {
+    console.warn(err);
+  });

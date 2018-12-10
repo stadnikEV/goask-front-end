@@ -1,5 +1,12 @@
+import loadPolyfillFetch from 'utils/polyfills/load-polyfill-fetch';
 import PagePublicSessions from './components/pages/public-sessions';
 
-new PagePublicSessions({
-  el: document.body,
-});
+loadPolyfillFetch()
+  .then(() => {
+    new PagePublicSessions({
+      el: document.body,
+    });
+  })
+  .catch((err) => {
+    console.warn(err);
+  });
