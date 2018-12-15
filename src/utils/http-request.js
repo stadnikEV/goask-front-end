@@ -17,7 +17,6 @@ const httpRequest = () => {
     post({ url, options = {} }) {
       options.method = 'post';
       const params = this.prepareParams(options);
-
       return this.request(url, params);
     }
 
@@ -42,14 +41,17 @@ const httpRequest = () => {
       const params = {
         method,
         credentials: 'include',
-        headers: {
-          'Content-Type': contentType,
-        },
+        headers: {},
       };
+
+      if (contentType !== 'setByBrowser') {
+        params.headers['Content-Type'] = contentType;
+      }
+
       if (contentType === 'application/json' && data) {
         params.body = JSON.stringify(data);
       }
-      if (contentType === 'video/webm') {
+      if (contentType === 'video/webm' || contentType === 'setByBrowser') {
         params.body = data;
       }
 

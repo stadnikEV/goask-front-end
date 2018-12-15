@@ -20,6 +20,11 @@ export default class StatusQuestion extends BaseComponent {
       statusData.modifierClassName = 'color-blue';
       return statusData;
     }
+    if (status === 'stream') {
+      statusData.statusName = 'Запись видео';
+      statusData.modifierClassName = 'color-blue';
+      return statusData;
+    }
     if (status === 'ready') {
       statusData.statusName = 'Готово';
       statusData.modifierClassName = 'color-green';

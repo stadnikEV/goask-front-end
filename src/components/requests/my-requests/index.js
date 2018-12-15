@@ -27,7 +27,6 @@ export default class MyRequests extends BaseComponent {
 
     this.getMyRequests(this.getRangeRequests())
       .then((response) => {
-        console.log(response);
         this.numberOfRequests = response.numberOfRequests;
         this.numberOfPages = this.getNumbersOfPages();
 
@@ -57,6 +56,7 @@ export default class MyRequests extends BaseComponent {
     this.eventsPubSub.requestReject = PubSub.subscribe('request-reject', this.onRequestReject.bind(this));
     this.eventsPubSub.goToResponse = PubSub.subscribe('go-to-response', this.onGoToResponse.bind(this));
     this.eventsPubSub.download = PubSub.subscribe('request-download', this.onDownload.bind(this));
+    this.eventsPubSub.upload = PubSub.subscribe('request-upload', this.onUpload.bind(this));
     this.eventsPubSub.send = PubSub.subscribe('request-send', this.onSend.bind(this));
   }
 
@@ -138,8 +138,44 @@ export default class MyRequests extends BaseComponent {
     const { questionId } = data;
     const link = document.createElement('a');
     link.href = `<%publicPathBackEnd%>/download-video-speaker/${questionId}`;
-    link.download = true;
+    link.download = '';
+
     link.click();
+  }
+
+  onUpload(msg, data) {
+    const { questionId } = data;
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.classList.add('hidden');
+    document.body.appendChild(input);
+
+    const sendFile = (ev) => {
+      const file = ev.target.files[0];
+      alert(file.size);
+      const formdata = new FormData();
+      formdata.append('file', file);
+      httpRequest.post({
+        url: `<%publicPathBackEnd%>/api/upload/${questionId}`,
+        options: {
+          data: formdata,
+          contentType: 'setByBrowser',
+        },
+      })
+        .then(() => {
+          alert('Загружено');
+          document.body.removeChild(input);
+        })
+        .catch((e) => {
+          // console.warn(e);
+          alert(e.message);
+          document.body.removeChild(input);
+        });
+    };
+
+    input.addEventListener('change', sendFile);
+
+    input.click();
   }
 
   onSend(msg, data) {

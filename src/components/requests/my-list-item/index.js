@@ -25,16 +25,20 @@ export default class MyListItem extends BaseComponent {
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
     this.elements.buttoSendContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-send-container"]');
     this.elements.buttoDownloadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-download-container"]');
+    this.elements.buttoUploadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-upload-container"]');
     this.elements.buttoResponseContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-response-container"]');
     this.elements.buttoRejectContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-reject-container"]');
 
     this.initComponentStatusQuestion({ status: this.status });
 
-    if (this.status === 'pending'
-    || this.status === 'recorded'
-    || this.status === 'decode') {
+    if (this.status !== 'ready') {
       this.initComponentButtonReject();
+    }
+
+    if (this.status === 'pending'
+    || this.status === 'recorded') {
       this.initComponentButtonResponse();
+      this.initComponentButtonUpload();
     }
 
     if (this.status === 'recorded') {
@@ -110,6 +114,20 @@ export default class MyListItem extends BaseComponent {
     });
   }
 
+  initComponentButtonUpload() {
+    this.components.buttonUpload = new ButtonMainEvent({
+      el: this.elements.buttoUploadContainer,
+      modifierClassName: 'button-main__button_width-container',
+      componentName: 'button-my-request-upload',
+      eventName: 'request-upload',
+      data: {
+        questionId: this.questionId,
+        listItem: this,
+      },
+      value: 'Загрузить',
+    });
+  }
+
   initComponentButtonReject() {
     this.components.buttonReject = new ButtonMainEvent({
       el: this.elements.buttoRejectContainer,
@@ -163,9 +181,11 @@ export default class MyListItem extends BaseComponent {
       this.components.buttonResponse.destroy();
       this.components.buttonReject.destroy();
       this.components.buttonSend.destroy();
+      this.components.buttonUpload.destroy();
       delete this.components.buttonResponse;
       delete this.components.buttonReject;
       delete this.components.buttonSend;
+      delete this.components.buttonUpload;
     }
   }
 
