@@ -15,7 +15,7 @@ module.exports = {
     "no-alert": "off",
     "no-useless-constructor": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]mage" }],
+    "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]mage|Promise" }],
     "import/extensions": [
       {
         "<extension>": "never",

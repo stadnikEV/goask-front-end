@@ -35,15 +35,6 @@ const config = {
         exclude: /node_modules/,
         loader: 'set-public-path',
       },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          publicPath,
-        },
-      },
       // {
       //   test: /\.scss$/,
       //   use: [
@@ -126,6 +117,15 @@ if (NODE_ENV === 'dev') {
     port: 3000,
     contentBase: path.join(__dirname, 'dist'),
   };
+  config.module.rules.push({
+    enforce: 'pre',
+    test: /\.js$/,
+    exclude: /node_modules|src\/utils\/polyfills/,
+    loader: 'eslint-loader',
+    options: {
+      publicPath,
+    },
+  });
 }
 
 

@@ -138,7 +138,7 @@ export default class MyRequests extends BaseComponent {
     const { questionId } = data;
     const link = document.createElement('a');
     link.href = `<%publicPathBackEnd%>/download-video-speaker/${questionId}`;
-    link.download = '';
+    // link.download = '';
 
     link.click();
   }
