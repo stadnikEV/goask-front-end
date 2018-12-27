@@ -24,7 +24,7 @@ export default class MyListItem extends BaseComponent {
     this.elements.question = this.elements.myListItem.querySelector('[data-element="my-list-item__question"]');
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
     this.elements.buttoSendContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-send-container"]');
-    this.elements.buttoDownloadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-download-container"]');
+    this.elements.buttoPlayContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-play-container"]');
     this.elements.buttoUploadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-upload-container"]');
     this.elements.buttoResponseContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-response-container"]');
     this.elements.buttoRejectContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-reject-container"]');
@@ -36,18 +36,20 @@ export default class MyListItem extends BaseComponent {
     }
 
     if (this.status === 'pending'
-    || this.status === 'recorded') {
+    || this.status === 'processed'
+    || this.status === 'uploadError'
+    || this.status === 'decodeError') {
       this.initComponentButtonResponse();
       this.initComponentButtonUpload();
     }
 
-    if (this.status === 'recorded') {
-      this.initComponentButtonDownload();
+    if (this.status === 'processed') {
+      this.initComponentButtonPlay();
       this.initComponentButtonSend();
     }
 
     if (this.status === 'ready') {
-      this.initComponentButtonDownload();
+      this.initComponentButtonPlay();
     }
 
     this.onResize = this.onResize.bind(this);
@@ -100,17 +102,17 @@ export default class MyListItem extends BaseComponent {
     });
   }
 
-  initComponentButtonDownload() {
-    this.components.buttonDownload = new ButtonMainEvent({
-      el: this.elements.buttoDownloadContainer,
+  initComponentButtonPlay() {
+    this.components.buttonPlay = new ButtonMainEvent({
+      el: this.elements.buttoPlayContainer,
       modifierClassName: 'button-main__button_width-container',
-      componentName: 'button-my-request-download',
-      eventName: 'request-download',
+      componentName: 'button-my-request-play',
+      eventName: 'request-go-to-play',
       data: {
         questionId: this.questionId,
         listItem: this,
       },
-      value: 'Скачать',
+      value: 'Просмотр',
     });
   }
 

@@ -4,6 +4,7 @@ import BaseComponent from 'components/__shared/base-component';
 import MyRequestList from 'components/requests/my-request-list';
 import MyTitle from 'components/my-title';
 import NavigationPage from 'components/nav-page';
+import uploadVideo from 'utils/upload-video.js';
 import './style.scss'; // css
 import template from './template.hbs';
 
@@ -58,6 +59,7 @@ export default class MyRequests extends BaseComponent {
     this.eventsPubSub.download = PubSub.subscribe('request-download', this.onDownload.bind(this));
     this.eventsPubSub.upload = PubSub.subscribe('request-upload', this.onUpload.bind(this));
     this.eventsPubSub.send = PubSub.subscribe('request-send', this.onSend.bind(this));
+    this.eventsPubSub.goToPlay = PubSub.subscribe('request-go-to-play', this.onGoToPlay.bind(this));
   }
 
   removeEvents() {
@@ -134,12 +136,17 @@ export default class MyRequests extends BaseComponent {
     window.location.href = `<%publicPathBackEnd%>/stream/${questionId}`;
   }
 
+  onGoToPlay(msg, data) {
+    const { questionId } = data;
+    window.location.href = `<%publicPathBackEnd%>/play-speaker/${questionId}`;
+  }
+
   onDownload(msg, data) {
     const { questionId } = data;
     const link = document.createElement('a');
+    document.body.appendChild(link);
     link.href = `<%publicPathBackEnd%>/download-video-speaker/${questionId}`;
-    // link.download = '';
-
+    link.download = '';
     link.click();
   }
 
@@ -152,30 +159,30 @@ export default class MyRequests extends BaseComponent {
 
     const sendFile = (ev) => {
       const file = ev.target.files[0];
-      alert(file.size);
-      const formdata = new FormData();
-      formdata.append('file', file);
-      httpRequest.post({
+      const formData = new FormData();
+      console.log(file);
+      formData.append('file', file);
+
+      uploadVideo({
+        formData,
         url: `<%publicPathBackEnd%>/api/upload/${questionId}`,
-        options: {
-          data: formdata,
-          contentType: 'setByBrowser',
-        },
+        progress: this.onUploadProgress,
       })
         .then(() => {
-          alert('Загружено');
-          document.body.removeChild(input);
+          console.log('загружено');
         })
         .catch((e) => {
-          // console.warn(e);
-          alert(e.message);
-          document.body.removeChild(input);
+          console.warn(e);
         });
     };
 
     input.addEventListener('change', sendFile);
 
     input.click();
+  }
+
+  onUploadProgress(event) {
+    console.log(event);
   }
 
   onSend(msg, data) {

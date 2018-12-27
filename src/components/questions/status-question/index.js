@@ -20,7 +20,12 @@ export default class StatusQuestion extends BaseComponent {
       statusData.modifierClassName = 'color-blue';
       return statusData;
     }
-    if (status === 'stream') {
+    if (status === 'upload') {
+      statusData.statusName = 'Загрузка';
+      statusData.modifierClassName = 'color-blue';
+      return statusData;
+    }
+    if (status === 'streaming') {
       statusData.statusName = 'Запись видео';
       statusData.modifierClassName = 'color-blue';
       return statusData;
@@ -35,7 +40,17 @@ export default class StatusQuestion extends BaseComponent {
       statusData.modifierClassName = 'color-blue';
       return statusData;
     }
-    if (status === 'recorded') {
+    if (status === 'decodeError') {
+      statusData.statusName = 'Ошибка обработки видео';
+      statusData.modifierClassName = 'color-red';
+      return statusData;
+    }
+    if (status === 'uploadError') {
+      statusData.statusName = 'Ошибка загрузки видео';
+      statusData.modifierClassName = 'color-red';
+      return statusData;
+    }
+    if (status === 'processed') {
       statusData.statusName = 'Видео записано';
       statusData.modifierClassName = 'color-blue';
       return statusData;

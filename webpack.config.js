@@ -20,6 +20,7 @@ const config = {
     publicSessionDetails: './src/public-session-details.js',
     registrationSpeaker: './src/registration-speaker.js',
     stream: './src/stream.js',
+    playSpeaker: './src/play-speaker.js',
   },
   output: {
     filename: 'js/[name].js',
