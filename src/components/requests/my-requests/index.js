@@ -56,8 +56,7 @@ export default class MyRequests extends BaseComponent {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.requestReject = PubSub.subscribe('request-reject', this.onRequestReject.bind(this));
     this.eventsPubSub.goToResponse = PubSub.subscribe('go-to-response', this.onGoToResponse.bind(this));
-    this.eventsPubSub.download = PubSub.subscribe('request-download', this.onDownload.bind(this));
-    this.eventsPubSub.upload = PubSub.subscribe('request-upload', this.onUpload.bind(this));
+    this.eventsPubSub.upload = PubSub.subscribe('button-upload', this.onUpload.bind(this));
     this.eventsPubSub.send = PubSub.subscribe('request-send', this.onSend.bind(this));
     this.eventsPubSub.goToPlay = PubSub.subscribe('request-go-to-play', this.onGoToPlay.bind(this));
   }
@@ -158,20 +157,21 @@ export default class MyRequests extends BaseComponent {
     document.body.appendChild(input);
 
     const sendFile = (ev) => {
+      PubSub.publish(`start-upload-${questionId}`);
       const file = ev.target.files[0];
       const formData = new FormData();
-      console.log(file);
       formData.append('file', file);
 
       uploadVideo({
         formData,
         url: `<%publicPathBackEnd%>/api/upload/${questionId}`,
-        progress: this.onUploadProgress,
+        progress: this.onUploadProgress.bind(this, questionId),
       })
         .then(() => {
-          console.log('загружено');
+          PubSub.publish(`end-upload-${questionId}`, { status: 'decode' });
         })
         .catch((e) => {
+          PubSub.publish(`end-upload-${questionId}`, { status: 'uploadError' });
           console.warn(e);
         });
     };
@@ -181,8 +181,11 @@ export default class MyRequests extends BaseComponent {
     input.click();
   }
 
-  onUploadProgress(event) {
-    console.log(event);
+  onUploadProgress(questionId, event) {
+    PubSub.publish(`upload-progress-${questionId}`, {
+      value: event.loaded,
+      max: event.total,
+    });
   }
 
   onSend(msg, data) {

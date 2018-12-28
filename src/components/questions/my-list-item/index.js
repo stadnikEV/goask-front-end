@@ -20,14 +20,14 @@ export default class MyListItem extends BaseComponent {
     this.elements.statusQuestionContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__status-question-container"]');
     this.elements.question = this.elements.myListItem.querySelector('[data-element="my-list-item__question"]');
     this.elements.navigation = this.elements.myListItem.querySelector('[data-element="my-list-item__navigation-container"]');
-    this.elements.buttoDownloadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-download-container"]');
-    this.elements.buttoDetailsContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-details-container"]');
+    this.elements.buttonPlayContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-play-container"]');
+    this.elements.buttonDetailsContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-details-container"]');
 
     this.initComponentStatusQuestion({ status: data.status });
     this.initComponentButtonDetails();
 
     if (data.status === 'ready') {
-      this.initComponentButtonDownload();
+      this.initComponentButtonPlay();
     }
 
     this.onResize = this.onResize.bind(this);
@@ -66,7 +66,7 @@ export default class MyListItem extends BaseComponent {
 
   initComponentButtonDetails() {
     this.components.ButtonDetails = new ButtonMainEvent({
-      el: this.elements.buttoDetailsContainer,
+      el: this.elements.buttonDetailsContainer,
       modifierClassName: 'button-main__button_width-container button-main__button_color-gray',
       componentName: 'my-question-details',
       eventName: 'question-details',
@@ -75,17 +75,17 @@ export default class MyListItem extends BaseComponent {
     });
   }
 
-  initComponentButtonDownload() {
-    this.components.buttonDownload = new ButtonMainEvent({
-      el: this.elements.buttoDownloadContainer,
+  initComponentButtonPlay() {
+    this.components.buttonPlay = new ButtonMainEvent({
+      el: this.elements.buttonPlayContainer,
       modifierClassName: 'button-main__button_width-container',
-      componentName: 'button-my-question-download',
-      eventName: 'question-download',
+      componentName: 'button-my-question-play',
+      eventName: 'question-go-to-play',
       data: {
         questionId: this.questionId,
         listItem: this,
       },
-      value: 'Скачать',
+      value: 'Просмотр',
     });
   }
 

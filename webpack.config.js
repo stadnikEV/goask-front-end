@@ -21,6 +21,7 @@ const config = {
     registrationSpeaker: './src/registration-speaker.js',
     stream: './src/stream.js',
     playSpeaker: './src/play-speaker.js',
+    playUser: './src/play-user.js',
   },
   output: {
     filename: 'js/[name].js',

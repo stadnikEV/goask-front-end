@@ -2,6 +2,7 @@ import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonMainEvent from 'components/buttons/button-main-event';
 import StatusQuestion from 'components/questions/status-question';
+import ProgressBar from 'components/progress-bar';
 import getTruncateText from 'utils/get-truncate-text';
 
 import './style.scss'; // css
@@ -28,10 +29,13 @@ export default class MyListItem extends BaseComponent {
     this.elements.buttoUploadContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-upload-container"]');
     this.elements.buttoResponseContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-response-container"]');
     this.elements.buttoRejectContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__button-reject-container"]');
+    this.elements.uploadProgressContainer = this.elements.myListItem.querySelector('[data-element="my-list-item__upload-progress-container"]');
 
     this.initComponentStatusQuestion({ status: this.status });
 
-    if (this.status !== 'ready') {
+    if (this.status !== 'ready'
+    && this.status !== 'upload'
+    && this.status !== 'decode') {
       this.initComponentButtonReject();
     }
 
@@ -74,6 +78,9 @@ export default class MyListItem extends BaseComponent {
   addEvents() {
     window.addEventListener('resize', this.onResize);
     this.eventsPubSub.videoSent = PubSub.subscribe('video-response-sent', this.onVideoSent.bind(this));
+    this.eventsPubSub.startUpload = PubSub.subscribe(`start-upload-${this.questionId}`, this.onStartUpload.bind(this));
+    this.eventsPubSub.endUpload = PubSub.subscribe(`end-upload-${this.questionId}`, this.onEndUpload.bind(this));
+    this.eventsPubSub.uploadProgress = PubSub.subscribe(`upload-progress-${this.questionId}`, this.onUploadProgress.bind(this));
   }
 
   removeEvents() {
@@ -85,6 +92,14 @@ export default class MyListItem extends BaseComponent {
     this.components.statusQestion = new StatusQuestion({
       el: this.elements.statusQuestionContainer,
       status,
+    });
+  }
+
+  initUploadProgress({ value, max }) {
+    this.components.uploadProgress = new ProgressBar({
+      el: this.elements.uploadProgressContainer,
+      value,
+      max,
     });
   }
 
@@ -121,7 +136,7 @@ export default class MyListItem extends BaseComponent {
       el: this.elements.buttoUploadContainer,
       modifierClassName: 'button-main__button_width-container',
       componentName: 'button-my-request-upload',
-      eventName: 'request-upload',
+      eventName: 'button-upload',
       data: {
         questionId: this.questionId,
         listItem: this,
@@ -189,6 +204,46 @@ export default class MyListItem extends BaseComponent {
       delete this.components.buttonSend;
       delete this.components.buttonUpload;
     }
+  }
+
+  onStartUpload() {
+    this.components.statusQestion.setStatus({ status: 'upload' });
+    this.components.buttonResponse.destroy();
+    this.components.buttonReject.destroy();
+    this.components.buttonUpload.destroy();
+    delete this.components.buttonResponse;
+    delete this.components.buttonReject;
+    delete this.components.buttonUpload;
+
+    if (this.components.buttonSend) {
+      this.components.buttonSend.destroy();
+      delete this.components.buttonSend;
+    }
+    if (this.components.buttonPlay) {
+      this.components.buttonPlay.destroy();
+      delete this.components.buttonPlay;
+    }
+  }
+
+  onUploadProgress(msg, { value, max }) {
+    if (!this.components.uploadProgress) {
+      this.initUploadProgress({ value, max });
+    }
+
+    if (value === max) {
+      setTimeout(() => {
+        this.components.uploadProgress.destroy();
+        delete this.components.uploadProgress;
+      }, 800);
+
+      return;
+    }
+
+    this.components.uploadProgress.setValue({ value });
+  }
+
+  onEndUpload(msg, data) {
+    this.components.statusQestion.setStatus({ status: data.status });
   }
 
 

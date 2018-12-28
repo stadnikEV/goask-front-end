@@ -55,7 +55,7 @@ export default class MyQuestions extends BaseComponent {
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('button-navigation-page', this.onSetPage.bind(this));
     this.eventsPubSub.questionDetails = PubSub.subscribe('question-details', this.onQuestionDetails.bind(this));
     this.eventsPubSub.setNavigationPage = PubSub.subscribe('back-from-question-details', this.onBackFromDetails.bind(this));
-    this.eventsPubSub.download = PubSub.subscribe('question-download', this.onDownload.bind(this));
+    this.eventsPubSub.goToPlay = PubSub.subscribe('question-go-to-play', this.onGoToPlay.bind(this));
   }
 
   removeEvents() {
@@ -169,6 +169,11 @@ export default class MyQuestions extends BaseComponent {
     return httpRequest.get({
       url: `<%publicPathBackEnd%>/api/questions?from=${from}&to=${to}`,
     });
+  }
+
+  onGoToPlay(msg, data) {
+    const { questionId } = data;
+    window.location.href = `<%publicPathBackEnd%>/play-user/${questionId}`;
   }
 
   getQuestionsDetails(data) {
