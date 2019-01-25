@@ -3,7 +3,9 @@ import HttpError from 'utils/http-error.js';
 import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import 'components/__shared/login-registration/style.scss'; // css
+import './style.scss';
 import FormRegistration from '../forms/form-registration';
+import TipInline from '../tip-inline';
 import template from './template.hbs';
 
 
@@ -15,11 +17,11 @@ export default class Registration extends BaseComponent {
 
     this.render();
     this.elements.registration = document.querySelector('[data-component="registration"]');
-    this.elements.FormContainer = this.elements.registration.querySelector('[data-element="registration__form-container"]');
+    this.elements.mainContainer = this.elements.registration.querySelector('[data-element="registration__main-container"]');
+    this.elements.formContainer = this.elements.registration.querySelector('[data-element="registration__form-container"]');
+    this.elements.tipConfirmMessageContainer = this.elements.registration.querySelector('[data-element="registration__tip-confirm-message-container"]');
 
-    this.components.formRegistration = new FormRegistration({
-      el: this.elements.FormContainer,
-    });
+    this.initForm();
 
     this.addEvents();
   }
@@ -36,14 +38,31 @@ export default class Registration extends BaseComponent {
     this.unsubscribe();
   }
 
+  initForm() {
+    this.components.formRegistration = new FormRegistration({
+      el: this.elements.formContainer,
+    });
+  }
+
+  initTipConfirmMessage() {
+    this.components.tipConfirmMessage = new TipInline({
+      el: this.elements.tipConfirmMessageContainer,
+      componentName: 'confirm-message',
+      message: `На ваш почтовый ящик <a href="mailto:${this.data.email}">${this.data.email}</a> было отправлено письмо. Для завершения регистрации следуйте инструкциям в письме.`,
+      color: 'black',
+    });
+    this.elements.mainContainer.classList.add('registration__main-container_width-wide');
+  }
+
   onSendData(msg, data) {
+    this.data = data;
     httpRequest.post({
       url: '<%publicPathBackEnd%>/api/registration',
       options: { data },
     })
-      .then((json) => {
-        const { link } = json;
-        window.location.href = link;
+      .then(() => {
+        this.removeComponent({ componentName: 'formRegistration' });
+        this.initTipConfirmMessage();
       })
       .catch((err) => {
         this.components.formRegistration.formEnable();

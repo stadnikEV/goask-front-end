@@ -146,6 +146,7 @@ export default class FormLogin extends BaseComponent {
     this.components.tipEmail = new TipInline({
       el: this.elements.tipEmailContainer,
       componentName: 'tip-inline-email',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -154,6 +155,7 @@ export default class FormLogin extends BaseComponent {
     this.components.tipPassword = new TipInline({
       el: this.elements.tipPasswordContainer,
       componentName: 'tip-inline-password',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 

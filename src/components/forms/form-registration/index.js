@@ -176,6 +176,7 @@ export default class FormRegistration extends BaseComponent {
     this.components.tipName = new TipInline({
       el: this.elements.tipNameContainer,
       componentName: 'tip-inline-name',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -184,6 +185,7 @@ export default class FormRegistration extends BaseComponent {
     this.components.tipEmail = new TipInline({
       el: this.elements.tipEmailContainer,
       componentName: 'tip-inline-email',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -192,6 +194,7 @@ export default class FormRegistration extends BaseComponent {
     this.components.tipPassword = new TipInline({
       el: this.elements.tipPasswordContainer,
       componentName: 'tip-inline-password',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
