@@ -1,0 +1,23 @@
+@import 'components/__shared/css/variables.scss';
+
+.navigation-header {
+  height: 100%;
+  background-color: $white;
+  font-size: 0px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  &__button-header-speakers-confirm-container,
+  &__button-header-speakers-container,
+  &__button-header-statistics-container {
+    vertical-align: middle;
+    height: 100%;
+    display: inline-block;
+    font-size: 1rem;
+  }
+}

@@ -1,6 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
 import MylistItem from 'components/questions/my-list-item';
-import './style.scss'; // css
 import template from './template.hbs';
 
 

@@ -1,0 +1,13 @@
+@import 'components/__shared/css/variables.scss';
+
+.form-login {
+  padding-bottom: 250px;
+
+  &__login-container {
+    margin-bottom: 8px;
+  }
+  &__submit-container {
+    margin-top: 15px;
+    float: left;
+  }
+}

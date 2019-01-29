@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import Header from 'components/header';
+import Header from 'components/headers/header-main';
 import Registration from 'components/registration';
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css

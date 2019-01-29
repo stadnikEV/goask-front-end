@@ -3,7 +3,7 @@ import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonHeaderLink from 'components/buttons/button-header-link';
 import ButtonHeaderEvent from 'components/buttons/button-header-event';
-import 'components/nav-header/style.scss'; // css
+import './style.scss'; // css
 
 
 export default class NavHeader extends BaseComponent {
@@ -38,6 +38,7 @@ export default class NavHeader extends BaseComponent {
 
   addEvents() {
     this.eventsPubSub.logout = PubSub.subscribe('logout', this.logout.bind(this));
+    this.eventsPubSub.speakerRegistered = PubSub.subscribe('speaker-registered', this.onSpeakerRegistered.bind(this));
   }
 
   removeEvents() {
@@ -92,5 +93,9 @@ export default class NavHeader extends BaseComponent {
       .catch((e) => {
         console.warn(e);
       });
+  }
+
+  onSpeakerRegistered() {
+    this.removeComponent({ componentName: 'buttonCreateSpeaker' });
   }
 }

@@ -1,0 +1,39 @@
+<div class="about-speaker"
+     data-component="about-speaker">
+
+  <div class="about-speaker__container"
+       data-element="about-speaker__container">
+    <p class="about-speaker__speaker-name">
+      {{firstname}} {{lastname}}
+    </p>
+
+    <div class="about-speaker__category"
+         data-element="about-speaker__category">
+      <span>Категории:</span>
+      {{#each categories}}
+        {{content}},
+      {{/each}}
+    </div>
+
+
+    {{#if numberOfResponses}}
+      <div class="about-speaker__number-responses"
+           data-element="about-speaker__number-responses">
+        <span>Количество ответов:</span> {{numberOfResponses}}
+      </div>
+    {{/if}}
+
+    <p class="about-speaker__about"
+       data-element="about-speaker__about">
+      {{about}}
+    </p>
+
+    {{#each sessions}}
+      <div class="speaker-list__item-container"
+           data-element="speaker-list__item-container"
+           data-speakerId="{{speakerId}}">
+      </div>
+    {{/each}}
+  </div>
+
+</div>

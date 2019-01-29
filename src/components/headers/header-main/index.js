@@ -1,7 +1,7 @@
 import BaseComponent from 'components/__shared/base-component';
 import Logo from 'components/logo';
-import NavHeader from 'components/nav-header';
-import 'components/header/style.scss'; // css
+import NavHeader from 'components/navigations/nav-header-main';
+import './style.scss';
 
 export default class Header extends BaseComponent {
   constructor({ el }) {

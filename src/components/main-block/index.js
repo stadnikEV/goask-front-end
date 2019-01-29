@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import UserNavigation from 'components/nav-user';
+import UserNavigation from 'components/navigations/nav-user';
 import './style.scss'; // css
 
 

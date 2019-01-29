@@ -1,13 +1,6 @@
 @import 'components/__shared/css/variables.scss';
 
 .form-registration {
-  &__describe {
-    font-size: 125%;
-    color: $black;
-    margin-bottom: 20px;
-    cursor: default;
-    text-align: center;
-  }
   &__name-container {
     margin-bottom: 8px;
   }

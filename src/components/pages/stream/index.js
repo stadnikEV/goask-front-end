@@ -1,11 +1,11 @@
 import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
-import Header from 'components/header';
+import Header from 'components/headers/header-main';
 import Stream from 'components/stream';
 import TipInline from 'components/tip-inline';
-import 'components/__shared/css/reset.scss'; // css
-import 'components/__shared/css/base.scss'; // css
-import './style.scss'; // css
+import 'components/__shared/css/reset.scss';
+import 'components/__shared/css/base.scss';
+import './style.scss';
 
 
 export default class PageStream extends BaseComponent {

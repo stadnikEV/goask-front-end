@@ -22,6 +22,7 @@ const config = {
     stream: './src/stream.js',
     playSpeaker: './src/play-speaker.js',
     playUser: './src/play-user.js',
+    admin: './src/admin.js',
   },
   output: {
     filename: 'js/[name].js',

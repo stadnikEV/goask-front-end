@@ -21,6 +21,15 @@
     vertical-align: middle;
     text-align: left;
     white-space: normal;
+
+    .login__describe,
+    .registration__describe {
+      font-size: 125%;
+      color: $black;
+      margin-bottom: 20px;
+      cursor: default;
+      text-align: center;
+    }
   }
 
   &__main-container:after {

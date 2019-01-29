@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import Header from 'components/header';
+import Header from 'components/headers/header-main';
 import PublicSessionDetails from 'components/sessions/public-session-details';
 import MainBlock from 'components/main-block';
 import 'components/__shared/css/reset.scss'; // css

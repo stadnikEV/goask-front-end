@@ -1,0 +1,13 @@
+@import 'components/__shared/css/variables.scss';
+
+.speakers-confirm {
+  height: 500px;
+  margin: 0 auto;
+  width: 75%;
+  margin-bottom: 150px;
+
+  &__speakers-list-container {
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+}

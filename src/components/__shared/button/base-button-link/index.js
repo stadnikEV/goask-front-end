@@ -23,7 +23,7 @@ export default class BaseButtonLink extends BaseComponent {
   }
 
   removeEvents() {
-    this.elements.logo.removeEventListener('mousedown', this.onMouseDown);
+    this.elements.button.removeEventListener('mousedown', this.onMouseDown);
   }
 
   onMouseDown(e) {

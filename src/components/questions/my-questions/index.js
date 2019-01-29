@@ -3,7 +3,7 @@ import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import MyQuestionList from 'components/questions/my-question-list';
 import MyTitle from 'components/my-title';
-import NavigationPage from 'components/nav-page';
+import NavigationPage from 'components/navigations/nav-page';
 import './style.scss'; // css
 import template from './template.hbs';
 

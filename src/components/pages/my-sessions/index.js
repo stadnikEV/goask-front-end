@@ -1,5 +1,5 @@
 import BaseComponent from 'components/__shared/base-component';
-import Header from 'components/header';
+import Header from 'components/headers/header-main';
 import MainBlock from 'components/main-block';
 import MySessions from 'components/sessions/my-sessions';
 

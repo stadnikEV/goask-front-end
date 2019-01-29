@@ -1,0 +1,49 @@
+<div class="speaker-list-item"
+     data-component="speaker-list-item"
+     data-speakerId="{{speakerId}}">
+
+  <div class="speaker-list-item__navigation-container"
+       data-element="speaker-list-item__navigation-container">
+    <div class="speaker-list-item__buttons-container">
+      <div class="speaker-list-item__button-details-container"
+           data-element="speaker-list-item__button-details-container">
+      </div>
+      <div class="speaker-list-item__button-confirm-container"
+           data-element="speaker-list-item__button-confirm-container">
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-list-item__content"
+       data-element="speaker-list-item__content">
+
+    <p class="speaker-list-item__speaker-name">
+      {{firstname}} {{lastname}}
+    </p>
+
+    <div class="speaker-list-item__category"
+         data-element="speaker-list-item__category">
+      <span>Категории:</span>
+      {{#each categories}}
+        {{content}},
+      {{/each}}
+    </div>
+
+    <div class="speaker-list-item__status-container"
+         data-element="speaker-list-item__status-container">
+    </div>
+
+    {{#if numberOfResponses}}
+      <div class="speaker-list-item__number-responses"
+           data-element="speaker-list-item__number-responses">
+        <span>Количество ответов:</span> {{numberOfResponses}}
+      </div>
+    {{/if}}
+
+    <p class="speaker-list-item__about"
+       data-element="speaker-list-item__about">
+      {{about}}
+    </p>
+  </div>
+
+</div>

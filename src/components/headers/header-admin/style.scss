@@ -1,0 +1,21 @@
+@import 'components/__shared/css/variables.scss';
+
+.header {
+  height: 100%;
+  width: 75%;
+  box-sizing: border-box;
+  background-color: $white;
+  margin: 0 auto;
+
+  &__navigation-container {
+    height: 100%;
+    float: left;
+  }
+
+  &::after {
+    color: red;
+    content: '';
+    display: block;
+    clear: both;
+  }
+}

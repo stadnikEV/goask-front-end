@@ -1,0 +1,16 @@
+@import 'components/__shared/css/variables.scss';
+
+.status-speaker {
+  font-weight: bold;
+  &__value {
+    &_color-red {
+      color: $red;
+    }
+    &_color-blue {
+      color: $blue;
+    }
+    &_color-green {
+      color: green;
+    }
+  }
+}

@@ -20,6 +20,7 @@ export default class BaseButtonEvent extends BaseComponent {
 
     this.eventName = eventName;
     this.data = data;
+    this.className = className;
     this.componentName = componentName;
 
     this.render({
@@ -34,6 +35,14 @@ export default class BaseButtonEvent extends BaseComponent {
     this.onButtonClick = this.onButtonClick.bind(this);
 
     this.addEvents();
+  }
+
+  select() {
+    this.elements.button.classList.add(`${this.className}__button_selected`);
+  }
+
+  deselect() {
+    this.elements.button.classList.remove(`${this.className}__button_selected`);
   }
 
   render(options) {

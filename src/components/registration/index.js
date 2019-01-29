@@ -46,7 +46,7 @@ export default class Registration extends BaseComponent {
 
   initTipConfirmMessage() {
     this.components.tipConfirmMessage = new TipInline({
-      el: this.elements.tipConfirmMessageContainer,
+      el: this.elements.mainContainer,
       componentName: 'confirm-message',
       message: `На ваш почтовый ящик <a href="mailto:${this.data.email}">${this.data.email}</a> было отправлено письмо. Для завершения регистрации следуйте инструкциям в письме.`,
       color: 'black',
