@@ -50,7 +50,7 @@ export default class AdminPageSelector extends BaseComponent {
       return;
     }
     if (routeHash === 'speakers') {
-      // this.initSpeakers();
+      this.initSpeakers();
       return;
     }
     if (routeHash === 'login') {
@@ -69,14 +69,35 @@ export default class AdminPageSelector extends BaseComponent {
   }
 
   initSpeakersConfirm() {
-    import(/* webpackChunkName: "admin-speakers-confirm" */ '../admin-speakers-confirm')
+    import(/* webpackChunkName: "admin-speakers" */ '../admin-speakers')
       .then((Module) => {
         if (router.getRouteHash() !== 'speakers-confirm') {
           return;
         }
-        const SpeakersConfirm = Module.default;
-        this.components.speakersConfirm = new SpeakersConfirm({ el: this.elements.contentContainer });
-        this.currentComponent = 'speakersConfirm';
+        const Speakers = Module.default;
+        this.components.speakers = new Speakers({
+          el: this.elements.contentContainer,
+          filter: 'notConfirmed',
+        });
+        this.currentComponent = 'speakers';
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  initSpeakers() {
+    import(/* webpackChunkName: "admin-speaker" */ '../admin-speakers')
+      .then((Module) => {
+        if (router.getRouteHash() !== 'speakers') {
+          return;
+        }
+        const Speakers = Module.default;
+        this.components.speakers = new Speakers({
+          el: this.elements.contentContainer,
+          filter: 'confirmed',
+        });
+        this.currentComponent = 'speakers';
       })
       .catch((err) => {
         console.warn(err);
@@ -84,7 +105,7 @@ export default class AdminPageSelector extends BaseComponent {
   }
 
   initAboutSpeaker() {
-    import(/* webpackChunkName: "about-speaker" */ '../admin-about-speaker')
+    import(/* webpackChunkName: "admin-about-speaker" */ '../admin-about-speaker')
       .then((Module) => {
         if (router.getRouteHash()
           .search(/^about-speaker\/[0-9]+$/) === -1) {

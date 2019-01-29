@@ -40,4 +40,9 @@ export default class SpeakerStatus extends BaseComponent {
       modifierClassName,
     });
   }
+
+  setStatus({ status }) {
+    const statusData = this.getStatusData({ status });
+    this.render(statusData);
+  }
 }
