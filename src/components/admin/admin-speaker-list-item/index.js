@@ -28,26 +28,30 @@ export default class SpeakerListItem extends BaseComponent {
     this.initButtonDetails();
     this.initStatusSpeaker({ status: data.active });
 
-    const truncateDescribeText = this.getTruncateDescribeText();
+    // const truncateDescribeText = this.getTruncateDescribeText();
 
-    if (truncateDescribeText) {
-      this.elements.about.innerHTML = truncateDescribeText;
-    }
+    // if (truncateDescribeText) {
+    //   this.elements.about.innerHTML = truncateDescribeText;
+    // }
 
-    this.onResize = this.onResize.bind(this);
-    this.str = this.elements.about.textContent;
+    // this.onResize = this.onResize.bind(this);
+    // this.str = this.elements.about.textContent;
 
     this.addEvents();
   }
 
   render(data) {
-    this.el.innerHTML = template({
+    const templateData = {
       speakerId: data.speakerId,
       firstname: data.firstname,
       lastname: data.lastname,
       about: data.about,
       categories: data.categories,
-    });
+    };
+    if (typeof data.numberResponses === 'number') {
+      templateData.numberResponses = data.numberResponses.toString();
+    }
+    this.el.innerHTML = template(templateData);
   }
 
   addEvents() {

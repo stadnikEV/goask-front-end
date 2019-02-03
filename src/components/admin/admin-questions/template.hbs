@@ -1,0 +1,49 @@
+<div class="questions"
+     data-component="questions">
+
+   <div class="questions__about-container"
+        data-element="questions__about-container">
+
+     <p class="questions__speaker-name">
+       {{firstname}} {{lastname}}
+     </p>
+
+     <div class="questions__category"
+          data-element="questions__category">
+       <span>Категории:</span>
+       {{#each categories}}
+         {{content}}
+       {{/each}}
+     </div>
+
+     <div class="questions__status-container"
+          data-element="questions__status-container">
+     </div>
+
+     {{#if numberResponses}}
+       <div class="questions__number-responses"
+            data-element="questions__number-responses">
+         <span>Количество ответов:</span> {{numberResponses}}
+       </div>
+     {{/if}}
+     <p class="questions__about-title">
+       О спикер
+     </p>
+     <p class="questions__about"
+        data-element="questions__about">
+       {{about}}
+     </p>
+   </div>
+
+  <div class="questions__question-container"
+       data-element="questions__question-container">
+    <p class="questions__question-title">
+      Список сесиий
+    </p>
+    <div class="questions__question-list-container"
+         data-element="questions__question-list-container">
+    </div>
+  </div>
+
+
+</div>

@@ -25,7 +25,7 @@
          data-element="speaker-list-item__category">
       <span>Категории:</span>
       {{#each categories}}
-        {{content}},
+        {{content}}
       {{/each}}
     </div>
 
@@ -33,17 +33,17 @@
          data-element="speaker-list-item__status-container">
     </div>
 
-    {{#if numberOfResponses}}
+    {{#if numberResponses}}
       <div class="speaker-list-item__number-responses"
            data-element="speaker-list-item__number-responses">
-        <span>Количество ответов:</span> {{numberOfResponses}}
+        <span>Количество ответов:</span> {{numberResponses}}
       </div>
     {{/if}}
 
-    <p class="speaker-list-item__about"
+    <!-- <p class="speaker-list-item__about"
        data-element="speaker-list-item__about">
       {{about}}
-    </p>
+    </p> -->
   </div>
 
 </div>

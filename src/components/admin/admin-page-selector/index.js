@@ -53,6 +53,10 @@ export default class AdminPageSelector extends BaseComponent {
       this.initSpeakers();
       return;
     }
+    if (routeHash.search(/^sessions\/[0-9]\/questions$/) !== -1) {
+      this.initQuestions();
+      return;
+    }
     if (routeHash === 'login') {
       this.initLogin();
       return;
@@ -78,6 +82,7 @@ export default class AdminPageSelector extends BaseComponent {
         this.components.speakers = new Speakers({
           el: this.elements.contentContainer,
           filter: 'notConfirmed',
+          fields: 'speakerId firstname lastname about categories active',
         });
         this.currentComponent = 'speakers';
       })
@@ -96,6 +101,7 @@ export default class AdminPageSelector extends BaseComponent {
         this.components.speakers = new Speakers({
           el: this.elements.contentContainer,
           filter: 'confirmed',
+          fields: 'speakerId firstname lastname about categories active numberResponses',
         });
         this.currentComponent = 'speakers';
       })

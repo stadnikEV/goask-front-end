@@ -1,10 +1,13 @@
+@import 'components/__shared/css/variables.scss';
+
 .speaker-list-item {
   margin: 15px 0 20px 0;
-  height: 180px;
-  border-bottom: solid 1px lightgray;
+  height: 130px;
+  // border-bottom: solid 1px lightgray;
+  background-color: $light-gray;
 
   &__content {
-    height: 100%;
+    padding: 15px 20px;
 
     .speaker-list-item__speaker-name {
       font-size: 140%;
@@ -32,8 +35,9 @@
   }
 
   &__navigation-container {
+    padding: 20px 20px;
     float: right;
-    height: 170px;
+    // height: 120px;
     display: inline-block;
     padding-left: 20px;
 

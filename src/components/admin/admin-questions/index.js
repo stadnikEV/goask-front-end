@@ -1,5 +1,5 @@
 import router from 'router';
-import httpRequest from 'utils/http-request.js';
+// import httpRequest from 'utils/http-request.js';
 import BaseComponent from 'components/__shared/base-component';
 import StatusSpeaker from 'components/admin/admin-status-speaker';
 import SessionList from 'components/admin/admin-session-list';
@@ -7,18 +7,18 @@ import './style.scss';
 import template from './template.hbs';
 
 
-export default class AboutSpeaker extends BaseComponent {
+export default class Questions extends BaseComponent {
   constructor({ el }) {
     super({ el });
     this.components = {};
     this.eventsPubSub = {};
 
-    this.getSpeakerDetails()
+    this.getQuestions()
       .then((data) => {
         this.render(data);
-        this.elements.aboutSpeaker = document.querySelector('[data-component="about-speaker"]');
-        this.elements.statusSpeakerContainer = this.elements.aboutSpeaker.querySelector('[data-element="about-speaker__status-container"]');
-        this.elements.sessionsListContainer = this.elements.aboutSpeaker.querySelector('[data-element="about-speaker__sessions-list-container"]');
+        this.elements.questions = document.querySelector('[data-component="questions"]');
+        this.elements.statusSpeakerContainer = this.elements.aboutSpeaker.querySelector('[data-element="questions__status-container"]');
+        this.elements.questionListContainer = this.elements.aboutSpeaker.querySelector('[data-element="questions__question-list-container"]');
 
         this.initStatusSpeaker({ status: data.active });
         this.initSessionList({ speakerId: data.speakerId });
@@ -36,9 +36,9 @@ export default class AboutSpeaker extends BaseComponent {
     this.el.innerHTML = template(data);
   }
 
-  getSpeakerId() {
+  getSessionId() {
     const hash = router.getRouteHash();
-    return hash.substring(14);
+    return hash.match(/[0-9]+/);
   }
 
   initStatusSpeaker({ status }) {
@@ -56,8 +56,9 @@ export default class AboutSpeaker extends BaseComponent {
     });
   }
 
-  getSpeakerDetails() {
-    const speakerId = this.getSpeakerId();
-    return httpRequest.get({ url: `<%publicPathBackEnd%>/api/speakers/${speakerId}` });
+  getQuestions() {
+    const sessionId = this.getSessionId();
+    console.log(sessionId);
+    // return httpRequest.get({ url: `<%publicPathBackEnd%>/api/speakers/${speakerId}` });
   }
 }

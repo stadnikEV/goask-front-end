@@ -5,4 +5,5 @@ export default [
   '^speakers$',
   '^login$',
   '^statistics$',
+  '^sessions/[0-9]/questions$',
 ];

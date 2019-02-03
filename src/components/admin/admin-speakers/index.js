@@ -10,12 +10,12 @@ import template from './template.hbs';
 
 
 export default class AdminSpeakersConfirm extends BaseComponent {
-  constructor({ el, filter }) {
+  constructor({ el, filter, fields }) {
     super({ el });
     this.components = {};
     this.eventsPubSub = {};
 
-    this.getSpeakers(filter)
+    this.getSpeakers({ filter, fields })
       .then((speakers) => {
         this.render();
         this.elements.speakersConfirm = document.querySelector('[data-component="speakers-confirm"]');
@@ -52,9 +52,9 @@ export default class AdminSpeakersConfirm extends BaseComponent {
     });
   }
 
-  getSpeakers(filter) {
+  getSpeakers({ filter, fields }) {
     return httpRequest.get({
-      url: `<%publicPathBackEnd%>/api/speakers?filter=${filter}&fields=speakerId firstname lastname about categories active`,
+      url: `<%publicPathBackEnd%>/api/speakers?filter=${filter}&fields=${fields}`,
     });
   }
 
@@ -64,7 +64,7 @@ export default class AdminSpeakersConfirm extends BaseComponent {
 
   onButtonConfirm(msg, { active, speakerId, listItemComponent }) {
     httpRequest.post({
-      url: `<%publicPathBackEnd%>/api/speakers/${speakerId}/active`,
+      url: `<%publicPathBackEnd%>/api/speakers/${speakerId}/status`,
       options: {
         data: {
           active,
