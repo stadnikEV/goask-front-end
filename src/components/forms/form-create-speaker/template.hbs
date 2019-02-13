@@ -1,6 +1,32 @@
 <form class="form-create-speaker"
       data-component="form-create-speaker">
 
+  {{#if notLogin}}
+    <label class="form-label form-create-speaker__label"
+           for="email">
+    Почта
+    </label>
+    <div class="form-create-speaker__tip-container"
+         data-element="form-create-speaker__tip-email-container">
+    </div>
+    <div class="form-create-speaker__email-container"
+         data-element="form-create-speaker__email-container">
+    </div>
+
+
+    <label class="form-label form-create-speaker__label"
+           for="password">
+    Пароль
+    </label>
+    <div class="form-create-speaker__tip-container"
+         data-element="form-create-speaker__tip-password-container">
+    </div>
+    <div class="form-create-speaker__password-container"
+         data-element="form-create-speaker__password-container">
+    </div>
+  {{/if}}
+
+
   <label class="form-label form-create-speaker__label"
          for="firstname">
   Имя
@@ -23,7 +49,6 @@
   <div class="form-create-speaker__lastname-container"
        data-element="form-create-speaker__lastname-container">
   </div>
-
 
 
   <label class="form-label form-create-speaker__label"

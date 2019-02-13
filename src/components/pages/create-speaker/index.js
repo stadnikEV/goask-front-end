@@ -3,7 +3,7 @@ import Header from 'components/headers/header-main';
 import RegistrationSpeaker from 'components/registration-speaker';
 import 'components/__shared/css/reset.scss'; // css
 import 'components/__shared/css/base.scss'; // css
-import 'components/pages/registration-speaker/style.scss'; // css
+import 'components/pages/create-speaker/style.scss'; // css
 
 
 export default class PageCreateSpeaker extends BaseComponent {

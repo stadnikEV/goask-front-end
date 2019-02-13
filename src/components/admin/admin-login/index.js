@@ -1,7 +1,7 @@
 import PubSub from 'pubsub-js';
 import HttpError from 'utils/http-error.js';
-import router from 'router';
 import httpRequest from 'utils/http-request.js';
+import router from 'router';
 import BaseComponent from 'components/__shared/base-component';
 import 'components/__shared/login-registration/style.scss';
 import FormLoginAdmin from '../../forms/form-login-admin';

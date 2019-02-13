@@ -8,7 +8,7 @@ import TipInline from '../tip-inline';
 import template from './template.hbs';
 
 
-export default class Login extends BaseComponent {
+export default class RegistrationSpeaker extends BaseComponent {
   constructor({ el }) {
     super({ el });
     this.components = {};
@@ -18,6 +18,8 @@ export default class Login extends BaseComponent {
     this.elements.createSpeaker = document.querySelector('[data-component="create-speaker"]');
     this.elements.FormContainer = this.elements.createSpeaker.querySelector('[data-element="create-speaker__form-container"]');
     this.elements.mainContainer = this.elements.createSpeaker.querySelector('[data-element="create-speaker__main-container"]');
+
+    this.login = this.isLogin();
 
     this.getCategoriesName()
       .then((categories) => {
@@ -52,22 +54,40 @@ export default class Login extends BaseComponent {
     this.components.formCreateSpeaker = new FormCreateSpeaker({
       el: this.elements.FormContainer,
       categories,
+      isLogin: this.login,
     });
+  }
+
+  isLogin() {
+    const value = this.el.getAttribute('data-is-login');
+    if (value === 'true') {
+      return true;
+    }
+    return false;
   }
 
   initTipConfirmMessage() {
+    const message = (!this.login)
+      ? `На ваш почтовый ящик <a href="mailto:${this.data.email}">${this.data.email}</a> было отправлено письмо. Для завершения регистрации следуйте инструкциям в письме.`
+      : 'Ваша заявка отправлена на рассмотрение модератором.';
+
     this.components.tipConfirmMessage = new TipInline({
       el: this.elements.mainContainer,
       componentName: 'confirm-message',
-      message: 'Ваша заявка отправлена на рассмотрение модератором.',
+      message,
       color: 'black',
     });
-    this.elements.mainContainer.classList.add('registration__main-container_width-wide');
+    this.elements.mainContainer.classList.add('create-speaker__main-container_width-wide');
   }
 
   onSendData(msg, data) {
+    this.data = data;
+    const url = (this.login)
+      ? '<%publicPathBackEnd%>/api/become-speaker'
+      : '<%publicPathBackEnd%>/api/create-speaker';
+
     httpRequest.post({
-      url: '<%publicPathBackEnd%>/api/registration-speaker',
+      url,
       options: { data },
     })
       .then(() => {
@@ -78,8 +98,28 @@ export default class Login extends BaseComponent {
       .catch((err) => {
         this.components.formCreateSpeaker.formEnable();
         if (err instanceof HttpError) {
+          if (err.status === 403) {
+            this.components.formCreateSpeaker.tipHendler({
+              isValid: false,
+              message: 'email уже зарегистрирован',
+              tipName: 'tipEmail',
+            });
+
+            return;
+          }
+          if (err.status === 400) {
+            if (err.message === 'not correct email') {
+              this.components.formCreateSpeaker.tipHendler({
+                isValid: false,
+                message: 'email не корректный',
+                tipName: 'tipEmail',
+              });
+            }
+
+            return;
+          }
           if (err.status === 500) {
-            console.log('ошибка на сторне сервера');
+            console.log('server error');
           }
         }
         console.warn(err);

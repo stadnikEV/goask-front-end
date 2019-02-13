@@ -10,9 +10,14 @@
 
   &__firstname-container,
   &__lastname-container,
+  &__email-container,
+  &__password-container,
   &__category-container,
   &__about-container, {
     margin-bottom: 15px;
+  }
+  &__password-container {
+    margin-bottom: 50px;
   }
   &__about-container {
     height: 200px;

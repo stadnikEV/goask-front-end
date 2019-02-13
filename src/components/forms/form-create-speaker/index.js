@@ -9,14 +9,16 @@ import template from './template.hbs'; // template
 import ButtonSubmit from '../../buttons/button-submit';
 import InputText from '../../inputs/input-text';
 import Textarea from '../../inputs/textarea';
+import InputEmail from '../../inputs/input-email';
+import InputPassword from '../../inputs/input-password';
 
 
 export default class FormCreateSpeaker extends BaseComponent {
-  constructor({ el, categories }) {
+  constructor({ el, categories, isLogin }) {
     super({ el });
     this.components = {};
 
-    this.render();
+    this.render({ notLogin: !isLogin });
 
     this.elements.form = document.querySelector('[data-component="form-create-speaker"]');
     this.elements.categoryContainer = this.elements.form.querySelector('[data-element="form-create-speaker__category-container"]');
@@ -41,12 +43,26 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.initComponentTipCategory();
     this.initComponentButtonSubmit();
 
+    this.isLogin = isLogin;
+
+    if (!isLogin) {
+      this.elements.emailContainer = this.elements.form.querySelector('[data-element="form-create-speaker__email-container"]');
+      this.elements.passwordContainer = this.elements.form.querySelector('[data-element="form-create-speaker__password-container"]');
+      this.elements.tipEmailContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-email-container"]');
+      this.elements.tipPasswordContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-password-container"]');
+
+      this.initComponentInputEmail();
+      this.initComponentInputPassword();
+      this.initComponentTipEmail();
+      this.initComponentTipPassword();
+    }
+
     this.onClick = this.onClick.bind(this);
     this.addEvents();
   }
 
-  render() {
-    this.el.innerHTML = template();
+  render({ notLogin }) {
+    this.el.innerHTML = template({ notLogin });
   }
 
 
@@ -77,36 +93,59 @@ export default class FormCreateSpeaker extends BaseComponent {
       const aboutStatus = this.components.textAbout.validation();
       const categoryStatus = this.components.selectCategory.validation();
 
+      let emailStatus = { isValid: true };
+      let passwordStatus = { isValid: true };
+
+      if (!this.isLogin) {
+        emailStatus = this.components.inputEmail.validation();
+        passwordStatus = this.components.inputPassword.validation();
+
+        this.tipHendler({
+          isValid: emailStatus.isValid,
+          message: emailStatus.message,
+          tipName: 'tipEmail',
+        });
+        this.tipHendler({
+          isValid: passwordStatus.isValid,
+          message: passwordStatus.message,
+          tipName: 'tipPassword',
+        });
+      }
+
 
       this.tipHendler({
         isValid: firstnameStatus.isValid,
         message: getValidationMessage({ tipName: 'firstname', validationMessage: firstnameStatus.message }),
-        tipElem: this.components.tipFirstname,
+        tipName: 'tipFirstname',
       });
       this.tipHendler({
         isValid: lastnameStatus.isValid,
         message: getValidationMessage({ tipName: 'lastname', validationMessage: lastnameStatus.message }),
-        tipElem: this.components.tipLastname,
+        tipName: 'tipLastname',
       });
       this.tipHendler({
         isValid: aboutStatus.isValid,
         message: getValidationMessage({ tipName: 'about', validationMessage: aboutStatus.message }),
-        tipElem: this.components.tipAbout,
+        tipName: 'tipAbout',
       });
       this.tipHendler({
         isValid: categoryStatus.isValid,
         message: categoryStatus.message,
-        tipElem: this.components.tipCategory,
+        tipName: 'tipCategory',
       });
 
       this.setFocus({
+        isValidEmail: emailStatus.isValid,
+        isValidPassword: passwordStatus.isValid,
         isValidFirstname: firstnameStatus.isValid,
         isValidLastname: lastnameStatus.isValid,
         isValidAbout: aboutStatus.isValid,
         isValidCategory: categoryStatus.isValid,
       });
 
-      if (firstnameStatus.isValid
+      if (emailStatus.isValid
+      && passwordStatus.isValid
+      && firstnameStatus.isValid
       && lastnameStatus.isValid
       && aboutStatus.isValid
       && categoryStatus.isValid) {
@@ -117,27 +156,42 @@ export default class FormCreateSpeaker extends BaseComponent {
           about: this.components.textAbout.getData(),
           category: this.components.selectCategory.getData(),
         };
+        if (!this.isLogin) {
+          data.email = this.components.inputEmail.getData();
+          data.password = this.components.inputPassword.getData();
+        }
         PubSub.publish('form-create-speaker-data', data);
       }
     }
   }
 
-  tipHendler({ isValid, message, tipElem }) {
+  tipHendler({ isValid, message, tipName }) {
     if (isValid) {
-      tipElem.showTip({ message: '' });
+      this.components[tipName].showTip({ message: '' });
       return;
     }
-
-    tipElem.showTip({ message });
+    this.components[tipName].showTip({ message });
   }
 
 
   setFocus({
+    isValidEmail,
+    isValidPassword,
     isValidFirstname,
     isValidLastname,
     isValidAbout,
     isValidCategory,
   }) {
+    if (!this.isLogin) {
+      if (!isValidEmail) {
+        this.components.inputEmail.setFocus();
+        return;
+      }
+      if (!isValidPassword) {
+        this.components.inputPassword.setFocus();
+        return;
+      }
+    }
     if (!isValidFirstname) {
       this.components.inputFirstname.setFocus();
       return;
@@ -151,7 +205,6 @@ export default class FormCreateSpeaker extends BaseComponent {
       return;
     }
     if (!isValidCategory) {
-      console.log('focuse');
       this.components.selectCategory.setFocus();
       return;
     }
@@ -160,6 +213,10 @@ export default class FormCreateSpeaker extends BaseComponent {
 
   formDisable() {
     this.inSendProcess = true;
+    if (!this.isLogin) {
+      this.components.inputEmail.disable();
+      this.components.inputPassword.disable();
+    }
     this.components.inputFirstname.disable();
     this.components.inputLastname.disable();
     this.components.textAbout.disable();
@@ -168,6 +225,10 @@ export default class FormCreateSpeaker extends BaseComponent {
 
   formEnable() {
     this.inSendProcess = false;
+    if (!this.isLogin) {
+      this.components.inputEmail.enable();
+      this.components.inputPassword.enable();
+    }
     this.components.inputFirstname.enable();
     this.components.inputLastname.enable();
     this.components.textAbout.enable();
@@ -189,6 +250,21 @@ export default class FormCreateSpeaker extends BaseComponent {
       el: this.elements.lastnameContainer,
       componentName: 'lastname',
       maxLength: 20,
+    });
+  }
+
+  initComponentInputEmail() {
+    this.components.inputEmail = new InputEmail({
+      el: this.elements.emailContainer,
+      componentName: 'email',
+    });
+  }
+
+
+  initComponentInputPassword() {
+    this.components.inputPassword = new InputPassword({
+      el: this.elements.passwordContainer,
+      componentName: 'password',
     });
   }
 
@@ -218,6 +294,7 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.tipFirstname = new TipInline({
       el: this.elements.tipFirstnameContainer,
       componentName: 'tip-inline-firstname',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -225,6 +302,23 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.tipLastname = new TipInline({
       el: this.elements.tipLastnameContainer,
       componentName: 'tip-inline-lastname',
+      classModifier: 'tip-inline_font-smal',
+    });
+  }
+
+  initComponentTipEmail() {
+    this.components.tipEmail = new TipInline({
+      el: this.elements.tipEmailContainer,
+      componentName: 'tip-inline-email',
+      classModifier: 'tip-inline_font-smal',
+    });
+  }
+
+  initComponentTipPassword() {
+    this.components.tipPassword = new TipInline({
+      el: this.elements.tipPasswordContainer,
+      componentName: 'tip-inline-password',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -232,6 +326,7 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.tipAbout = new TipInline({
       el: this.elements.tipAboutContainer,
       componentName: 'tip-inline-about',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
@@ -239,6 +334,7 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.tipCategory = new TipInline({
       el: this.elements.tipCategoryContainer,
       componentName: 'tip-inline-category',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 

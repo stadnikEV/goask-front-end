@@ -73,9 +73,22 @@ export default class Registration extends BaseComponent {
               message: 'email уже зарегистрирован',
               tipName: 'tipEmail',
             });
+
+            return;
+          }
+          if (err.status === 400) {
+            if (err.message === 'not correct email') {
+              this.components.formRegistration.tipHendler({
+                isValid: false,
+                message: 'email не корректный',
+                tipName: 'tipEmail',
+              });
+            }
+
+            return;
           }
           if (err.status === 500) {
-            console.log('ошибка на сторне сервера');
+            console.log('server error');
           }
         }
         console.warn(err);
