@@ -1,0 +1,58 @@
+@import 'components/__shared/css/variables.scss';
+
+.public-speaker-list-item {
+  font-size: 110%;
+  margin: 15px 0 20px 0;
+  height: 200px;
+  border-bottom: solid 1px lightgray;
+
+  &__content {
+    height: 100%;
+    width: 100%;
+
+
+    .public-speaker-list-item__content-header {
+      padding-bottom: 15px;
+
+      .public-speaker-list-item__speaker {
+        margin-bottom: 10px;
+        font-size: 120%;
+        font-weight: bold;
+      }
+
+      .public-speaker-list-item__category {
+        margin-bottom: 5px;
+        & span {
+          font-weight: bold;
+        }
+      }
+
+      .public-speaker-list-item__expertise {
+        font-weight: bold;
+      }
+    }
+
+    .public-speaker-list-item__describe-speaker-container {
+      margin-right: 150px;
+    }
+  }
+
+  &__navigation {
+    height: 190px;
+    float: right;
+    display: inline-block;
+    text-align: right;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: bottom;
+    }
+
+    .public-speaker-list-item__button-speaker-details-container {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+  }
+}

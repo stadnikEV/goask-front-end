@@ -98,11 +98,20 @@ export default class RegistrationSpeaker extends BaseComponent {
       .catch((err) => {
         this.components.formCreateSpeaker.formEnable();
         if (err instanceof HttpError) {
-          if (err.status === 403) {
+          if (err.status === 403 && err.message === 'email already exists') {
             this.components.formCreateSpeaker.tipHendler({
               isValid: false,
               message: 'email уже зарегистрирован',
               tipName: 'tipEmail',
+            });
+
+            return;
+          }
+          if (err.status === 403 && err.message === 'request entity too large') {
+            this.components.formCreateSpeaker.tipHendler({
+              isValid: false,
+              message: 'Изображение слишком боьшое',
+              tipName: 'tipAddAvatar',
             });
 
             return;

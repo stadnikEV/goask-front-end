@@ -3,9 +3,22 @@
 .form-create-speaker {
   padding-bottom: 250px;
 
+  &__add-avatar-container {
+    height: 130px;
+    margin-bottom: 15px;
+  }
+
   &__label {
     display: inline-block;
     padding-bottom: 2px;
+
+    & span {
+      font-size: 70%;
+    }
+  }
+
+  &__tip-container {
+    margin-bottom: 5px;
   }
 
   &__firstname-container,
@@ -15,6 +28,11 @@
   &__category-container,
   &__about-container, {
     margin-bottom: 15px;
+  }
+
+  &__password-container,
+  &__email-container {
+    width: 60%;
   }
   &__password-container {
     margin-bottom: 50px;

@@ -16,7 +16,7 @@ const config = {
     main: './src/main.js',
     login: './src/login.js',
     registration: './src/registration.js',
-    publicSessions: './src/public-sessions.js',
+    publicSpeakers: './src/public-speakers.js',
     publicSessionDetails: './src/public-session-details.js',
     createSpeaker: './src/create-speaker.js',
     stream: './src/stream.js',

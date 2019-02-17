@@ -1,12 +1,12 @@
 import PubSub from 'pubsub-js';
 import httpRequest from 'utils/http-request.js';
+import readBlob from 'utils//read-blob';
 import CustomError from 'utils/custom-error.js';
 import BaseComponent from 'components/__shared/base-component';
 import ButtonRecord from 'components/buttons/button-record';
 import getMimeType from './get-mime-type';
 import defineGetUserMedia from './define-get-user-media';
 import connectStreamSource from './connect-stream-source';
-import readBlob from './read-blob';
 import './style.scss'; // css
 import template from './template.hbs';
 

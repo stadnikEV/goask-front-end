@@ -1,0 +1,36 @@
+@import 'components/__shared/css/variables.scss';
+
+.public-speakers {
+  margin-bottom: 150px;
+
+  &__select-category-container {
+    background-color: $very-light-gray;
+    border-bottom: 1px solid lightgray;
+
+    .public-speakers__select-category {
+      width: 75%;
+      margin: 0 auto;
+      padding-top: 50px;
+
+      .public-speakers__describe-category {
+        margin-bottom: 5px;
+      }
+
+      .public-speakers__select-container {
+        width: 400px;
+        padding-bottom: 50px;
+      }
+    }
+  }
+
+  &__list-container {
+    padding: 60px 0 100px 0;
+    margin: 0 auto;
+    width: 75%;
+  }
+
+  &__page-navigation-container {
+    width: 100%;
+    text-align: center;
+  }
+}

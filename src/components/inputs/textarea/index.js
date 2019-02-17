@@ -1,8 +1,8 @@
 import BaseInput from 'components/__shared/base-input';
-import 'components/__shared/base-input/style.scss'; // css
+import 'components/__shared/base-input/style.scss';
 import validationTextarea from './validation-textarea';
-import template from './template.hbs'; // template
-import './style.scss'; // css
+import template from './template.hbs';
+import './style.scss';
 
 
 export default class Textarea extends BaseInput {

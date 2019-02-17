@@ -1,6 +1,9 @@
 module.exports = ({ tipName, validationMessage }) => {
   let message = null;
   if (validationMessage === 'is empty') {
+    if (tipName === 'addAvatar') {
+      message = 'Загрузите вашу фотографию';
+    }
     if (tipName === 'firstname') {
       message = 'Введите имя';
     }
@@ -21,6 +24,9 @@ module.exports = ({ tipName, validationMessage }) => {
     if (tipName === 'about') {
       message = 'Количество символов не должно превышать 4000 символов';
     }
+  }
+  if (validationMessage === 'file limit exceeded') {
+    message = 'Разрешение фотографии слишком большое';
   }
   return message;
 };

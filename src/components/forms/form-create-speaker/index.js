@@ -1,11 +1,12 @@
 import PubSub from 'pubsub-js';
 import BaseComponent from 'components/__shared/base-component';
 import SelectCategory from 'components/inputs/select';
-import 'components/__shared/form/style.scss'; // css
-import 'components/forms/form-create-speaker/style.scss'; // css
+import AddAvatar from 'components/add-avatar';
+import 'components/__shared/form/style.scss';
+import 'components/forms/form-create-speaker/style.scss';
 import getValidationMessage from './get-validation-message';
 import TipInline from '../../tip-inline';
-import template from './template.hbs'; // template
+import template from './template.hbs';
 import ButtonSubmit from '../../buttons/button-submit';
 import InputText from '../../inputs/input-text';
 import Textarea from '../../inputs/textarea';
@@ -21,11 +22,13 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.render({ notLogin: !isLogin });
 
     this.elements.form = document.querySelector('[data-component="form-create-speaker"]');
+    this.elements.addAvataContainer = this.elements.form.querySelector('[data-element="form-create-speaker__add-avatar-container"]');
     this.elements.categoryContainer = this.elements.form.querySelector('[data-element="form-create-speaker__category-container"]');
     this.elements.firstnameContainer = this.elements.form.querySelector('[data-element="form-create-speaker__firstname-container"]');
     this.elements.lastnameContainer = this.elements.form.querySelector('[data-element="form-create-speaker__lastname-container"]');
     this.elements.aboutContainer = this.elements.form.querySelector('[data-element="form-create-speaker__about-container"]');
 
+    this.elements.tipAddAvatarContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-add-avatar-container"]');
     this.elements.tipCategoryContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-category-container"]');
     this.elements.tipFirstnameContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-firstname-container"]');
     this.elements.tipLastnameContainer = this.elements.form.querySelector('[data-element="form-create-speaker__tip-lastname-container"]');
@@ -35,8 +38,10 @@ export default class FormCreateSpeaker extends BaseComponent {
 
     this.initComponentInputFirstname();
     this.initComponentInputLastname();
+    this.initComponentAddAvatar();
     this.initComponentTextAbout();
     this.initComponentSelectCategory(categories);
+    this.initComponentTipAddAvatar();
     this.initComponentTipFirstname();
     this.initComponentTipLastname();
     this.initComponentTipAbout();
@@ -88,6 +93,7 @@ export default class FormCreateSpeaker extends BaseComponent {
         return;
       }
 
+      const avatarStatus = this.components.addAvatar.validation();
       const firstnameStatus = this.components.inputFirstname.validation();
       const lastnameStatus = this.components.inputLastname.validation();
       const aboutStatus = this.components.textAbout.validation();
@@ -114,6 +120,11 @@ export default class FormCreateSpeaker extends BaseComponent {
 
 
       this.tipHendler({
+        isValid: avatarStatus.isValid,
+        message: getValidationMessage({ tipName: 'addAvatar', validationMessage: avatarStatus.message }),
+        tipName: 'tipAddAvatar',
+      });
+      this.tipHendler({
         isValid: firstnameStatus.isValid,
         message: getValidationMessage({ tipName: 'firstname', validationMessage: firstnameStatus.message }),
         tipName: 'tipFirstname',
@@ -135,6 +146,7 @@ export default class FormCreateSpeaker extends BaseComponent {
       });
 
       this.setFocus({
+        isValidAddAvatar: avatarStatus.isValid,
         isValidEmail: emailStatus.isValid,
         isValidPassword: passwordStatus.isValid,
         isValidFirstname: firstnameStatus.isValid,
@@ -143,24 +155,38 @@ export default class FormCreateSpeaker extends BaseComponent {
         isValidCategory: categoryStatus.isValid,
       });
 
-      if (emailStatus.isValid
-      && passwordStatus.isValid
-      && firstnameStatus.isValid
-      && lastnameStatus.isValid
-      && aboutStatus.isValid
-      && categoryStatus.isValid) {
+      if (avatarStatus.isValid
+        && emailStatus.isValid
+        && passwordStatus.isValid
+        && firstnameStatus.isValid
+        && lastnameStatus.isValid
+        && aboutStatus.isValid
+        && categoryStatus.isValid
+      ) {
         this.formDisable();
-        const data = {
-          firstname: this.components.inputFirstname.getData(),
-          lastname: this.components.inputLastname.getData(),
-          about: this.components.textAbout.getData(),
-          category: this.components.selectCategory.getData(),
-        };
-        if (!this.isLogin) {
-          data.email = this.components.inputEmail.getData();
-          data.password = this.components.inputPassword.getData();
-        }
-        PubSub.publish('form-create-speaker-data', data);
+
+        this.components.addAvatar.getData()
+          .then((imgData) => {
+            const data = {
+              avatar: imgData.data,
+              avatarExtend: imgData.extend,
+              firstname: this.components.inputFirstname.getData(),
+              lastname: this.components.inputLastname.getData(),
+              about: this.components.textAbout.getData(),
+              category: this.components.selectCategory.getData(),
+            };
+
+
+            if (!this.isLogin) {
+              data.email = this.components.inputEmail.getData();
+              data.password = this.components.inputPassword.getData();
+            }
+
+            PubSub.publish('form-create-speaker-data', data);
+          })
+          .catch((err) => {
+            console.warn(err);
+          });
       }
     }
   }
@@ -175,6 +201,7 @@ export default class FormCreateSpeaker extends BaseComponent {
 
 
   setFocus({
+    isValidAddAvatar,
     isValidEmail,
     isValidPassword,
     isValidFirstname,
@@ -191,6 +218,10 @@ export default class FormCreateSpeaker extends BaseComponent {
         this.components.inputPassword.setFocus();
         return;
       }
+    }
+    if (!isValidAddAvatar) {
+      this.components.addAvatar.setFocus();
+      return;
     }
     if (!isValidFirstname) {
       this.components.inputFirstname.setFocus();
@@ -235,6 +266,11 @@ export default class FormCreateSpeaker extends BaseComponent {
     this.components.selectCategory.enable();
   }
 
+  initComponentAddAvatar() {
+    this.components.addAvatar = new AddAvatar({
+      el: this.elements.addAvataContainer,
+    });
+  }
 
   initComponentInputFirstname() {
     this.components.inputFirstname = new InputText({
@@ -287,6 +323,14 @@ export default class FormCreateSpeaker extends BaseComponent {
       componentName: 'category',
       disableFirst: true,
       categories,
+    });
+  }
+
+  initComponentTipAddAvatar() {
+    this.components.tipAddAvatar = new TipInline({
+      el: this.elements.tipAddAvatarContainer,
+      componentName: 'tip-inline-add-avatar',
+      classModifier: 'tip-inline_font-smal',
     });
   }
 
